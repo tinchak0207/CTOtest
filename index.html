@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CPTTM Event Registration Platform - Macau Productivity and Technology Transfer Center. Register for courses, seminars, competitions, and professional certifications.">
+    <meta name="keywords" content="CPTTM, Macau, training, courses, events, professional development, certification, IT, fashion, business, language">
+    <meta name="author" content="CPTTM - Macau Productivity and Technology Transfer Center">
+    <title>CPTTM Event Registration Platform</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <img src="assets/logo.svg" alt="CPTTM Logo" onerror="this.style.display='none'">
+                    <span class="logo-text">CPTTM</span>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#home" data-i18n="nav.home">Home</a></li>
+                        <li><a href="#events" data-i18n="nav.events">Events</a></li>
+                        <li><a href="#courses" data-i18n="nav.courses">Courses</a></li>
+                        <li><a href="#competitions" data-i18n="nav.competitions">Competitions</a></li>
+                        <li><a href="#about" data-i18n="nav.about">About</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <div class="language-selector">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="zh">中文</button>
+                        <button class="lang-btn" data-lang="pt">PT</button>
+                    </div>
+                    <button class="login-btn" data-i18n="header.login">
+                        <i class="fas fa-user"></i> Student Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 data-i18n="hero.title">Macau Productivity and Technology Transfer Center</h1>
+                <p data-i18n="hero.subtitle">Event Registration Platform for Professional Development</p>
+                <div class="hero-search">
+                    <input type="text" id="hero-search-input" placeholder="Search for courses, events, or competitions..." data-i18n-placeholder="hero.searchPlaceholder">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <h2 data-i18n="categories.title">Course Categories</h2>
+            <div class="category-grid">
+                <div class="category-card" data-category="it">
+                    <div class="category-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 data-i18n="categories.it.title">Information Technology</h3>
+                    <p data-i18n="categories.it.desc">Cloud computing, programming, cybersecurity, and more</p>
+                    <button class="category-btn" data-i18n="categories.viewMore">View Courses</button>
+                </div>
+                <div class="category-card" data-category="fashion">
+                    <div class="category-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 data-i18n="categories.fashion.title">Fashion & Creativity</h3>
+                    <p data-i18n="categories.fashion.desc">Design, fashion, creative arts, and innovation</p>
+                    <button class="category-btn" data-i18n="categories.viewMore">View Courses</button>
+                </div>
+                <div class="category-card" data-category="language">
+                    <div class="category-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3 data-i18n="categories.language.title">Business Language</h3>
+                    <p data-i18n="categories.language.desc">English, Chinese, Portuguese for business</p>
+                    <button class="category-btn" data-i18n="categories.viewMore">View Courses</button>
+                </div>
+                <div class="category-card" data-category="management">
+                    <div class="category-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3 data-i18n="categories.management.title">Enterprise Management</h3>
+                    <p data-i18n="categories.management.desc">Business operations, management, and strategy</p>
+                    <button class="category-btn" data-i18n="categories.viewMore">View Courses</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="events-section" id="events">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-i18n="events.title">Upcoming Events & Courses</h2>
+                <div class="filter-controls">
+                    <input type="date" id="start-date" class="date-input">
+                    <span>-</span>
+                    <input type="date" id="end-date" class="date-input">
+                    <select id="category-filter" class="filter-select">
+                        <option value="all" data-i18n="filter.allCategories">All Categories</option>
+                        <option value="it" data-i18n="categories.it.title">Information Technology</option>
+                        <option value="fashion" data-i18n="categories.fashion.title">Fashion & Creativity</option>
+                        <option value="language" data-i18n="categories.language.title">Business Language</option>
+                        <option value="management" data-i18n="categories.management.title">Enterprise Management</option>
+                    </select>
+                    <select id="type-filter" class="filter-select">
+                        <option value="all" data-i18n="filter.allTypes">All Types</option>
+                        <option value="course" data-i18n="filter.course">Course</option>
+                        <option value="seminar" data-i18n="filter.seminar">Seminar</option>
+                        <option value="competition" data-i18n="filter.competition">Competition</option>
+                        <option value="exam" data-i18n="filter.exam">Examination</option>
+                    </select>
+                    <button id="apply-filters" class="apply-filters-btn" data-i18n="filter.apply">Apply Filters</button>
+                </div>
+            </div>
+            
+            <div class="events-grid" id="events-grid">
+                <!-- Events will be dynamically loaded here -->
+            </div>
+
+            <div class="pagination">
+                <button class="pagination-btn" id="prev-page" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <span class="pagination-info">
+                    <span data-i18n="pagination.page">Page</span> <span id="current-page">1</span> <span data-i18n="pagination.of">of</span> <span id="total-pages">1</span>
+                </span>
+                <button class="pagination-btn" id="next-page">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnerships Section -->
+    <section class="partnerships">
+        <div class="container">
+            <h2 data-i18n="partnerships.title">Our Technology Partners</h2>
+            <div class="partners-grid">
+                <div class="partner-card">
+                    <div class="partner-logo">Huawei</div>
+                    <p data-i18n="partnerships.huawei">Technology training partnership since 2021</p>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-logo">Alibaba Cloud</div>
+                    <p data-i18n="partnerships.alibaba">Cloud certification partnership since 2022</p>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-logo">CPTTM</div>
+                    <p data-i18n="partnerships.vqa">China National Vocational Qualification Assessment</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-content">
+                <h2 data-i18n="about.title">About CPTTM</h2>
+                <p data-i18n="about.founding">The Macau Productivity and Technology Transfer Center (CPTTM) was founded in 1996 as a non-profit organization jointly established by the Macau SAR Government and the private sector.</p>
+                <p data-i18n="about.mission">Our mission is to support enterprises to utilize effectively new conceptual thinking, information and resources in order to increase the value-added of its products or services, with the aim to promote higher productivity and stronger competitiveness.</p>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label" data-i18n="about.stats.courses">Courses Annually</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">25+</div>
+                        <div class="stat-label" data-i18n="about.stats.years">Years of Service</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10,000+</div>
+                        <div class="stat-label" data-i18n="about.stats.students">Students Trained</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-i18n="footer.contact.title">Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> <span data-i18n="footer.contact.address">Macau, China</span></p>
+                    <p><i class="fas fa-phone"></i> +853 2878 1313</p>
+                    <p><i class="fas fa-envelope"></i> info@cpttm.org.mo</p>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer.links.title">Quick Links</h4>
+                    <ul>
+                        <li><a href="#events" data-i18n="footer.links.events">Event Registration</a></li>
+                        <li><a href="#courses" data-i18n="footer.links.courses">Course Catalog</a></li>
+                        <li><a href="#competitions" data-i18n="footer.links.competitions">Competitions</a></li>
+                        <li><a href="#" data-i18n="footer.links.vqa">Vocational Qualification</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer.systems.title">Related Systems</h4>
+                    <ul>
+                        <li><a href="#" data-i18n="footer.systems.register">register.cpttm.org.mo</a></li>
+                        <li><a href="#" data-i18n="footer.systems.www2">www2.cpttm.org.mo</a></li>
+                        <li><a href="#" data-i18n="footer.systems.main">www.cpttm.org.mo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer.social.title">Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="WeChat"><i class="fab fa-weixin"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CPTTM - Macau Productivity and Technology Transfer Center. <span data-i18n="footer.rights">All rights reserved.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 data-i18n="login.title">Student Login</h2>
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="username" data-i18n="login.username">Username or Email</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password" data-i18n="login.password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="submit-btn" data-i18n="login.submit">Login</button>
+                <div class="login-links">
+                    <a href="#" data-i18n="login.forgot">Forgot Password?</a>
+                    <a href="#" data-i18n="login.register">Register Account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Event Detail Modal -->
+    <div id="event-modal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close-modal">&times;</span>
+            <div id="event-detail-content">
+                <!-- Event details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="events-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
