@@ -22,11 +22,11 @@
                 </div>
                 <nav class="main-nav">
                     <ul>
-                        <li><a href="#home" data-i18n="nav.home">Home</a></li>
-                        <li><a href="#events" data-i18n="nav.events">Events</a></li>
-                        <li><a href="#courses" data-i18n="nav.courses">Courses</a></li>
-                        <li><a href="#competitions" data-i18n="nav.competitions">Competitions</a></li>
-                        <li><a href="#about" data-i18n="nav.about">About</a></li>
+                        <li><a href="#about" data-i18n="nav.about">關於生產力中心</a></li>
+                        <li><a href="#training" data-i18n="nav.training">培訓</a></li>
+                        <li><a href="#competitions" data-i18n="nav.competitions">比賽</a></li>
+                        <li><a href="#seminars" data-i18n="nav.seminars">研討會</a></li>
+                        <li><a href="#contact" data-i18n="nav.contact">聯絡我們</a></li>
                     </ul>
                 </nav>
                 <div class="header-actions">
@@ -48,7 +48,7 @@
         <div class="container">
             <div class="hero-content">
                 <h1 data-i18n="hero.title">Macau Productivity and Technology Transfer Center</h1>
-                <p data-i18n="hero.subtitle">Event Registration Platform for Professional Development</p>
+                
                 <div class="hero-search">
                     <input type="text" id="hero-search-input" placeholder="Search for courses, events, or competitions..." data-i18n-placeholder="hero.searchPlaceholder">
                     <button class="search-btn">
@@ -62,39 +62,31 @@
     <!-- Categories Section -->
     <section class="categories">
         <div class="container">
-            <h2 data-i18n="categories.title">Course Categories</h2>
+            <h2 data-i18n="professional_training.title">專業培訓</h2>
             <div class="category-grid">
                 <div class="category-card" data-category="it">
                     <div class="category-icon">
                         <i class="fas fa-laptop-code"></i>
                     </div>
-                    <h3 data-i18n="categories.it.title">Information Technology</h3>
-                    <p data-i18n="categories.it.desc">Cloud computing, programming, cybersecurity, and more</p>
-                    <button class="category-btn" data-i18n="categories.viewMore">View Courses</button>
-                </div>
-                <div class="category-card" data-category="fashion">
-                    <div class="category-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <h3 data-i18n="categories.fashion.title">Fashion & Creativity</h3>
-                    <p data-i18n="categories.fashion.desc">Design, fashion, creative arts, and innovation</p>
-                    <button class="category-btn" data-i18n="categories.viewMore">View Courses</button>
-                </div>
-                <div class="category-card" data-category="language">
-                    <div class="category-icon">
-                        <i class="fas fa-language"></i>
-                    </div>
-                    <h3 data-i18n="categories.language.title">Business Language</h3>
-                    <p data-i18n="categories.language.desc">English, Chinese, Portuguese for business</p>
-                    <button class="category-btn" data-i18n="categories.viewMore">View Courses</button>
+                    <h3 data-i18n="professional_training.it">資訊科技</h3>
                 </div>
                 <div class="category-card" data-category="management">
                     <div class="category-icon">
                         <i class="fas fa-briefcase"></i>
                     </div>
-                    <h3 data-i18n="categories.management.title">Enterprise Management</h3>
-                    <p data-i18n="categories.management.desc">Business operations, management, and strategy</p>
-                    <button class="category-btn" data-i18n="categories.viewMore">View Courses</button>
+                    <h3 data-i18n="professional_training.management_certification">管理及認證</h3>
+                </div>
+                <div class="category-card" data-category="fashion">
+                    <div class="category-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 data-i18n="professional_training.culture_creativity">文化創意</h3>
+                </div>
+                <div class="category-card" data-category="exam">
+                    <div class="category-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 data-i18n="professional_training.professional_exams">專業考試</h3>
                 </div>
             </div>
         </div>
@@ -111,10 +103,10 @@
                     <input type="date" id="end-date" class="date-input">
                     <select id="category-filter" class="filter-select">
                         <option value="all" data-i18n="filter.allCategories">All Categories</option>
-                        <option value="it" data-i18n="categories.it.title">Information Technology</option>
-                        <option value="fashion" data-i18n="categories.fashion.title">Fashion & Creativity</option>
-                        <option value="language" data-i18n="categories.language.title">Business Language</option>
-                        <option value="management" data-i18n="categories.management.title">Enterprise Management</option>
+                        <option value="it" data-i18n="professional_training.it">資訊科技</option>
+                        <option value="management" data-i18n="professional_training.management_certification">管理及認證</option>
+                        <option value="fashion" data-i18n="professional_training.culture_creativity">文化創意</option>
+                        <option value="exam" data-i18n="professional_training.professional_exams">專業考試</option>
                     </select>
                     <select id="type-filter" class="filter-select">
                         <option value="all" data-i18n="filter.allTypes">All Types</option>

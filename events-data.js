@@ -2,105 +2,105 @@ const eventsData = [
     {
         id: 1,
         title: {
-            en: "Cloud Computing with Alibaba Cloud",
-            zh: "阿里雲雲端運算課程",
-            pt: "Computação em Nuvem com Alibaba Cloud"
+            en: "Fashion Festival Creates a Cross-Border Creative Feast, GBA Fashion Gathers in Macau",
+            zh: "服裝節打造跨界創意盛宴 灣區時尚匯聚澳門",
+            pt: "Festival de Moda Cria um Banquete Criativo Transfronteiriço, Moda da GBA Reúne-se em Macau"
         },
         description: {
-            en: "Learn the fundamentals of cloud computing using Alibaba Cloud platform. Includes hands-on labs and certification preparation.",
-            zh: "學習使用阿里雲平台的雲端運算基礎知識，包括實作實驗室和認證準備。",
-            pt: "Aprenda os fundamentos da computação em nuvem usando a plataforma Alibaba Cloud. Inclui laboratórios práticos e preparação para certificação."
+            en: "The 'Macao Fashion Festival 2025', co-organized by the Macau Productivity and Technology Transfer Center and the Macao Trade and Investment Promotion Institute, continued today (23rd) at the Venetian Macao's Florence Convention Center. The 'GBA Fashion Show' brought together six outstanding designers from Macau, Hong Kong, Shenzhen, and Guangzhou to lead the audience on a fashion journey exploring the culture of the Guangdong-Hong Kong-Macao Greater Bay Area (GBA).",
+            zh: "由澳門生產力暨科技轉移中心與招商投資促進局合辦的“澳門服裝節2025”，今(23)日於澳門威尼斯人佛羅倫斯會議廳精彩續演，“大灣區時尚匯演”匯聚澳門、香港、深圳及廣州六組優秀設計師，攜手引領觀眾探索粵港澳大灣區（下稱“大灣區”）文化的時尚之旅。",
+            pt: "O 'Festival de Moda de Macau 2025', co-organizado pelo Centro de Produtividade e Transferência de Tecnologia de Macau e pelo Instituto de Promoção do Comércio e do Investimento de Macau, continuou hoje (23) no Centro de Convenções Florence do Venetian Macao. O 'Desfile de Moda da GBA' reuniu seis excelentes designers de Macau, Hong Kong, Shenzhen e Guangzhou para guiar o público numa viagem de moda explorando a cultura da Grande Baía de Guangdong-Hong Kong-Macau (GBA)."
         },
-        category: "it",
-        type: "course",
-        date: "2024-12-15",
+        category: "fashion",
+        type: "seminar",
+        date: "2025-10-23",
         time: "14:00-18:00",
         duration: "4 hours",
         location: {
-            en: "CPTTM Training Center, Room 301",
-            zh: "生產力中心培訓室301",
-            pt: "Centro de Formação CPTTM, Sala 301"
+            en: "Venetian Macao, Florence Convention Hall",
+            zh: "澳門威尼斯人佛羅倫斯會議廳",
+            pt: "Venetian Macao, Salão de Convenções Florence"
         },
         instructor: {
-            en: "Dr. Wong Chi Ming",
-            zh: "黃志明博士",
-            pt: "Dr. Wong Chi Ming"
+            en: "GBA Designers",
+            zh: "大灣區設計師",
+            pt: "Designers da GBA"
         },
-        fee: "MOP 500",
-        totalSeats: 30,
-        availableSeats: 12,
+        fee: "Free",
+        totalSeats: 100,
+        availableSeats: 25,
         language: {
-            en: "Cantonese with English materials",
-            zh: "廣東話授課，英文教材",
-            pt: "Cantonês com materiais em inglês"
+            en: "Multilingual",
+            zh: "多語言",
+            pt: "Multilíngue"
         }
     },
     {
         id: 2,
         title: {
-            en: "ESG Certification Seminar",
-            zh: "ESG認證研討會",
-            pt: "Seminário de Certificação ESG"
+            en: "Issue 703: New Quality Productivity",
+            zh: "第703期新質生產力",
+            pt: "Edição 703: Nova Produtividade de Qualidade"
         },
         description: {
-            en: "Comprehensive seminar on Environmental, Social, and Governance (ESG) certification for enterprises. Learn compliance requirements and best practices.",
-            zh: "企業環境、社會和治理(ESG)認證的綜合研討會。了解合規要求和最佳實踐。",
-            pt: "Seminário abrangente sobre certificação Ambiental, Social e de Governança (ESG) para empresas. Aprenda requisitos de conformidade e melhores práticas."
+            en: "【Latest Issue】Issue 703 of Macao Daily News's New Quality Productivity Bi-monthly: - 【Corporate Interview】Admittedly's Leapfrog Development Empowers All Industries - 【1+4 Dynamics】Deepening GMP Practice: Empowering Macao's Pharmaceutical Industry to a New International Milestone...",
+            zh: "【最新一期】第703期澳門日報新質生產力半月刊內容：\n\n– 【企業專訪】愛達利跨越發展賦能百業\n\n– 【1+4動態】深化GMP實踐：賦能澳門醫藥產業邁向國際新里程\n\n– 【時尚創意及技術篇】生產力為婚慶行業發展育人才\n\n– 【ISO發佈】ISO 22002-4:2025食品安全前提方案 第4部分：食品包材製造\n\n– 商務特選課程\n\n文章連結：https://www.macaodaily.com/html/2025-10/23/node_44.htm",
+            pt: "【Última Edição】Edição 703 do Bi-mensal de Nova Produtividade de Qualidade do Macao Daily News: - 【Entrevista Corporativa】O Desenvolvimento Salto da Admittedly Capacita Todas as Indústrias - 【Dinâmicas 1+4】Aprofundando a Prática de GMP: Capacitando a Indústria Farmacêutica de Macau para um Novo Marco Internacional..."
         },
         category: "management",
         type: "seminar",
-        date: "2024-12-20",
-        time: "09:30-12:30",
-        duration: "3 hours",
+        date: "2025-10-23",
+        time: "09:00-17:00",
+        duration: "Full day",
         location: {
-            en: "CPTTM Conference Hall",
-            zh: "生產力中心會議廳",
-            pt: "Salão de Conferências CPTTM"
+            en: "Online",
+            zh: "線上",
+            pt: "Online"
         },
         instructor: {
-            en: "Prof. Maria Santos",
-            zh: "瑪利亞·桑托斯教授",
-            pt: "Prof. Maria Santos"
+            en: "N/A",
+            zh: "N/A",
+            pt: "N/A"
         },
-        fee: "MOP 300",
-        totalSeats: 50,
-        availableSeats: 5,
+        fee: "Free",
+        totalSeats: 999,
+        availableSeats: 999,
         language: {
-            en: "English and Portuguese",
-            zh: "英語和葡萄牙語",
-            pt: "Inglês e Português"
+            en: "Chinese",
+            zh: "中文",
+            pt: "Chinês"
         }
     },
     {
         id: 3,
         title: {
-            en: "Fashion Design Competition 2024",
-            zh: "2024時裝設計大賽",
-            pt: "Competição de Design de Moda 2024"
+            en: "Macao Fashion Festival Kicks Off, Integrating Technology and Fashion Creativity",
+            zh: "澳門服裝節拉開帷幕 融合科技與時尚創意",
+            pt: "Festival de Moda de Macau Começa, Integrando Tecnologia e Criatividade de Moda"
         },
         description: {
-            en: "Annual fashion design competition for young designers. Showcase your creativity and win prizes up to MOP 10,000.",
-            zh: "年度青年設計師時裝設計大賽。展示您的創造力，贏取高達10,000澳門元的獎金。",
-            pt: "Competição anual de design de moda para jovens designers. Mostre sua criatividade e ganhe prêmios de até MOP 10.000."
+            en: "The 'Macao Fashion Festival 2025', co-organized by the Macau Productivity and Technology Transfer Center and the Macao Trade and Investment Promotion Institute, officially kicked off today (22nd). The four-day event, held at the Venetian Macao's Florence Convention Hall, will showcase new Macao fashion designs.",
+            zh: "由澳門生產力暨科技轉移中心與招商投資促進局合辦的“澳門服裝節2025”於今(22)日正式揭幕。活動由即日起一連四日，假澳門威尼斯人佛羅倫斯會議廳舉行，呈獻澳門時尚設計新作。開幕式以機械科技元素為載體，結合六位本澳新銳時裝設計師的創意，打造融合時尚與科技的表演，共同感受跨界時尚魅力。",
+            pt: "O 'Festival de Moda de Macau 2025', co-organizado pelo Centro de Produtividade e Transferência de Tecnologia de Macau e pelo Instituto de Promoção do Comércio e do Investimento de Macau, começou oficialmente hoje (22). O evento de quatro dias, realizado no Salão de Convenções Florence do Venetian Macao, apresentará novos designs de moda de Macau."
         },
         category: "fashion",
-        type: "competition",
-        date: "2025-01-15",
-        time: "10:00-17:00",
-        duration: "Full day",
+        type: "seminar",
+        date: "2025-10-22",
+        time: "10:00-18:00",
+        duration: "8 hours",
         location: {
-            en: "Macau Cultural Center",
-            zh: "澳門文化中心",
-            pt: "Centro Cultural de Macau"
+            en: "Venetian Macao, Florence Convention Hall",
+            zh: "澳門威尼斯人佛羅倫斯會議廳",
+            pt: "Venetian Macao, Salão de Convenções Florence"
         },
         instructor: {
-            en: "Judging Panel",
-            zh: "評審團",
-            pt: "Painel de Juízes"
+            en: "Various Designers",
+            zh: "多位設計師",
+            pt: "Vários Designers"
         },
         fee: "Free",
-        totalSeats: 100,
-        availableSeats: 67,
+        totalSeats: 200,
+        availableSeats: 50,
         language: {
             en: "Multilingual",
             zh: "多語言",
@@ -110,325 +110,109 @@ const eventsData = [
     {
         id: 4,
         title: {
-            en: "Business English Communication",
-            zh: "商業英語溝通課程",
-            pt: "Comunicação em Inglês de Negócios"
+            en: "Smart Fashion: Robotics Driving the Future Sharing Session",
+            zh: "智能時尚：機械人驅動未來分享會",
+            pt: "Moda Inteligente: Robótica a Impulsionar a Sessão de Partilha do Futuro"
         },
         description: {
-            en: "Improve your business English skills for professional communication, presentations, and negotiations.",
-            zh: "提升您的商業英語技能，用於專業溝通、簡報和談判。",
-            pt: "Melhore suas habilidades de inglês de negócios para comunicação profissional, apresentações e negociações."
+            en: "Online registration is now open for the 'Smart Fashion: Robotics Driving the Future' sharing session.",
+            zh: "智能時尚：機械人驅動未來分享會，現正接受網上報名。",
+            pt: "As inscrições online estão agora abertas para a sessão de partilha 'Moda Inteligente: Robótica a Impulsionar o Futuro'."
         },
-        category: "language",
-        type: "course",
-        date: "2024-12-10",
-        time: "19:00-21:00",
-        duration: "2 hours per session, 8 sessions",
+        category: "fashion",
+        type: "seminar",
+        date: "2025-10-25",
+        time: "14:30-16:00",
+        duration: "1.5 hours",
         location: {
-            en: "CPTTM Training Center, Room 205",
-            zh: "生產力中心培訓室205",
-            pt: "Centro de Formação CPTTM, Sala 205"
+            en: "Online",
+            zh: "線上",
+            pt: "Online"
         },
         instructor: {
-            en: "Ms. Jennifer Lee",
-            zh: "李珍妮女士",
-            pt: "Ms. Jennifer Lee"
+            en: "Industry Experts",
+            zh: "行業專家",
+            pt: "Especialistas da Indústria"
         },
-        fee: "MOP 1,200",
-        totalSeats: 20,
-        availableSeats: 8,
+        fee: "Free",
+        totalSeats: 100,
+        availableSeats: 45,
         language: {
-            en: "English",
-            zh: "英語",
-            pt: "Inglês"
+            en: "Cantonese",
+            zh: "廣東話",
+            pt: "Cantonês"
         }
     },
     {
         id: 5,
         title: {
-            en: "Python Programming Fundamentals",
-            zh: "Python編程基礎課程",
-            pt: "Fundamentos de Programação Python"
+            en: "Online Seminar on Building Management",
+            zh: "樓宇管理線上專題講座",
+            pt: "Seminário Online sobre Gestão de Edifícios"
         },
         description: {
-            en: "Learn Python programming from scratch. Perfect for beginners who want to start a career in software development.",
-            zh: "從零開始學習Python編程。非常適合想要開始軟體開發職業生涯的初學者。",
-            pt: "Aprenda programação Python do zero. Perfeito para iniciantes que desejam iniciar uma carreira em desenvolvimento de software."
+            en: "Online Seminar on Building Management – Safety Precautions for Building Power Supply Systems (SEM27-10-2025-SMTA). Seminar Date: 2025-10-31, 19:30-20:30. Registration Period: Oct 13 to Oct 28.",
+            zh: "樓宇管理線上專題講座 – 樓宇供電系統安全須知 (SEM27-10-2025-SMTA)\n講座日期：2025年10月31日，19:30-20:30\n報名日期：10月13日至10月28日",
+            pt: "Seminário Online sobre Gestão de Edifícios – Precauções de Segurança para Sistemas de Fornecimento de Energia de Edifícios (SEM27-10-2025-SMTA). Data do Seminário: 31-10-2025, 19:30-20:30. Período de Inscrição: 13 de Out a 28 de Out."
         },
-        category: "it",
-        type: "course",
-        date: "2024-12-12",
-        time: "18:30-21:30",
-        duration: "3 hours per session, 10 sessions",
+        category: "management",
+        type: "seminar",
+        date: "2025-10-31",
+        time: "19:30-20:30",
+        duration: "1 hour",
         location: {
-            en: "CPTTM IT Lab",
-            zh: "生產力中心電腦室",
-            pt: "Laboratório de TI CPTTM"
+            en: "Online",
+            zh: "線上",
+            pt: "Online"
         },
         instructor: {
-            en: "Mr. Chan Siu Ming",
-            zh: "陳兆明先生",
-            pt: "Sr. Chan Siu Ming"
+            en: "Invited Speaker",
+            zh: "特邀講者",
+            pt: "Orador Convidado"
         },
-        fee: "MOP 1,800",
-        totalSeats: 25,
-        availableSeats: 0,
+        fee: "Free",
+        totalSeats: 150,
+        availableSeats: 80,
         language: {
-            en: "Cantonese with English materials",
-            zh: "廣東話授課，英文教材",
-            pt: "Cantonês com materiais em inglês"
+            en: "Cantonese",
+            zh: "廣東話",
+            pt: "Cantonês"
         }
     },
     {
         id: 6,
         title: {
-            en: "Microsoft Office Specialist Competition",
-            zh: "微軟Office專家技能競賽",
-            pt: "Competição de Especialista em Microsoft Office"
+            en: "Opening Ceremony of 'Huawei Digital Talent Foundation Program' Successfully Held",
+            zh: "“華為數字化人才基礎研修計劃” 開班儀式順利舉行",
+            pt: "Cerimónia de Abertura do 'Programa de Fundação de Talentos Digitais da Huawei' Realizada com Sucesso"
         },
         description: {
-            en: "Test your Microsoft Office skills in Word, Excel, and PowerPoint. Winners receive international certification.",
-            zh: "測試您在Word、Excel和PowerPoint的微軟Office技能。獲勝者將獲得國際認證。",
-            pt: "Teste suas habilidades do Microsoft Office em Word, Excel e PowerPoint. Os vencedores recebem certificação internacional."
+            en: "The opening ceremony of the 'Huawei Digital Talent Foundation Program', jointly organized by the Labour Affairs Bureau (DSAL) of the Macao SAR Government and the Livelihood Affairs Bureau of the Guangdong-Macao In-Depth Cooperation Zone in Hengqin, supported by Huawei Services (Hong Kong) Co., Limited - Macau Branch, and undertaken by the Macau Productivity and Technology Transfer Center (CPTTM), was successfully held this morning (9th) at the CPTTM head office auditorium.",
+            zh: "由澳門特別行政區政府勞工事務局（下稱“勞工局”）與橫琴粵澳深度合作區民生事務局（下稱“民生局”）聯合主辦，華為服務（香港）有限公司-澳門分公司（下稱“華為澳門”）支持，澳門生產力暨科技轉移中心（下稱“生產力中心”）承辦的“華為數字化人才基礎研修計劃”開班儀式今日（9日）上午在澳門生產力暨科技轉移中心總辦事處演講廳順利舉行。",
+            pt: "A cerimónia de abertura do 'Programa de Fundação de Talentos Digitais da Huawei', organizada conjuntamente pela Direção dos Serviços para os Assuntos Laborais (DSAL) do Governo da RAEM e pelo Departamento de Assuntos de Subsistência da Zona de Cooperação Aprofundada Guangdong-Macau em Hengqin, com o apoio da Huawei Services (Hong Kong) Co., Limited - Sucursal de Macau, e executada pelo Centro de Produtividade e Transferência de Tecnologia de Macau (CPTTM), foi realizada com sucesso esta manhã (9) no auditório da sede do CPTTM."
         },
         category: "it",
-        type: "competition",
-        date: "2025-01-20",
-        time: "13:00-17:00",
-        duration: "4 hours",
-        location: {
-            en: "CPTTM IT Lab",
-            zh: "生產力中心電腦室",
-            pt: "Laboratório de TI CPTTM"
-        },
-        instructor: {
-            en: "Competition Organizers",
-            zh: "比賽組織者",
-            pt: "Organizadores da Competição"
-        },
-        fee: "MOP 200",
-        totalSeats: 40,
-        availableSeats: 23,
-        language: {
-            en: "Interface in multiple languages",
-            zh: "多語言界面",
-            pt: "Interface em vários idiomas"
-        }
-    },
-    {
-        id: 7,
-        title: {
-            en: "Digital Marketing Strategy Workshop",
-            zh: "數碼營銷策略工作坊",
-            pt: "Workshop de Estratégia de Marketing Digital"
-        },
-        description: {
-            en: "Learn effective digital marketing strategies including SEO, social media marketing, and content creation.",
-            zh: "學習有效的數碼營銷策略，包括SEO、社交媒體營銷和內容創作。",
-            pt: "Aprenda estratégias eficazes de marketing digital, incluindo SEO, marketing de mídia social e criação de conteúdo."
-        },
-        category: "management",
         type: "course",
-        date: "2024-12-18",
-        time: "14:00-17:00",
-        duration: "3 hours",
+        date: "2025-10-09",
+        time: "10:00-11:00",
+        duration: "1 hour",
         location: {
-            en: "CPTTM Training Center, Room 401",
-            zh: "生產力中心培訓室401",
-            pt: "Centro de Formação CPTTM, Sala 401"
-        },
-        instructor: {
-            en: "Ms. Sophia Chen",
-            zh: "陳思敏女士",
-            pt: "Ms. Sophia Chen"
-        },
-        fee: "MOP 600",
-        totalSeats: 35,
-        availableSeats: 15,
-        language: {
-            en: "Cantonese and Mandarin",
-            zh: "廣東話及普通話",
-            pt: "Cantonês e Mandarim"
-        }
-    },
-    {
-        id: 8,
-        title: {
-            en: "Graphic Design with Adobe Creative Suite",
-            zh: "Adobe創意套件平面設計課程",
-            pt: "Design Gráfico com Adobe Creative Suite"
-        },
-        description: {
-            en: "Master Adobe Photoshop, Illustrator, and InDesign for professional graphic design work.",
-            zh: "掌握Adobe Photoshop、Illustrator和InDesign，從事專業平面設計工作。",
-            pt: "Domine Adobe Photoshop, Illustrator e InDesign para trabalho profissional de design gráfico."
-        },
-        category: "fashion",
-        type: "course",
-        date: "2024-12-22",
-        time: "10:00-13:00",
-        duration: "3 hours per session, 6 sessions",
-        location: {
-            en: "CPTTM Design Studio",
-            zh: "生產力中心設計工作室",
-            pt: "Estúdio de Design CPTTM"
-        },
-        instructor: {
-            en: "Mr. Luis Fernandes",
-            zh: "費爾南德斯先生",
-            pt: "Sr. Luis Fernandes"
-        },
-        fee: "MOP 1,500",
-        totalSeats: 18,
-        availableSeats: 4,
-        language: {
-            en: "English and Portuguese",
-            zh: "英語和葡萄牙語",
-            pt: "Inglês e Português"
-        }
-    },
-    {
-        id: 9,
-        title: {
-            en: "Huawei HCIA Cloud Computing Certification",
-            zh: "華為HCIA雲端運算認證課程",
-            pt: "Certificação Huawei HCIA Cloud Computing"
-        },
-        description: {
-            en: "Official Huawei certification course covering cloud computing fundamentals and Huawei Cloud services.",
-            zh: "華為官方認證課程，涵蓋雲端運算基礎知識和華為雲服務。",
-            pt: "Curso de certificação oficial da Huawei que abrange fundamentos de computação em nuvem e serviços Huawei Cloud."
-        },
-        category: "it",
-        type: "exam",
-        date: "2025-01-10",
-        time: "09:00-12:00",
-        duration: "3 hours",
-        location: {
-            en: "CPTTM IT Lab",
-            zh: "生產力中心電腦室",
-            pt: "Laboratório de TI CPTTM"
+            en: "CPTTM Head Office Auditorium",
+            zh: "澳門生產力暨科技轉移中心總辦事處演講廳",
+            pt: "Auditório da Sede do CPTTM"
         },
         instructor: {
             en: "Huawei Certified Instructor",
-            zh: "華為認證講師",
+            zh: "華為認證導師",
             pt: "Instrutor Certificado Huawei"
         },
-        fee: "MOP 800",
+        fee: "Free",
         totalSeats: 30,
-        availableSeats: 18,
+        availableSeats: 0,
         language: {
-            en: "English examination",
-            zh: "英語考試",
-            pt: "Exame em inglês"
-        }
-    },
-    {
-        id: 10,
-        title: {
-            en: "Portuguese for Business Professionals",
-            zh: "商業葡萄牙語專業課程",
-            pt: "Português para Profissionais de Negócios"
-        },
-        description: {
-            en: "Learn Portuguese language skills specifically tailored for business contexts and professional environments.",
-            zh: "學習專為商業環境和專業場合量身定制的葡萄牙語技能。",
-            pt: "Aprenda habilidades de língua portuguesa especificamente adaptadas para contextos de negócios e ambientes profissionais."
-        },
-        category: "language",
-        type: "course",
-        date: "2024-12-14",
-        time: "19:00-21:00",
-        duration: "2 hours per session, 12 sessions",
-        location: {
-            en: "CPTTM Training Center, Room 203",
-            zh: "生產力中心培訓室203",
-            pt: "Centro de Formação CPTTM, Sala 203"
-        },
-        instructor: {
-            en: "Ms. Ana Silva",
-            zh: "安娜·席爾瓦女士",
-            pt: "Ms. Ana Silva"
-        },
-        fee: "MOP 1,400",
-        totalSeats: 15,
-        availableSeats: 9,
-        language: {
-            en: "Portuguese with English support",
-            zh: "葡萄牙語授課，英語輔助",
-            pt: "Português com suporte em inglês"
-        }
-    },
-    {
-        id: 11,
-        title: {
-            en: "Entrepreneurship and Innovation Seminar",
-            zh: "創業與創新研討會",
-            pt: "Seminário de Empreendedorismo e Inovação"
-        },
-        description: {
-            en: "Discover the key principles of entrepreneurship and innovation in the digital age. Network with successful entrepreneurs.",
-            zh: "探索數碼時代創業和創新的關鍵原則。與成功企業家建立聯繫。",
-            pt: "Descubra os princípios-chave do empreendedorismo e inovação na era digital. Faça networking com empreendedores de sucesso."
-        },
-        category: "management",
-        type: "seminar",
-        date: "2025-01-05",
-        time: "14:00-18:00",
-        duration: "4 hours",
-        location: {
-            en: "CPTTM Conference Hall",
-            zh: "生產力中心會議廳",
-            pt: "Salão de Conferências CPTTM"
-        },
-        instructor: {
-            en: "Panel of Entrepreneurs",
-            zh: "企業家座談小組",
-            pt: "Painel de Empreendedores"
-        },
-        fee: "MOP 400",
-        totalSeats: 60,
-        availableSeats: 32,
-        language: {
-            en: "English and Cantonese",
-            zh: "英語和廣東話",
-            pt: "Inglês e Cantonês"
-        }
-    },
-    {
-        id: 12,
-        title: {
-            en: "Cybersecurity Essentials",
-            zh: "網絡安全基礎課程",
-            pt: "Fundamentos de Cibersegurança"
-        },
-        description: {
-            en: "Learn the fundamentals of cybersecurity, including threat detection, risk management, and security best practices.",
-            zh: "學習網絡安全基礎知識，包括威脅檢測、風險管理和安全最佳實踐。",
-            pt: "Aprenda os fundamentos de cibersegurança, incluindo detecção de ameaças, gestão de riscos e melhores práticas de segurança."
-        },
-        category: "it",
-        type: "course",
-        date: "2024-12-16",
-        time: "18:30-21:30",
-        duration: "3 hours per session, 8 sessions",
-        location: {
-            en: "CPTTM IT Lab",
-            zh: "生產力中心電腦室",
-            pt: "Laboratório de TI CPTTM"
-        },
-        instructor: {
-            en: "Mr. Kevin Lam",
-            zh: "林家偉先生",
-            pt: "Sr. Kevin Lam"
-        },
-        fee: "MOP 1,600",
-        totalSeats: 22,
-        availableSeats: 11,
-        language: {
-            en: "English",
-            zh: "英語",
-            pt: "Inglês"
+            en: "Cantonese",
+            zh: "廣東話",
+            pt: "Cantonês"
         }
     }
 ];
@@ -464,12 +248,12 @@ function filterEvents() {
         let matchesSearch = true;
         if (currentFilters.searchQuery) {
             const query = currentFilters.searchQuery.toLowerCase();
-            const titleEn = event.title.en.toLowerCase();
-            const titleZh = event.title.zh.toLowerCase();
-            const titlePt = event.title.pt.toLowerCase();
-            const descEn = event.description.en.toLowerCase();
-            const descZh = event.description.zh.toLowerCase();
-            const descPt = event.description.pt.toLowerCase();
+            const titleEn = getLocalizedValue(event.title, 'en').toLowerCase();
+            const titleZh = getLocalizedValue(event.title, 'zh').toLowerCase();
+            const titlePt = getLocalizedValue(event.title, 'pt').toLowerCase();
+            const descEn = getLocalizedValue(event.description, 'en').toLowerCase();
+            const descZh = getLocalizedValue(event.description, 'zh').toLowerCase();
+            const descPt = getLocalizedValue(event.description, 'pt').toLowerCase();
             
             matchesSearch = titleEn.includes(query) || titleZh.includes(query) || 
                           titlePt.includes(query) || descEn.includes(query) || 
@@ -496,165 +280,139 @@ function renderEvents() {
         `;
         document.getElementById('current-page').textContent = '0';
         document.getElementById('total-pages').textContent = '0';
+        updatePaginationButtons(totalPages);
         return;
     }
     
-    const startIdx = (currentPage - 1) * eventsPerPage;
-    const endIdx = startIdx + eventsPerPage;
-    const pageEvents = filteredEvents.slice(startIdx, endIdx);
-    
-    eventsGrid.innerHTML = pageEvents.map(event => {
-        const title = getLocalizedValue(event.title, currentLang);
-        const description = getLocalizedValue(event.description, currentLang);
-        const location = getLocalizedValue(event.location, currentLang);
-        
-        const seatsPercentage = (event.availableSeats / event.totalSeats) * 100;
-        let seatsClass = '';
-        let seatsText = `${event.availableSeats} ${t('eventCard.seatsAvailable')}`;
-        
-        if (event.availableSeats === 0) {
-            seatsClass = 'full';
-            seatsText = t('eventCard.fullyBooked');
-        } else if (seatsPercentage < 20) {
-            seatsClass = 'limited';
-            seatsText = `${event.availableSeats} ${t('eventCard.seatsAvailable')} - ${t('eventCard.limitedSeats')}`;
-        }
-        
-        const typeBadge = t(`filter.${event.type}`);
-        const categoryName = t(`categories.${event.category}.title`);
-        
-        const iconMap = {
-            it: 'fa-laptop-code',
-            fashion: 'fa-palette',
-            language: 'fa-language',
-            management: 'fa-briefcase'
-        };
-        
-        return `
-            <div class="event-card" data-event-id="${event.id}">
-                <div class="event-image">
-                    <i class="fas ${iconMap[event.category]}"></i>
-                    <div class="event-type-badge">${typeBadge}</div>
-                </div>
-                <div class="event-content">
-                    <span class="event-category">${categoryName}</span>
-                    <h3 class="event-title">${title}</h3>
-                    <p class="event-description">${description}</p>
-                    <div class="event-meta">
-                        <div class="event-meta-item">
-                            <i class="fas fa-calendar"></i>
-                            <span>${event.date}</span>
-                        </div>
-                        <div class="event-meta-item">
-                            <i class="fas fa-clock"></i>
-                            <span>${event.time}</span>
-                        </div>
-                        <div class="event-meta-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>${location}</span>
-                        </div>
-                    </div>
-                    <div class="event-footer">
-                        <span class="event-seats ${seatsClass}">${seatsText}</span>
-                        <button class="register-btn" ${event.availableSeats === 0 ? 'disabled' : ''}>
-                            ${t('eventCard.register')}
-                        </button>
-                    </div>
-                </div>
+    const startIndex = (currentPage - 1) * eventsPerPage;
+    const endIndex = startIndex + eventsPerPage;
+    const paginatedEvents = filteredEvents.slice(startIndex, endIndex);
+
+    eventsGrid.innerHTML = paginatedEvents.map(event => `
+        <div class="event-card" data-event-id="${event.id}">
+            <div class="event-card-header">
+                <span class="event-category ${event.category}">${t('categories.' + event.category + '.title')}</span>
+                <span class="event-type">${t('filter.' + event.type)}</span>
             </div>
-        `;
-    }).join('');
+            <h3 class="event-title">${getLocalizedValue(event.title, currentLang)}</h3>
+            <p class="event-date">${event.date}</p>
+            <p class="event-description">${getLocalizedValue(event.description, currentLang).substring(0, 100)}...</p>
+            <div class="event-card-footer">
+                <div class="event-seats">
+                    ${event.availableSeats > 0 
+                        ? `<i class="fas fa-chair"></i> ${event.availableSeats} ${t('eventCard.seatsAvailable')}`
+                        : `<span class="fully-booked">${t('eventCard.fullyBooked')}</span>`
+                    }
+                    ${event.availableSeats > 0 && event.availableSeats < 10 ? `<span class="limited-seats">${t('eventCard.limitedSeats')}</span>` : ''}
+                </div>
+                <button class="register-btn" ${event.availableSeats === 0 ? 'disabled' : ''}>${t('eventCard.register')}</button>
+            </div>
+        </div>
+    `).join('');
     
     document.getElementById('current-page').textContent = currentPage;
     document.getElementById('total-pages').textContent = totalPages;
-    
-    document.getElementById('prev-page').disabled = currentPage === 1;
-    document.getElementById('next-page').disabled = currentPage === totalPages;
+
+    updatePaginationButtons(totalPages);
     
     document.querySelectorAll('.event-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-            if (!e.target.classList.contains('register-btn')) {
-                const eventId = parseInt(card.getAttribute('data-event-id'));
-                showEventDetail(eventId);
-            }
-        });
-    });
-    
-    document.querySelectorAll('.register-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const eventId = parseInt(btn.closest('.event-card').getAttribute('data-event-id'));
-            registerForEvent(eventId);
+        card.addEventListener('click', () => {
+            const eventId = card.getAttribute('data-event-id');
+            showEventDetail(eventId);
         });
     });
 }
 
+function updatePaginationButtons(totalPages) {
+    const prevPageBtn = document.getElementById('prev-page');
+    const nextPageBtn = document.getElementById('next-page');
+    
+    prevPageBtn.disabled = currentPage === 1;
+    nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+}
+
 function showEventDetail(eventId) {
-    const event = eventsData.find(e => e.id === eventId);
+    const event = eventsData.find(e => e.id == eventId);
     if (!event) return;
     
-    const title = getLocalizedValue(event.title, currentLang);
-    const description = getLocalizedValue(event.description, currentLang);
-    const location = getLocalizedValue(event.location, currentLang);
-    const instructor = getLocalizedValue(event.instructor, currentLang);
-    const language = getLocalizedValue(event.language, currentLang);
+    const modal = document.getElementById('event-modal');
+    const modalContent = document.getElementById('event-detail-content');
     
-    const detailContent = document.getElementById('event-detail-content');
-    detailContent.innerHTML = `
-        <div class="event-detail">
-            <h2>${title}</h2>
-            <div class="event-detail-meta">
+    modalContent.innerHTML = `
+        <div class="event-detail-header" style="background-image: url('assets/${event.category}.jpg')">
+            <h2>${getLocalizedValue(event.title, currentLang)}</h2>
+        </div>
+        <div class="event-detail-body">
+            <div class="event-detail-info">
                 <p><strong>${t('eventDetail.date')}:</strong> ${event.date}</p>
                 <p><strong>${t('eventDetail.time')}:</strong> ${event.time}</p>
-                <p><strong>${t('eventDetail.location')}:</strong> ${location}</p>
-                <p><strong>${t('eventDetail.instructor')}:</strong> ${instructor}</p>
+                <p><strong>${t('eventDetail.location')}:</strong> ${getLocalizedValue(event.location, currentLang)}</p>
+                <p><strong>${t('eventDetail.instructor')}:</strong> ${getLocalizedValue(event.instructor, currentLang)}</p>
                 <p><strong>${t('eventDetail.duration')}:</strong> ${event.duration}</p>
-                <p><strong>${t('eventDetail.language')}:</strong> ${language}</p>
+                <p><strong>${t('eventDetail.language')}:</strong> ${getLocalizedValue(event.language, currentLang)}</p>
                 <p><strong>${t('eventDetail.fee')}:</strong> ${event.fee}</p>
                 <p><strong>${t('eventDetail.seats')}:</strong> ${event.availableSeats} / ${event.totalSeats}</p>
             </div>
             <div class="event-detail-description">
-                <h3>Description</h3>
-                <p>${description}</p>
+                <p>${getLocalizedValue(event.description, currentLang)}</p>
             </div>
-            <div class="event-detail-actions">
-                <button class="btn-register" onclick="registerForEvent(${event.id})" ${event.availableSeats === 0 ? 'disabled' : ''}>
-                    <i class="fas fa-user-plus"></i> ${t('eventDetail.register')}
-                </button>
-                <button class="btn-share" onclick="shareEvent(${event.id})">
-                    <i class="fas fa-share-alt"></i> ${t('eventDetail.share')}
-                </button>
-            </div>
+        </div>
+        <div class="event-detail-footer">
+            <button class="share-btn"><i class="fas fa-share-alt"></i> ${t('eventDetail.share')}</button>
+            <button class="register-now-btn" ${event.availableSeats === 0 ? 'disabled' : ''}>${t('eventDetail.register')}</button>
         </div>
     `;
     
-    document.getElementById('event-modal').classList.add('active');
+    modal.style.display = 'block';
 }
 
-function registerForEvent(eventId) {
-    const event = eventsData.find(e => e.id === eventId);
-    if (!event || event.availableSeats === 0) return;
+function initEvents() {
+    renderEvents();
     
-    alert(`Registration for "${getLocalizedValue(event.title, currentLang)}" will be processed. Please login to continue.`);
-    document.getElementById('login-modal').classList.add('active');
-}
+    document.getElementById('prev-page').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderEvents();
+        }
+    });
 
-function shareEvent(eventId) {
-    const event = eventsData.find(e => e.id === eventId);
-    if (!event) return;
+    document.getElementById('next-page').addEventListener('click', () => {
+        const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderEvents();
+        }
+    });
     
-    const url = `${window.location.origin}${window.location.pathname}?event=${eventId}&l=${currentLang === 'en' ? 'e' : currentLang === 'zh' ? 'c' : 'p'}`;
+    document.getElementById('apply-filters').addEventListener('click', () => {
+        currentFilters.category = document.getElementById('category-filter').value;
+        currentFilters.type = document.getElementById('type-filter').value;
+        currentFilters.startDate = document.getElementById('start-date').value;
+        currentFilters.endDate = document.getElementById('end-date').value;
+        filterEvents();
+        renderEvents();
+    });
     
-    if (navigator.share) {
-        navigator.share({
-            title: getLocalizedValue(event.title, currentLang),
-            text: getLocalizedValue(event.description, currentLang),
-            url: url
-        });
-    } else {
-        navigator.clipboard.writeText(url);
-        alert('Event link copied to clipboard!');
-    }
+    const heroSearchInput = document.getElementById('hero-search-input');
+    heroSearchInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            currentFilters.searchQuery = heroSearchInput.value;
+            filterEvents();
+            renderEvents();
+        }
+    });
+    
+    document.querySelector('.search-btn').addEventListener('click', () => {
+        currentFilters.searchQuery = heroSearchInput.value;
+        filterEvents();
+        renderEvents();
+    });
 }
 
 window.renderEvents = renderEvents;
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initEvents);
+} else {
+    initEvents();
+}
