@@ -1,265 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CPTTM Event Registration Platform - Macau Productivity and Technology Transfer Center. Register for courses, seminars, competitions, and professional certifications.">
-    <meta name="keywords" content="CPTTM, Macau, training, courses, events, professional development, certification, IT, fashion, business, language">
-    <meta name="author" content="CPTTM - Macau Productivity and Technology Transfer Center">
-    <title>CPTTM Event Registration Platform</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>机器人学院 - 服务机器人应用开发在线学习平台</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-top">
+    <div class="layout">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
                 <div class="logo">
-                    <img src="assets/logo.svg" alt="CPTTM Logo" onerror="this.style.display='none'">
-                    <span class="logo-text">CPTTM</span>
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="#4CAF50"/>
+                        <path d="M16 8C13.8 8 12 9.8 12 12V14H10C9.4 14 9 14.4 9 15V23C9 23.6 9.4 24 10 24H22C22.6 24 23 23.6 23 23V15C23 14.4 22.6 14 22 14H20V12C20 9.8 18.2 8 16 8ZM18 14H14V12C14 10.9 14.9 10 16 10C17.1 10 18 10.9 18 12V14ZM15 20C14.4 20 14 19.6 14 19C14 18.4 14.4 18 15 18C15.6 18 16 18.4 16 19C16 19.6 15.6 20 15 20ZM17 20C16.4 20 16 19.6 16 19C16 18.4 16.4 18 17 18C17.6 18 18 18.4 18 19C18 19.6 17.6 20 17 20Z" fill="white"/>
+                    </svg>
+                    <h1>机器人学院</h1>
                 </div>
-                <nav class="main-nav">
-                    <ul>
-                        <li><a href="#about" data-i18n="nav.about">關於生產力中心</a></li>
-                        <li><a href="#training" data-i18n="nav.training">培訓</a></li>
-                        <li><a href="#competitions" data-i18n="nav.competitions">比賽</a></li>
-                        <li><a href="#seminars" data-i18n="nav.seminars">研討會</a></li>
-                        <li><a href="#contact" data-i18n="nav.contact">聯絡我們</a></li>
-                    </ul>
+                <nav class="header-nav">
+                    <button class="nav-btn" data-view="home">首页</button>
+                    <button class="nav-btn" data-view="learn">学习</button>
+                    <button class="nav-btn" data-view="practice">练习</button>
+                    <button class="nav-btn" data-view="exam">模拟考试</button>
+                    <button class="nav-btn" data-view="progress">学习进度</button>
                 </nav>
                 <div class="header-actions">
-                    <div class="language-selector">
-                        <button class="lang-btn active" data-lang="en">EN</button>
-                        <button class="lang-btn" data-lang="zh">中文</button>
-                        <button class="lang-btn" data-lang="pt">PT</button>
-                    </div>
-                    <button class="login-btn" data-i18n="header.login">
-                        <i class="fas fa-user"></i> Student Login
+                    <button class="theme-toggle" title="切换主题">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <line x1="12" y1="1" x2="12" y2="3"/>
+                            <line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/>
+                            <line x1="21" y1="12" x2="23" y2="12"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
                     </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 data-i18n="hero.title">Macau Productivity and Technology Transfer Center</h1>
-                
-                <div class="hero-search">
-                    <input type="text" id="hero-search-input" placeholder="Search for courses, events, or competitions..." data-i18n-placeholder="hero.searchPlaceholder">
-                    <button class="search-btn">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Categories Section -->
-    <section class="categories">
-        <div class="container">
-            <h2 data-i18n="professional_training.title">專業培訓</h2>
-            <div class="category-grid">
-                <div class="category-card" data-category="it">
-                    <div class="category-icon">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
-                    <h3 data-i18n="professional_training.it">資訊科技</h3>
-                </div>
-                <div class="category-card" data-category="management">
-                    <div class="category-icon">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <h3 data-i18n="professional_training.management_certification">管理及認證</h3>
-                </div>
-                <div class="category-card" data-category="fashion">
-                    <div class="category-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <h3 data-i18n="professional_training.culture_creativity">文化創意</h3>
-                </div>
-                <div class="category-card" data-category="exam">
-                    <div class="category-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <h3 data-i18n="professional_training.professional_exams">專業考試</h3>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Events Section -->
-    <section class="events-section" id="events">
-        <div class="container">
-            <div class="section-header">
-                <h2 data-i18n="events.title">Upcoming Events & Courses</h2>
-                <div class="filter-controls">
-                    <input type="date" id="start-date" class="date-input">
-                    <span>-</span>
-                    <input type="date" id="end-date" class="date-input">
-                    <select id="category-filter" class="filter-select">
-                        <option value="all" data-i18n="filter.allCategories">All Categories</option>
-                        <option value="it" data-i18n="professional_training.it">資訊科技</option>
-                        <option value="management" data-i18n="professional_training.management_certification">管理及認證</option>
-                        <option value="fashion" data-i18n="professional_training.culture_creativity">文化創意</option>
-                        <option value="exam" data-i18n="professional_training.professional_exams">專業考試</option>
-                    </select>
-                    <select id="type-filter" class="filter-select">
-                        <option value="all" data-i18n="filter.allTypes">All Types</option>
-                        <option value="course" data-i18n="filter.course">Course</option>
-                        <option value="seminar" data-i18n="filter.seminar">Seminar</option>
-                        <option value="competition" data-i18n="filter.competition">Competition</option>
-                        <option value="exam" data-i18n="filter.exam">Examination</option>
-                    </select>
-                    <button id="apply-filters" class="apply-filters-btn" data-i18n="filter.apply">Apply Filters</button>
-                </div>
-            </div>
-            
-            <div class="events-grid" id="events-grid">
-                <!-- Events will be dynamically loaded here -->
-            </div>
-
-            <div class="pagination">
-                <button class="pagination-btn" id="prev-page" disabled>
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <span class="pagination-info">
-                    <span data-i18n="pagination.page">Page</span> <span id="current-page">1</span> <span data-i18n="pagination.of">of</span> <span id="total-pages">1</span>
-                </span>
-                <button class="pagination-btn" id="next-page">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Partnerships Section -->
-    <section class="partnerships">
-        <div class="container">
-            <h2 data-i18n="partnerships.title">Our Technology Partners</h2>
-            <div class="partners-grid">
-                <div class="partner-card">
-                    <div class="partner-logo">Huawei</div>
-                    <p data-i18n="partnerships.huawei">Technology training partnership since 2021</p>
-                </div>
-                <div class="partner-card">
-                    <div class="partner-logo">Alibaba Cloud</div>
-                    <p data-i18n="partnerships.alibaba">Cloud certification partnership since 2022</p>
-                </div>
-                <div class="partner-card">
-                    <div class="partner-logo">CPTTM</div>
-                    <p data-i18n="partnerships.vqa">China National Vocational Qualification Assessment</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about-section" id="about">
-        <div class="container">
-            <div class="about-content">
-                <h2 data-i18n="about.title">About CPTTM</h2>
-                <p data-i18n="about.founding">The Macau Productivity and Technology Transfer Center (CPTTM) was founded in 1996 as a non-profit organization jointly established by the Macau SAR Government and the private sector.</p>
-                <p data-i18n="about.mission">Our mission is to support enterprises to utilize effectively new conceptual thinking, information and resources in order to increase the value-added of its products or services, with the aim to promote higher productivity and stronger competitiveness.</p>
-                <div class="about-stats">
-                    <div class="stat-card">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label" data-i18n="about.stats.courses">Courses Annually</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">25+</div>
-                        <div class="stat-label" data-i18n="about.stats.years">Years of Service</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">10,000+</div>
-                        <div class="stat-label" data-i18n="about.stats.students">Students Trained</div>
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="搜索题目...">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4 data-i18n="footer.contact.title">Contact Us</h4>
-                    <p><i class="fas fa-map-marker-alt"></i> <span data-i18n="footer.contact.address">Macau, China</span></p>
-                    <p><i class="fas fa-phone"></i> +853 2878 1313</p>
-                    <p><i class="fas fa-envelope"></i> info@cpttm.org.mo</p>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home View -->
+            <div class="view active" id="homeView">
+                <div class="hero">
+                    <h2>欢迎来到机器人学院</h2>
+                    <p class="hero-subtitle">从零基础到满分，掌握服务机器人应用开发（中级）核心知识</p>
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">300</div>
+                            <div class="stat-label">练习题</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">知识模块</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="progressPercent">0</div>
+                            <div class="stat-label">完成进度</div>
+                        </div>
+                    </div>
+                    <button class="cta-btn" data-view="learn">开始学习</button>
                 </div>
-                <div class="footer-section">
-                    <h4 data-i18n="footer.links.title">Quick Links</h4>
-                    <ul>
-                        <li><a href="#events" data-i18n="footer.links.events">Event Registration</a></li>
-                        <li><a href="#courses" data-i18n="footer.links.courses">Course Catalog</a></li>
-                        <li><a href="#competitions" data-i18n="footer.links.competitions">Competitions</a></li>
-                        <li><a href="#" data-i18n="footer.links.vqa">Vocational Qualification</a></li>
-                    </ul>
+
+                <div class="categories-grid">
+                    <h3>知识模块</h3>
+                    <div id="categoriesContainer"></div>
                 </div>
-                <div class="footer-section">
-                    <h4 data-i18n="footer.systems.title">Related Systems</h4>
-                    <ul>
-                        <li><a href="#" data-i18n="footer.systems.register">register.cpttm.org.mo</a></li>
-                        <li><a href="#" data-i18n="footer.systems.www2">www2.cpttm.org.mo</a></li>
-                        <li><a href="#" data-i18n="footer.systems.main">www.cpttm.org.mo</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4 data-i18n="footer.social.title">Follow Us</h4>
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="WeChat"><i class="fab fa-weixin"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+
+            <!-- Learn View -->
+            <div class="view" id="learnView">
+                <div class="learn-layout">
+                    <aside class="sidebar">
+                        <h3>知识模块</h3>
+                        <div id="learnSidebar"></div>
+                    </aside>
+                    <div class="learn-content">
+                        <div id="learnContentArea"></div>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 CPTTM - Macau Productivity and Technology Transfer Center. <span data-i18n="footer.rights">All rights reserved.</span></p>
-            </div>
-        </div>
-    </footer>
 
-    <!-- Login Modal -->
-    <div id="login-modal" class="modal">
+            <!-- Practice View -->
+            <div class="view" id="practiceView">
+                <div class="practice-header">
+                    <h2>智能练习</h2>
+                    <div class="practice-filters">
+                        <select id="categoryFilter">
+                            <option value="">所有模块</option>
+                        </select>
+                        <select id="typeFilter">
+                            <option value="">所有题型</option>
+                            <option value="single">单选题</option>
+                            <option value="multiple">多选题</option>
+                            <option value="truefalse">判断题</option>
+                        </select>
+                        <button id="resetPractice" class="secondary-btn">重置进度</button>
+                    </div>
+                </div>
+                <div id="practiceContent"></div>
+            </div>
+
+            <!-- Exam View -->
+            <div class="view" id="examView">
+                <div class="exam-container">
+                    <div class="exam-header">
+                        <h2>模拟考试</h2>
+                        <div class="exam-timer" id="examTimer">00:00:00</div>
+                    </div>
+                    <div id="examContent">
+                        <div class="exam-start">
+                            <h3>准备开始模拟考试</h3>
+                            <p>考试包含从所有模块随机抽取的30道题（单选10题、多选10题、判断10题）</p>
+                            <p>建议用时：30分钟</p>
+                            <button id="startExam" class="cta-btn">开始考试</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress View -->
+            <div class="view" id="progressView">
+                <div class="progress-container">
+                    <h2>学习进度</h2>
+                    <div class="progress-summary">
+                        <div class="progress-card">
+                            <h4>总体进度</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="overallProgress"></div>
+                            </div>
+                            <p><span id="completedCount">0</span> / 300 题已完成</p>
+                        </div>
+                        <div class="progress-card">
+                            <h4>正确率</h4>
+                            <div class="accuracy-display">
+                                <span id="accuracyPercent">0</span>%
+                            </div>
+                            <p><span id="correctCount">0</span> / <span id="attemptedCount">0</span> 题正确</p>
+                        </div>
+                    </div>
+                    <div class="category-progress">
+                        <h3>各模块进度</h3>
+                        <div id="categoryProgressList"></div>
+                    </div>
+                    <div class="recent-activity">
+                        <h3>最近活动</h3>
+                        <div id="recentActivityList"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 机器人学院 - 服务机器人应用开发在线学习平台</p>
+            <p>包含300道练习题，涵盖语音识别、图像处理、机器学习、ROS、SLAM等8大模块</p>
+        </footer>
+    </div>
+
+    <!-- Question Modal -->
+    <div class="modal" id="questionModal">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2 data-i18n="login.title">Student Login</h2>
-            <form id="login-form" class="login-form">
-                <div class="form-group">
-                    <label for="username" data-i18n="login.username">Username or Email</label>
-                    <input type="text" id="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password" data-i18n="login.password">Password</label>
-                    <input type="password" id="password" required>
-                </div>
-                <button type="submit" class="submit-btn" data-i18n="login.submit">Login</button>
-                <div class="login-links">
-                    <a href="#" data-i18n="login.forgot">Forgot Password?</a>
-                    <a href="#" data-i18n="login.register">Register Account</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Event Detail Modal -->
-    <div id="event-modal" class="modal">
-        <div class="modal-content modal-large">
-            <span class="close-modal">&times;</span>
-            <div id="event-detail-content">
-                <!-- Event details will be loaded here -->
+            <div class="modal-header">
+                <h3 id="modalQuestionTitle">题目</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalQuestionContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="prevQuestion" class="secondary-btn">上一题</button>
+                <button id="submitAnswer" class="cta-btn">提交答案</button>
+                <button id="nextQuestion" class="cta-btn">下一题</button>
             </div>
         </div>
     </div>
 
-    <script src="i18n.js"></script>
-    <script src="events-data.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

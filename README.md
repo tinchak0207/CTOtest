@@ -1,182 +1,241 @@
-# CPTTM Event Registration Platform
+# 机器人学院 - 服务机器人应用开发在线学习平台
 
-A modern, responsive frontend mimicking the events.cpttm.org.mo website - an event registration platform operated by the Macau Productivity and Technology Transfer Center (CPTTM).
+一个现代化、高度互动的在线学习平台，专注于服务机器人应用开发（中级）证书考试的学习与练习。
 
-## About CPTTM
+## 项目特色
 
-The Macau Productivity and Technology Transfer Center (CPTTM) was founded in 1996 as a non-profit organization jointly established by the Macau SAR Government and the private sector. The mission is to support enterprises to utilize effectively new conceptual thinking, information and resources in order to increase the value-added of its products or services, with the aim to promote higher productivity and stronger competitiveness.
+### ✨ 核心功能
 
-## Features
+- **300道精选练习题**：涵盖单选题、多选题和判断题三种题型
+- **8大知识模块**：系统化组织机器人学习内容
+  - 语音与语音识别
+  - 图像处理与视觉感知
+  - 机器学习与数据建模
+  - 机器人基础与硬件
+  - ROS系统与导航
+  - SLAM与定位建图
+  - 控制协同与系统集成
+  - 综合拓展与行业认知
+  
+- **智能学习路径**：从零基础到满分，循序渐进
+- **即时反馈系统**：答题后立即显示正确答案和解析
+- **学习进度追踪**：自动记录学习进度和答题正确率
+- **模拟考试模式**：随机抽取30道题进行全真模拟考试
+- **亮暗主题切换**：支持明亮和暗黑两种界面主题
+- **响应式设计**：完美适配桌面、平板和手机设备
 
-### Multi-language Support
-- **English** - Primary interface language
-- **Traditional Chinese (中文)** - For Chinese-speaking users
-- **Portuguese (Português)** - Reflecting Macau's bilingual heritage
-- Language switching via URL parameters (?l=e for English, ?l=c for Chinese, ?l=p for Portuguese)
-- Persistent language preference saved in localStorage
+### 🎯 学习目标
 
-### Event Management
-- **Event Listings** - Browse hundreds of courses, seminars, competitions, and examinations
-- **Advanced Filtering** - Filter by category, type, and date range
-- **Search Functionality** - Full-text search across all event titles and descriptions
-- **Pagination** - Efficient navigation through large event catalogs
-- **Event Details** - Comprehensive information including date, time, location, instructor, duration, language, fees, and available seats
+本平台基于实际考试大纲设计，帮助学员掌握：
 
-### Course Categories
-1. **Information Technology** - Cloud computing, programming, cybersecurity
-2. **Fashion & Creativity** - Design, fashion, creative arts
-3. **Business Language** - English, Chinese, Portuguese for business
-4. **Enterprise Management** - Business operations, management, strategy
+- **语音技术**：eSpeak参数、语音识别、语音合成、YanAPI
+- **计算机视觉**：OpenCV、色彩空间转换、轮廓检测、图像预处理
+- **机器学习**：MNIST数据集、sklearn库、KNN算法、模型训练与部署
+- **机器人操作系统**：ROS命令、导航功能包、rviz可视化
+- **SLAM技术**：KartoSLAM、AMCL定位、地图构建、回环检测
+- **运动学**：正逆运动学、D-H参数、齐次变换、工作空间
+- **系统集成**：协程与线程、颜色追踪、机器人控制
 
-### Event Types
-- Training Courses
-- Seminars and Conferences
-- Competitions (Fashion Design, Office Skills)
-- Professional Certification Examinations
+## 技术栈
 
-### User Features
-- Student login system (frontend demo)
-- Event registration with seat availability tracking
-- Event sharing functionality
-- Responsive design for mobile, tablet, and desktop
-- Smooth scrolling and modern animations
+- **前端框架**：原生HTML5 + CSS3 + JavaScript (ES6+)
+- **样式设计**：CSS变量 + Flexbox + Grid布局
+- **数据存储**：LocalStorage（客户端持久化）
+- **数据格式**：JSON
+- **字体**：Inter, PingFang SC, Microsoft YaHei
 
-## Technology Partnerships
-
-The platform showcases CPTTM's partnerships with:
-- **Huawei** - Technology training partnership since 2021
-- **Alibaba Cloud** - Cloud certification partnership since 2022
-- **China National VQA** - Vocational Qualification Assessment coordination
-
-## Technical Stack
-
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with CSS Grid, Flexbox, and custom properties
-- **Vanilla JavaScript** - No framework dependencies
-- **Font Awesome** - Icon library
-- **Responsive Design** - Mobile-first approach with breakpoints at 640px and 968px
-
-## File Structure
+## 项目结构
 
 ```
-.
-├── index.html          # Main HTML structure
-├── styles.css          # Complete styling and responsive design
-├── app.js              # Main application logic and event handlers
-├── i18n.js             # Internationalization and language management
-├── events-data.js      # Event data and filtering logic
-├── assets/
-│   └── logo.svg        # CPTTM logo
-└── README.md           # This file
+robotics-learning-platform/
+├── index.html              # 主页面
+├── styles.css              # 样式表
+├── app.js                  # 应用逻辑
+├── data/
+│   └── questions.json      # 题库数据（300题）
+├── parse_questions.py      # 题库解析脚本
+├── DEMO.md                 # 原始题库来源
+├── favicon.svg             # 网站图标
+└── README.md               # 项目说明
 ```
 
-## Getting Started
+## 快速开始
 
-1. Open `index.html` in a modern web browser
-2. No build process or dependencies required
-3. All files are self-contained and can be served from any static web server
+### 方法一：直接打开（推荐）
 
-## Usage
+1. 下载或克隆本项目
+2. 使用浏览器打开 `index.html` 文件
+3. 开始学习！
 
-### Browsing Events
-1. Scroll to the "Upcoming Events & Courses" section
-2. Use the filter controls to narrow down events by category, type, or date
-3. Click on any event card to view detailed information
+### 方法二：使用本地服务器
 
-### Searching
-1. Use the hero search bar to search for specific courses or topics
-2. Results update automatically based on your search query
+```bash
+# 使用Python内置服务器
+python3 -m http.server 8000
 
-### Language Switching
-1. Click the language buttons (EN, 中文, PT) in the header
-2. Alternatively, use URL parameters: `?l=e` (English), `?l=c` (Chinese), `?l=p` (Portuguese)
+# 或使用Node.js的http-server
+npx http-server -p 8000
 
-### Registration
-1. Click "Register" on any event card
-2. The system will prompt for login (demo functionality)
-3. Seat availability is tracked in real-time
+# 然后在浏览器中访问
+# http://localhost:8000
+```
 
-## Responsive Breakpoints
+## 使用指南
 
-- **Desktop**: > 968px - Full layout with all features
-- **Tablet**: 640px - 968px - Adjusted navigation and grid layouts
-- **Mobile**: < 640px - Single column layout, stacked navigation
+### 首页
 
-## Browser Support
+首页展示平台概览，包括：
+- 总题量、知识模块数量和学习进度统计
+- 8大知识模块的卡片展示
+- 每个模块的完成情况
 
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
+### 学习模式
 
-## Features Implemented
+1. 点击导航栏的「学习」按钮
+2. 在左侧边栏选择感兴趣的知识模块
+3. 查看模块介绍和核心知识点
+4. 点击「开始练习」进入练习模式
 
-✅ Multi-language support (English, Chinese, Portuguese)  
-✅ Event listing and filtering  
-✅ Advanced search functionality  
-✅ Category-based navigation  
-✅ Date range filtering  
-✅ Student login modal  
-✅ Event detail modal  
-✅ Seat availability tracking  
-✅ Responsive design  
-✅ Smooth animations  
-✅ Social sharing  
-✅ Pagination  
-✅ Partnership showcase  
-✅ About section with statistics  
-✅ Footer with contact information  
+### 练习模式
 
-## Sample Events
+1. 点击导航栏的「练习」按钮
+2. 使用筛选器选择特定模块或题型
+3. 逐题作答并提交
+4. 查看即时反馈和正确答案解析
+5. 系统自动记录答题情况
 
-The platform includes 12 sample events covering:
-- Cloud Computing (Alibaba Cloud, Huawei HCIA)
-- ESG Certification
-- Fashion Design Competition
-- Business Language Courses
-- Programming Fundamentals
-- Microsoft Office Skills
-- Digital Marketing
-- Graphic Design
-- Cybersecurity
-- Entrepreneurship Seminars
+### 模拟考试
 
-## Design Philosophy
+1. 点击导航栏的「模拟考试」按钮
+2. 点击「开始考试」
+3. 系统随机抽取30道题（单选10题、多选10题、判断10题）
+4. 计时答题
+5. 提交后查看成绩和用时
 
-The design follows modern web standards with:
-- Clean, professional aesthetic
-- Blue color scheme (#0066cc, #004d99) representing trust and professionalism
-- Orange accent color (#ff6600) for call-to-action elements
-- Ample whitespace for readability
-- Clear visual hierarchy
-- Accessible color contrasts
-- Intuitive navigation
+### 学习进度
 
-## Future Enhancements
+1. 点击导航栏的「学习进度」按钮
+2. 查看总体进度和正确率
+3. 查看各模块的详细进度
+4. 查看最近的学习活动记录
 
-Potential improvements for a production version:
-- Backend API integration
-- Real authentication system
-- Payment processing
-- Email notifications
-- Calendar integration
-- User dashboard
-- Course materials download
-- Instructor profiles
-- Student reviews and ratings
-- Advanced analytics
+## 数据处理
 
-## License
+### 题库解析
 
-This is a demonstration project mimicking the CPTTM events platform.
+项目使用 `parse_questions.py` 脚本将原始 `DEMO.md` 文件中的题目解析为结构化的 JSON 数据：
 
-## Contact
+```bash
+python3 parse_questions.py
+```
 
-For questions about CPTTM:
-- Website: www.cpttm.org.mo
-- Phone: +853 2878 1313
-- Location: Macau, China
+这会生成 `data/questions.json` 文件，包含：
+- 8个知识模块的分类信息
+- 300道题目的完整数据
+- 每道题的选项、正确答案和解析
+
+### 数据结构
+
+```json
+{
+  "categories": [
+    {
+      "id": "speech",
+      "name": "语音与语音识别",
+      "description": "语音分帧、语音识别分类..."
+    }
+  ],
+  "questions": [
+    {
+      "id": "SC-1",
+      "type": "single",
+      "question": "题目内容",
+      "options": [
+        {"key": "A", "text": "选项内容"},
+        {"key": "B", "text": "选项内容"}
+      ],
+      "correctOptions": ["B"],
+      "category": "speech",
+      "explanation": "答案解析"
+    }
+  ]
+}
+```
+
+## 特色设计
+
+### 🎨 现代UI设计
+
+- **流畅动画**：页面切换和元素交互都有细腻的过渡效果
+- **渐变背景**：使用微妙的渐变和模糊效果营造现代感
+- **卡片式布局**：信息层次清晰，易于浏览
+- **色彩系统**：基于CSS变量的主题色彩，支持一键切换
+
+### 🌓 亮暗主题
+
+- 点击右上角的主题切换按钮
+- 自动保存主题偏好
+- 全局CSS变量实现无缝切换
+
+### 📱 响应式设计
+
+- **桌面端**：完整功能，最佳体验
+- **平板**：自适应布局，侧边栏可折叠
+- **手机**：垂直排列，触摸优化
+
+### 💾 数据持久化
+
+- 使用LocalStorage存储学习进度
+- 记录每道题的答题状态和时间
+- 支持一键重置进度
+
+## 浏览器兼容性
+
+- ✅ Chrome 90+
+- ✅ Firefox 88+
+- ✅ Safari 14+
+- ✅ Edge 90+
+
+## 开发与维护
+
+### 添加新题目
+
+1. 在 `DEMO.md` 中添加新题目（遵循现有格式）
+2. 运行 `python3 parse_questions.py` 重新生成JSON
+3. 刷新浏览器即可看到新题目
+
+### 修改样式
+
+- 编辑 `styles.css` 文件
+- 使用CSS变量可快速调整主题色
+- 支持热重载（使用Live Server等工具）
+
+### 扩展功能
+
+- 所有核心逻辑在 `app.js` 中
+- 使用原生JavaScript，易于理解和修改
+- 模块化函数设计，便于扩展
+
+## 学习建议
+
+1. **系统学习**：按照模块顺序逐个攻克
+2. **反复练习**：重点模块多做几遍
+3. **错题重做**：关注答错的题目
+4. **模拟测试**：定期进行模拟考试
+5. **查看进度**：追踪学习效果
+
+## 贡献
+
+欢迎提交Issue和Pull Request！
+
+## 许可证
+
+MIT License
+
+## 联系方式
+
+如有问题或建议，欢迎反馈。
 
 ---
 
-**Note**: This is a frontend demonstration project. All event data is sample data for demonstration purposes. For actual event registration, please visit the official CPTTM website at events.cpttm.org.mo.
+© 2024 机器人学院 - 从零基础到满分，掌握服务机器人核心技术
