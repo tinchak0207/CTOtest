@@ -1,0 +1,915 @@
+{
+  "tutorials": [
+    {
+      "categoryId": "speech",
+      "categoryName": "语音与语音识别",
+      "lessons": [
+        {
+          "id": "speech-1",
+          "title": "语音识别基础",
+          "description": "了解语音识别的基本原理和应用",
+          "content": [
+            {
+              "type": "text",
+              "title": "什么是语音识别？",
+              "content": "语音识别（Speech Recognition）是计算机将人类语音转换为文本的技术。它是人机交互的重要组成部分，广泛应用于智能助手、语音输入、智能客服等场景。"
+            },
+            {
+              "type": "text",
+              "title": "语音识别的基本流程",
+              "content": "1. **语音采集**：通过麦克风获取音频信号\n2. **预处理**：降噪、分帧、加窗等处理\n3. **特征提取**：提取MFCC等声学特征\n4. **模型识别**：使用HMM、深度学习模型进行识别\n5. **后处理**：语言模型优化，输出文本"
+            },
+            {
+              "type": "code",
+              "title": "Python语音识别示例",
+              "language": "python",
+              "code": "import speech_recognition as sr\n\n# 创建识别器对象\nrecognizer = sr.Recognizer()\n\n# 从麦克风获取音频\nwith sr.Microphone() as source:\n    print(\"请说话...\")\n    audio = recognizer.listen(source)\n\n# 使用Google Speech Recognition\ntry:\n    text = recognizer.recognize_google(audio, language='zh-CN')\n    print(f\"识别结果: {text}\")\nexcept sr.UnknownValueError:\n    print(\"无法识别语音\")\nexcept sr.RequestError as e:\n    print(f\"错误: {e}\")",
+              "explanation": "这段代码展示了如何使用Python的speech_recognition库进行语音识别。首先创建识别器对象，然后从麦克风获取音频，最后调用Google的语音识别API进行识别。"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：语音分帧参数",
+              "task": "语音信号需要分帧处理。如果采样率为16000Hz，帧长25ms，帧移10ms，请计算每帧包含多少个采样点？",
+              "hint": "采样点数 = 采样率 × 时间长度",
+              "solution": "每帧采样点数 = 16000 × 0.025 = 400个采样点",
+              "exercise": {
+                "question": "如果采样率为8000Hz，帧长30ms，每帧有多少个采样点？",
+                "answer": "240"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "语音识别包含采集、预处理、特征提取、识别、后处理五个步骤",
+                "常用特征：MFCC（梅尔频率倒谱系数）",
+                "帧长一般为20-30ms，帧移为10-15ms",
+                "语音识别准确率受环境噪声、说话人口音等因素影响"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "speech-2",
+          "title": "eSpeak语音合成",
+          "description": "学习使用eSpeak进行语音合成",
+          "content": [
+            {
+              "type": "text",
+              "title": "eSpeak简介",
+              "content": "eSpeak是一个开源的语音合成软件，支持多种语言。它体积小、速度快，适合嵌入式系统和机器人应用。"
+            },
+            {
+              "type": "code",
+              "title": "eSpeak基本使用",
+              "language": "bash",
+              "code": "# 基本语音合成\nespeak \"Hello World\"\n\n# 中文语音合成\nespeak -v zh \"你好，世界\"\n\n# 调整语速（默认175，范围80-450）\nespeak -s 150 \"Speaking slowly\"\n\n# 调整音调（默认50，范围0-99）\nespeak -p 70 \"Higher pitch\"\n\n# 调整音量（默认100，范围0-200）\nespeak -a 150 \"Louder voice\"",
+              "explanation": "eSpeak的主要参数：\n- `-v`: 指定语言/语音\n- `-s`: 语速(speed)\n- `-p`: 音调(pitch)\n- `-a`: 音量(amplitude)"
+            },
+            {
+              "type": "code",
+              "title": "Python调用eSpeak",
+              "language": "python",
+              "code": "import os\nimport subprocess\n\ndef speak(text, lang='zh', speed=175, pitch=50):\n    \"\"\"使用eSpeak进行语音合成\"\"\"\n    cmd = f'espeak -v {lang} -s {speed} -p {pitch} \"{text}\"'\n    subprocess.run(cmd, shell=True)\n\n# 使用示例\nspeak(\"欢迎使用语音合成系统\", lang='zh', speed=150, pitch=60)",
+              "explanation": "在Python中可以使用subprocess模块调用eSpeak命令行工具进行语音合成。"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：eSpeak参数调整",
+              "task": "如果要让机器人用较低的声音、较慢的速度说话，应该如何设置参数？",
+              "hint": "低音调需要降低pitch值，慢速需要降低speed值",
+              "solution": "espeak -v zh -p 30 -s 120 \"你好\"",
+              "exercise": {
+                "question": "要实现高音快速的语音效果，pitch和speed应该设置为多大？(格式: pitch,speed，如50,175)",
+                "answer": "70,250"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "eSpeak支持多语言，使用-v参数指定",
+                "speed范围80-450，默认175",
+                "pitch范围0-99，默认50",
+                "amplitude范围0-200，默认100",
+                "可通过Python的subprocess或os.system调用"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "speech-3",
+          "title": "YanAPI语音接口",
+          "description": "学习使用云端语音API进行语音交互",
+          "content": [
+            {
+              "type": "text",
+              "title": "云端语音API的优势",
+              "content": "云端语音API（如YanAPI、百度语音、讯飞等）提供了更高准确率的语音识别和更自然的语音合成。它们具有以下优势：\n\n- **高准确率**：使用大规模训练数据和先进模型\n- **多语言支持**：支持普通话、方言、外语\n- **自然语音**：合成语音更接近真人\n- **持续优化**：模型不断更新迭代"
+            },
+            {
+              "type": "code",
+              "title": "语音识别API调用示例",
+              "language": "python",
+              "code": "import requests\nimport base64\n\ndef recognize_speech(audio_file, api_key):\n    \"\"\"调用语音识别API\"\"\"\n    # 读取音频文件\n    with open(audio_file, 'rb') as f:\n        audio_data = f.read()\n    \n    # Base64编码\n    audio_base64 = base64.b64encode(audio_data).decode('utf-8')\n    \n    # 构建请求\n    url = 'https://api.example.com/asr'\n    data = {\n        'audio': audio_base64,\n        'format': 'wav',\n        'rate': 16000,\n        'channel': 1\n    }\n    headers = {'Authorization': f'Bearer {api_key}'}\n    \n    # 发送请求\n    response = requests.post(url, json=data, headers=headers)\n    result = response.json()\n    \n    return result.get('result', '')\n\n# 使用示例\ntext = recognize_speech('audio.wav', 'your_api_key')\nprint(f\"识别结果: {text}\")",
+              "explanation": "调用语音识别API的基本步骤：\n1. 读取音频文件\n2. 进行Base64编码\n3. 构建API请求（包含音频数据和参数）\n4. 发送HTTP请求\n5. 解析返回结果"
+            },
+            {
+              "type": "code",
+              "title": "语音合成API调用示例",
+              "language": "python",
+              "code": "import requests\n\ndef synthesize_speech(text, api_key, output_file='output.mp3'):\n    \"\"\"调用语音合成API\"\"\"\n    url = 'https://api.example.com/tts'\n    data = {\n        'text': text,\n        'voice': 'zh-CN-XiaoxiaoNeural',  # 语音类型\n        'speed': 1.0,  # 语速\n        'pitch': 0,    # 音调\n        'format': 'mp3'\n    }\n    headers = {'Authorization': f'Bearer {api_key}'}\n    \n    response = requests.post(url, json=data, headers=headers)\n    \n    # 保存音频文件\n    with open(output_file, 'wb') as f:\n        f.write(response.content)\n    \n    print(f\"语音已保存到 {output_file}\")\n\n# 使用示例\nsynthesize_speech('欢迎来到机器人学院', 'your_api_key')",
+              "explanation": "语音合成API调用流程：\n1. 准备要合成的文本\n2. 选择语音类型和参数\n3. 发送API请求\n4. 接收返回的音频数据\n5. 保存为音频文件"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：API参数理解",
+              "task": "在实际应用中，音频采样率16000Hz与8000Hz相比，哪个音质更好？为什么？",
+              "hint": "采样率越高，能捕获的频率范围越广",
+              "solution": "16000Hz音质更好。根据奈奎斯特采样定理，采样率应至少为信号最高频率的2倍。16kHz可以捕获0-8kHz的频率，而8kHz只能捕获0-4kHz，人声主要频率在300-3400Hz，16kHz能更好地还原语音细节。",
+              "exercise": {
+                "question": "如果要识别电话语音（带宽300-3400Hz），最低采样率应该是多少Hz？",
+                "answer": "8000"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "云端API准确率高于本地识别",
+                "需要网络连接和API密钥",
+                "音频需要Base64编码传输",
+                "采样率16000Hz适合一般语音识别",
+                "注意处理API调用超时和错误情况"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": "vision",
+      "categoryName": "图像处理与视觉感知",
+      "lessons": [
+        {
+          "id": "vision-1",
+          "title": "OpenCV基础入门",
+          "description": "学习OpenCV库的基本使用和图像处理基础",
+          "content": [
+            {
+              "type": "text",
+              "title": "OpenCV简介",
+              "content": "OpenCV（Open Source Computer Vision Library）是一个开源的计算机视觉库，提供了丰富的图像处理和计算机视觉算法。它支持Python、C++、Java等多种编程语言，是机器人视觉开发的首选工具。"
+            },
+            {
+              "type": "code",
+              "title": "OpenCV基本操作",
+              "language": "python",
+              "code": "import cv2\nimport numpy as np\n\n# 读取图像\nimg = cv2.imread('image.jpg')\n\n# 显示图像\ncv2.imshow('Image', img)\ncv2.waitKey(0)\ncv2.destroyAllWindows()\n\n# 获取图像尺寸\nheight, width, channels = img.shape\nprint(f\"图像尺寸: {width}x{height}, 通道数: {channels}\")\n\n# 保存图像\ncv2.imwrite('output.jpg', img)",
+              "explanation": "OpenCV图像是NumPy数组，shape为(高度,宽度,通道数)。注意OpenCV默认使用BGR颜色顺序，而不是RGB。"
+            },
+            {
+              "type": "code",
+              "title": "图像基本处理",
+              "language": "python",
+              "code": "# 调整图像大小\nresized = cv2.resize(img, (640, 480))\n\n# 图像旋转\n(h, w) = img.shape[:2]\ncenter = (w // 2, h // 2)\nM = cv2.getRotationMatrix2D(center, 45, 1.0)\nrotated = cv2.warpAffine(img, M, (w, h))\n\n# 图像裁剪\ncropped = img[100:300, 100:400]\n\n# 图像翻转\nflipped_h = cv2.flip(img, 1)  # 水平翻转\nflipped_v = cv2.flip(img, 0)  # 垂直翻转",
+              "explanation": "常用的图像变换操作：\n- resize(): 调整大小\n- warpAffine(): 仿射变换（旋转、平移等）\n- 数组切片: 裁剪\n- flip(): 翻转"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：理解图像表示",
+              "task": "一张640x480的彩色图像，每个像素用3个字节存储，请计算该图像占用多少KB内存？",
+              "hint": "总字节数 = 宽 × 高 × 通道数，1KB = 1024字节",
+              "solution": "640 × 480 × 3 = 921600字节 = 900KB",
+              "exercise": {
+                "question": "一张1920x1080的RGB图像占用多少MB内存？(保留一位小数)",
+                "answer": "5.9"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "OpenCV图像是NumPy数组，shape为(H, W, C)",
+                "OpenCV使用BGR颜色顺序，而不是RGB",
+                "cv2.imread()读取图像，cv2.imwrite()保存图像",
+                "cv2.resize()可调整图像大小",
+                "图像坐标系：原点在左上角，x向右，y向下"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "vision-2",
+          "title": "色彩空间转换",
+          "description": "学习不同色彩空间及其转换方法",
+          "content": [
+            {
+              "type": "text",
+              "title": "常用色彩空间",
+              "content": "**RGB色彩空间**\n- 由红(R)、绿(G)、蓝(B)三个通道组成\n- 每个通道值范围0-255\n- 适合显示设备\n\n**HSV色彩空间**\n- H(Hue色相): 0-180度\n- S(Saturation饱和度): 0-255\n- V(Value明度): 0-255\n- 更符合人类颜色感知，便于颜色检测\n\n**灰度图像**\n- 单通道，值范围0-255\n- 0表示黑色，255表示白色"
+            },
+            {
+              "type": "code",
+              "title": "色彩空间转换",
+              "language": "python",
+              "code": "import cv2\n\n# 读取图像（BGR格式）\nimg = cv2.imread('image.jpg')\n\n# BGR转RGB\nimg_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)\n\n# BGR转HSV\nimg_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)\n\n# BGR转灰度\nimg_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\n\n# HSV转BGR\nimg_bgr = cv2.cvtColor(img_hsv, cv2.COLOR_HSV2BGR)\n\n# 查看HSV各通道\nh, s, v = cv2.split(img_hsv)\nprint(f\"H通道范围: {h.min()}-{h.max()}\")\nprint(f\"S通道范围: {s.min()}-{s.max()}\")\nprint(f\"V通道范围: {v.min()}-{v.max()}\")",
+              "explanation": "cv2.cvtColor()函数用于色彩空间转换。OpenCV中H通道范围是0-180（而不是0-360），这是为了适配8位存储。"
+            },
+            {
+              "type": "code",
+              "title": "基于HSV的颜色检测",
+              "language": "python",
+              "code": "import cv2\nimport numpy as np\n\n# 读取图像并转换为HSV\nimg = cv2.imread('image.jpg')\nhsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)\n\n# 定义红色的HSV范围\n# 红色在HSV中分为两段：0-10和170-180\nlower_red1 = np.array([0, 120, 70])\nupper_red1 = np.array([10, 255, 255])\nlower_red2 = np.array([170, 120, 70])\nupper_red2 = np.array([180, 255, 255])\n\n# 创建掩码\nmask1 = cv2.inRange(hsv, lower_red1, upper_red1)\nmask2 = cv2.inRange(hsv, lower_red2, upper_red2)\nmask = mask1 + mask2\n\n# 应用掩码\nresult = cv2.bitwise_and(img, img, mask=mask)\n\ncv2.imshow('Original', img)\ncv2.imshow('Mask', mask)\ncv2.imshow('Result', result)\ncv2.waitKey(0)",
+              "explanation": "HSV色彩空间便于颜色检测：\n1. 转换为HSV\n2. 定义目标颜色的HSV范围\n3. 使用inRange()创建二值掩码\n4. 使用bitwise_and()提取目标颜色区域"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：颜色范围设置",
+              "task": "如果要检测蓝色物体，在HSV空间中H(色相)的范围应该设置在哪个区间？",
+              "hint": "HSV中H的值：红0-10/170-180，黄15-30，绿35-85，蓝100-130",
+              "solution": "蓝色的H值范围通常在100-130之间（OpenCV中为100-130，因为H范围是0-180）",
+              "exercise": {
+                "question": "要检测绿色，H值范围应该是多少？(格式: min-max，如35-85)",
+                "answer": "35-85"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "RGB适合显示，HSV适合颜色检测",
+                "OpenCV中H范围0-180，S和V范围0-255",
+                "cv2.cvtColor()用于色彩空间转换",
+                "cv2.inRange()创建颜色范围掩码",
+                "红色在HSV中跨越0度，需要分两段处理"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "vision-3",
+          "title": "轮廓检测与形状识别",
+          "description": "学习如何检测和分析图像中的轮廓",
+          "content": [
+            {
+              "type": "text",
+              "title": "什么是轮廓？",
+              "content": "轮廓是具有相同颜色或灰度的连续点的曲线。轮廓检测在物体识别、形状分析、图像分割等任务中非常重要。\n\n**轮廓检测的基本步骤：**\n1. 转换为灰度图\n2. 二值化处理\n3. 查找轮廓\n4. 绘制或分析轮廓"
+            },
+            {
+              "type": "code",
+              "title": "轮廓检测基础",
+              "language": "python",
+              "code": "import cv2\nimport numpy as np\n\n# 读取图像\nimg = cv2.imread('shapes.jpg')\ngray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\n\n# 二值化\n_, binary = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)\n\n# 查找轮廓\ncontours, hierarchy = cv2.findContours(\n    binary, \n    cv2.RETR_EXTERNAL,  # 只检测外轮廓\n    cv2.CHAIN_APPROX_SIMPLE  # 压缩轮廓\n)\n\nprint(f\"找到 {len(contours)} 个轮廓\")\n\n# 绘制轮廓\nresult = img.copy()\ncv2.drawContours(result, contours, -1, (0, 255, 0), 2)\n\ncv2.imshow('Original', img)\ncv2.imshow('Binary', binary)\ncv2.imshow('Contours', result)\ncv2.waitKey(0)",
+              "explanation": "findContours()参数说明：\n- RETR_EXTERNAL: 只检测最外层轮廓\n- RETR_TREE: 检测所有轮廓并建立层级关系\n- CHAIN_APPROX_SIMPLE: 压缩轮廓，减少点数\n- CHAIN_APPROX_NONE: 保存所有轮廓点"
+            },
+            {
+              "type": "code",
+              "title": "轮廓属性分析",
+              "language": "python",
+              "code": "# 遍历每个轮廓\nfor i, contour in enumerate(contours):\n    # 计算轮廓面积\n    area = cv2.contourArea(contour)\n    \n    # 计算轮廓周长\n    perimeter = cv2.arcLength(contour, True)\n    \n    # 计算边界矩形\n    x, y, w, h = cv2.boundingRect(contour)\n    cv2.rectangle(result, (x, y), (x+w, y+h), (255, 0, 0), 2)\n    \n    # 计算最小外接圆\n    (cx, cy), radius = cv2.minEnclosingCircle(contour)\n    cv2.circle(result, (int(cx), int(cy)), int(radius), (0, 0, 255), 2)\n    \n    # 计算中心点\n    M = cv2.moments(contour)\n    if M['m00'] != 0:\n        center_x = int(M['m10'] / M['m00'])\n        center_y = int(M['m01'] / M['m00'])\n        cv2.circle(result, (center_x, center_y), 5, (255, 255, 0), -1)\n    \n    print(f\"轮廓{i}: 面积={area:.2f}, 周长={perimeter:.2f}\")",
+              "explanation": "常用轮廓属性：\n- contourArea(): 面积\n- arcLength(): 周长\n- boundingRect(): 边界矩形\n- minEnclosingCircle(): 最小外接圆\n- moments(): 矩，用于计算中心点"
+            },
+            {
+              "type": "code",
+              "title": "形状识别",
+              "language": "python",
+              "code": "def identify_shape(contour):\n    \"\"\"根据轮廓识别形状\"\"\"\n    # 轮廓近似\n    epsilon = 0.04 * cv2.arcLength(contour, True)\n    approx = cv2.approxPolyDP(contour, epsilon, True)\n    \n    # 根据顶点数量判断形状\n    vertices = len(approx)\n    \n    if vertices == 3:\n        return \"三角形\"\n    elif vertices == 4:\n        # 判断是正方形还是矩形\n        x, y, w, h = cv2.boundingRect(approx)\n        aspect_ratio = float(w) / h\n        if 0.95 <= aspect_ratio <= 1.05:\n            return \"正方形\"\n        else:\n            return \"矩形\"\n    elif vertices == 5:\n        return \"五边形\"\n    elif vertices > 5:\n        # 使用圆形度判断\n        area = cv2.contourArea(contour)\n        perimeter = cv2.arcLength(contour, True)\n        circularity = 4 * np.pi * area / (perimeter ** 2)\n        if circularity > 0.8:\n            return \"圆形\"\n    return \"未知形状\"\n\n# 使用示例\nfor contour in contours:\n    shape = identify_shape(contour)\n    print(f\"检测到: {shape}\")",
+              "explanation": "形状识别方法：\n1. 使用approxPolyDP()进行轮廓近似\n2. 根据近似后的顶点数量判断形状\n3. 使用长宽比、圆形度等特征进一步区分"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：轮廓筛选",
+              "task": "如果要过滤掉面积小于100像素的小轮廓，应该如何实现？",
+              "hint": "使用cv2.contourArea()计算面积，然后进行条件判断",
+              "solution": "filtered = [c for c in contours if cv2.contourArea(c) > 100]",
+              "exercise": {
+                "question": "要筛选出周长大于200的轮廓，应该使用哪个函数？",
+                "answer": "arcLength"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "轮廓检测前需要先二值化图像",
+                "findContours()返回轮廓列表和层级信息",
+                "contourArea()计算面积，arcLength()计算周长",
+                "approxPolyDP()用于轮廓近似和形状识别",
+                "可通过顶点数量、长宽比、圆形度等特征识别形状"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": "ml",
+      "categoryName": "机器学习与数据建模",
+      "lessons": [
+        {
+          "id": "ml-1",
+          "title": "机器学习基础概念",
+          "description": "理解机器学习的基本原理和分类",
+          "content": [
+            {
+              "type": "text",
+              "title": "什么是机器学习？",
+              "content": "机器学习是人工智能的一个分支，它使计算机能够从数据中学习规律，而无需明确编程。机器学习广泛应用于图像识别、语音识别、推荐系统等领域。\n\n**机器学习三大类型：**\n\n1. **监督学习**：从标注数据中学习，如分类、回归\n2. **无监督学习**：从未标注数据中发现模式，如聚类\n3. **强化学习**：通过与环境交互学习最优策略"
+            },
+            {
+              "type": "text",
+              "title": "机器学习工作流程",
+              "content": "1. **数据收集**：获取训练数据\n2. **数据预处理**：清洗、标准化、特征提取\n3. **模型选择**：选择合适的算法\n4. **模型训练**：使用训练集训练模型\n5. **模型评估**：使用测试集评估性能\n6. **模型调优**：调整参数优化性能\n7. **模型部署**：将模型应用到实际场景"
+            },
+            {
+              "type": "code",
+              "title": "sklearn机器学习示例",
+              "language": "python",
+              "code": "from sklearn import datasets\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.metrics import accuracy_score\n\n# 1. 加载数据\niris = datasets.load_iris()\nX = iris.data  # 特征\ny = iris.target  # 标签\n\n# 2. 划分训练集和测试集\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.3, random_state=42\n)\n\n# 3. 数据标准化\nscaler = StandardScaler()\nX_train = scaler.fit_transform(X_train)\nX_test = scaler.transform(X_test)\n\n# 4. 创建模型\nmodel = KNeighborsClassifier(n_neighbors=3)\n\n# 5. 训练模型\nmodel.fit(X_train, y_train)\n\n# 6. 预测\ny_pred = model.predict(X_test)\n\n# 7. 评估\naccuracy = accuracy_score(y_test, y_pred)\nprint(f\"准确率: {accuracy:.2%}\")",
+              "explanation": "这是一个完整的机器学习流程示例，使用KNN算法对鸢尾花数据集进行分类。sklearn库提供了丰富的工具，使机器学习变得简单。"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：理解训练集和测试集",
+              "task": "如果有1000个样本，按照7:3划分训练集和测试集，训练集有多少个样本？",
+              "hint": "训练集比例为70%",
+              "solution": "1000 × 0.7 = 700个样本",
+              "exercise": {
+                "question": "如果测试集有450个样本，总样本数为1500，训练集占比是多少？(百分比，如70)",
+                "answer": "70"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "机器学习分为监督学习、无监督学习、强化学习",
+                "训练集用于训练模型，测试集用于评估性能",
+                "sklearn是Python最流行的机器学习库",
+                "数据预处理（标准化、归一化）很重要",
+                "常用评估指标：准确率、精确率、召回率、F1分数"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ml-2",
+          "title": "MNIST手写数字识别",
+          "description": "学习使用MNIST数据集进行手写数字识别",
+          "content": [
+            {
+              "type": "text",
+              "title": "MNIST数据集介绍",
+              "content": "MNIST是机器学习领域最著名的数据集之一，包含70,000张手写数字图像（0-9）。\n\n**数据集结构：**\n- 训练集：60,000张图像\n- 测试集：10,000张图像\n- 图像尺寸：28×28像素\n- 灰度图像：每个像素值0-255\n- 标签：0-9共10个类别"
+            },
+            {
+              "type": "code",
+              "title": "加载MNIST数据集",
+              "language": "python",
+              "code": "from sklearn.datasets import fetch_openml\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# 加载MNIST数据集\nmnist = fetch_openml('mnist_784', version=1)\nX, y = mnist.data, mnist.target\n\nprint(f\"数据形状: {X.shape}\")  # (70000, 784)\nprint(f\"标签形状: {y.shape}\")  # (70000,)\n\n# 将数据转换为NumPy数组\nX = X.to_numpy()\ny = y.astype(int)\n\n# 可视化第一张图像\nfirst_image = X[0].reshape(28, 28)\nplt.imshow(first_image, cmap='gray')\nplt.title(f\"Label: {y[0]}\")\nplt.axis('off')\nplt.show()\n\n# 显示多张图像\nfig, axes = plt.subplots(2, 5, figsize=(12, 5))\nfor i, ax in enumerate(axes.flat):\n    ax.imshow(X[i].reshape(28, 28), cmap='gray')\n    ax.set_title(f\"Label: {y[i]}\")\n    ax.axis('off')\nplt.tight_layout()\nplt.show()",
+              "explanation": "MNIST数据集中，每张28×28的图像被展平为784维的向量。使用reshape(28, 28)可以将其还原为二维图像进行可视化。"
+            },
+            {
+              "type": "code",
+              "title": "训练数字识别模型",
+              "language": "python",
+              "code": "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.neural_network import MLPClassifier\nfrom sklearn.metrics import accuracy_score, classification_report\n\n# 划分数据集\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=10000, random_state=42\n)\n\n# 数据标准化\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# 创建神经网络模型\nmodel = MLPClassifier(\n    hidden_layer_sizes=(128, 64),  # 两个隐藏层\n    max_iter=20,\n    random_state=42,\n    verbose=True\n)\n\n# 训练模型\nprint(\"开始训练...\")\nmodel.fit(X_train_scaled, y_train)\n\n# 预测\ny_pred = model.predict(X_test_scaled)\n\n# 评估\naccuracy = accuracy_score(y_test, y_pred)\nprint(f\"\\n测试集准确率: {accuracy:.4f}\")\nprint(\"\\n分类报告:\")\nprint(classification_report(y_test, y_pred))",
+              "explanation": "使用多层感知机(MLP)进行数字识别。模型包含两个隐藏层(128和64个神经元)，可以学习图像的复杂特征。"
+            },
+            {
+              "type": "code",
+              "title": "模型预测和可视化",
+              "language": "python",
+              "code": "import random\n\n# 随机选择一些测试样本\nnum_samples = 10\nrandom_indices = random.sample(range(len(X_test)), num_samples)\n\nfig, axes = plt.subplots(2, 5, figsize=(15, 6))\nfor idx, ax in enumerate(axes.flat):\n    i = random_indices[idx]\n    image = X_test[i].reshape(28, 28)\n    true_label = y_test[i]\n    pred_label = model.predict(X_test_scaled[i:i+1])[0]\n    \n    ax.imshow(image, cmap='gray')\n    color = 'green' if true_label == pred_label else 'red'\n    ax.set_title(f\"True: {true_label}, Pred: {pred_label}\", color=color)\n    ax.axis('off')\n\nplt.tight_layout()\nplt.show()\n\n# 查看混淆矩阵\nfrom sklearn.metrics import confusion_matrix\nimport seaborn as sns\n\ncm = confusion_matrix(y_test, y_pred)\nplt.figure(figsize=(10, 8))\nsns.heatmap(cm, annot=True, fmt='d', cmap='Blues')\nplt.xlabel('Predicted')\nplt.ylabel('True')\nplt.title('Confusion Matrix')\nplt.show()",
+              "explanation": "通过可视化预测结果和混淆矩阵，可以直观地看到模型的性能。混淆矩阵显示了每个类别的识别情况。"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：理解数据维度",
+              "task": "MNIST图像是28×28像素，展平后是784维向量。如果使用32×32像素的图像，展平后是多少维？",
+              "hint": "维度 = 宽 × 高",
+              "solution": "32 × 32 = 1024维",
+              "exercise": {
+                "question": "如果图像是48×48像素，展平后的维度是多少？",
+                "answer": "2304"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "MNIST包含70,000张28×28的手写数字图像",
+                "训练集60,000张，测试集10,000张",
+                "图像展平为784维向量后输入模型",
+                "需要对数据进行标准化处理",
+                "多层感知机(MLP)适合图像分类任务",
+                "可使用混淆矩阵评估各类别识别效果"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ml-3",
+          "title": "KNN算法原理与应用",
+          "description": "学习K近邻算法的原理和实际应用",
+          "content": [
+            {
+              "type": "text",
+              "title": "KNN算法原理",
+              "content": "K近邻(K-Nearest Neighbors, KNN)是一种简单而有效的监督学习算法。\n\n**工作原理：**\n1. 计算待分类样本与所有训练样本的距离\n2. 选择距离最近的K个样本\n3. 根据这K个样本的标签进行投票\n4. 输出票数最多的类别作为预测结果\n\n**特点：**\n- 简单易懂，无需训练过程\n- 适用于多分类问题\n- 对异常值敏感\n- 计算量大，预测速度慢"
+            },
+            {
+              "type": "code",
+              "title": "KNN分类示例",
+              "language": "python",
+              "code": "from sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.datasets import make_classification\nfrom sklearn.model_selection import train_test_split\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# 生成示例数据\nX, y = make_classification(\n    n_samples=200,\n    n_features=2,\n    n_informative=2,\n    n_redundant=0,\n    n_clusters_per_class=1,\n    random_state=42\n)\n\n# 划分数据集\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.3, random_state=42\n)\n\n# 训练KNN模型\nknn = KNeighborsClassifier(n_neighbors=5)\nknn.fit(X_train, y_train)\n\n# 预测\ny_pred = knn.predict(X_test)\naccuracy = knn.score(X_test, y_test)\nprint(f\"准确率: {accuracy:.2%}\")\n\n# 可视化决策边界\nh = 0.02\nx_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1\ny_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1\nxx, yy = np.meshgrid(np.arange(x_min, x_max, h),\n                     np.arange(y_min, y_max, h))\nZ = knn.predict(np.c_[xx.ravel(), yy.ravel()])\nZ = Z.reshape(xx.shape)\n\nplt.figure(figsize=(10, 6))\nplt.contourf(xx, yy, Z, alpha=0.4)\nplt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, \n            marker='o', edgecolors='k', s=50, label='Train')\nplt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, \n            marker='s', edgecolors='k', s=100, label='Test')\nplt.xlabel('Feature 1')\nplt.ylabel('Feature 2')\nplt.title(f'KNN Classification (K={5})')\nplt.legend()\nplt.show()",
+              "explanation": "这个示例展示了KNN的分类效果和决策边界。不同颜色的区域表示不同的分类区域。"
+            },
+            {
+              "type": "code",
+              "title": "K值对模型的影响",
+              "language": "python",
+              "code": "from sklearn.metrics import accuracy_score\n\n# 测试不同的K值\nk_values = range(1, 21)\ntrain_scores = []\ntest_scores = []\n\nfor k in k_values:\n    knn = KNeighborsClassifier(n_neighbors=k)\n    knn.fit(X_train, y_train)\n    \n    train_score = knn.score(X_train, y_train)\n    test_score = knn.score(X_test, y_test)\n    \n    train_scores.append(train_score)\n    test_scores.append(test_score)\n\n# 绘制K值与准确率的关系\nplt.figure(figsize=(10, 6))\nplt.plot(k_values, train_scores, label='Training Accuracy', marker='o')\nplt.plot(k_values, test_scores, label='Testing Accuracy', marker='s')\nplt.xlabel('K Value')\nplt.ylabel('Accuracy')\nplt.title('KNN Performance vs K Value')\nplt.legend()\nplt.grid(True, alpha=0.3)\nplt.show()\n\n# 找出最佳K值\nbest_k = k_values[np.argmax(test_scores)]\nprint(f\"\\n最佳K值: {best_k}\")\nprint(f\"对应测试准确率: {max(test_scores):.4f}\")",
+              "explanation": "K值的选择对KNN性能有重要影响：\n- K太小：容易过拟合，对噪声敏感\n- K太大：欠拟合，决策边界过于平滑\n- 通常选择奇数，避免平票\n- 可以通过交叉验证选择最佳K值"
+            },
+            {
+              "type": "code",
+              "title": "距离度量方式",
+              "language": "python",
+              "code": "from sklearn.neighbors import KNeighborsClassifier\n\n# 测试不同的距离度量\nmetrics = ['euclidean', 'manhattan', 'minkowski']\n\nfor metric in metrics:\n    knn = KNeighborsClassifier(n_neighbors=5, metric=metric)\n    knn.fit(X_train, y_train)\n    score = knn.score(X_test, y_test)\n    print(f\"{metric.capitalize()} 距离准确率: {score:.4f}\")\n\n# 欧氏距离计算示例\npoint1 = np.array([1, 2])\npoint2 = np.array([4, 6])\neuclidean_dist = np.sqrt(np.sum((point1 - point2) ** 2))\nprint(f\"\\n欧氏距离示例: {euclidean_dist:.4f}\")\n\n# 曼哈顿距离计算示例\nmanhattan_dist = np.sum(np.abs(point1 - point2))\nprint(f\"曼哈顿距离示例: {manhattan_dist:.4f}\")",
+              "explanation": "常用距离度量：\n- 欧氏距离(Euclidean)：最常用，计算直线距离\n- 曼哈顿距离(Manhattan)：计算坐标轴方向距离之和\n- 闵可夫斯基距离(Minkowski)：欧氏和曼哈顿的泛化"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：计算距离",
+              "task": "点A(1,2)和点B(4,6)之间的欧氏距离是多少？",
+              "hint": "欧氏距离 = √[(x₂-x₁)² + (y₂-y₁)²]",
+              "solution": "√[(4-1)² + (6-2)²] = √[9 + 16] = √25 = 5",
+              "exercise": {
+                "question": "点A(0,0)和点B(3,4)之间的曼哈顿距离是多少？",
+                "answer": "7"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "KNN通过K个最近邻居投票进行分类",
+                "K值太小容易过拟合，太大容易欠拟合",
+                "常用距离度量：欧氏距离、曼哈顿距离",
+                "KNN是懒惰学习算法，预测时才计算",
+                "需要对特征进行标准化处理",
+                "适合小规模数据集，大数据集计算开销大"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": "robotics",
+      "categoryName": "机器人基础与硬件",
+      "lessons": [
+        {
+          "id": "robotics-1",
+          "title": "机器人基础概念",
+          "description": "了解机器人的分类、组成和基本原理",
+          "content": [
+            {
+              "type": "text",
+              "title": "机器人的定义与分类",
+              "content": "**机器人定义：**\n机器人是一种能够通过编程或自主决策完成特定任务的自动化机械装置。\n\n**按应用领域分类：**\n- **工业机器人**：用于制造业，如焊接、装配、搬运\n- **服务机器人**：为人类提供服务，如扫地机器人、餐厅服务机器人\n- **特种机器人**：在特殊环境工作，如水下、空中、灾害救援\n- **医疗机器人**：用于手术、康复、护理等医疗场景\n\n**按移动方式分类：**\n- 轮式机器人\n- 腿式机器人\n- 履带式机器人\n- 飞行机器人"
+            },
+            {
+              "type": "text",
+              "title": "机器人的组成结构",
+              "content": "一个完整的机器人系统通常包含以下几个部分：\n\n**1. 机械本体**\n- 机身结构\n- 关节和连杆\n- 执行器（舵机、电机等）\n\n**2. 传感系统**\n- 视觉传感器（摄像头、激光雷达）\n- 触觉传感器\n- 位置传感器（编码器、IMU）\n\n**3. 控制系统**\n- 控制器（单片机、嵌入式计算机）\n- 控制算法\n- 通信接口\n\n**4. 能源系统**\n- 电池\n- 电源管理\n\n**5. 人机交互界面**\n- 显示屏\n- 语音交互\n- 手势识别"
+            },
+            {
+              "type": "text",
+              "title": "机器人的自由度",
+              "content": "**自由度(Degree of Freedom, DOF)：**\n机器人能够独立运动的方向数量。\n\n**空间自由度：**\n- 3D空间中刚体有6个自由度\n- 3个平移自由度（X、Y、Z）\n- 3个旋转自由度（Roll、Pitch、Yaw）\n\n**机器人关节自由度：**\n- 每个旋转关节提供1个自由度\n- 每个移动关节提供1个自由度\n- 总自由度 = 所有关节自由度之和\n\n**示例：**\n- 移动机器人（平面）：3自由度（X、Y、θ）\n- 6轴机械臂：6自由度\n- 人形机器人手臂：7自由度（类人灵活性）"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：计算自由度",
+              "task": "一个机械臂有6个旋转关节，安装在一个可以XY平面移动的底座上，总共有多少个自由度？",
+              "hint": "总自由度 = 关节自由度 + 底座移动自由度",
+              "solution": "6个旋转关节 + 2个平移自由度(X, Y) = 8个自由度",
+              "exercise": {
+                "question": "四轮移动机器人在平面上运动，有几个自由度？",
+                "answer": "3"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "机器人分为工业、服务、特种、医疗等类型",
+                "机器人由机械本体、传感系统、控制系统、能源系统组成",
+                "自由度是机器人独立运动的方向数量",
+                "3D空间刚体有6个自由度（3平移+3旋转）",
+                "平面移动机器人有3个自由度（X、Y、θ）"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "robotics-2",
+          "title": "舵机原理与控制",
+          "description": "学习舵机的工作原理和PWM控制方法",
+          "content": [
+            {
+              "type": "text",
+              "title": "什么是舵机？",
+              "content": "舵机(Servo Motor)是一种位置伺服的驱动器，可以精确控制输出轴的角度。\n\n**舵机的特点：**\n- 可精确控制转角（通常0-180度）\n- 内置位置反馈系统\n- 集成了电机、减速器、控制电路\n- 使用PWM信号控制\n\n**舵机的组成：**\n1. 直流电机：提供动力\n2. 减速齿轮组：增大力矩、减小转速\n3. 位置传感器：检测输出轴角度\n4. 控制电路：接收PWM信号并控制电机"
+            },
+            {
+              "type": "text",
+              "title": "PWM控制原理",
+              "content": "PWM(Pulse Width Modulation)脉冲宽度调制是控制舵机的主要方式。\n\n**PWM参数：**\n- **周期**：通常为20ms（频率50Hz）\n- **脉宽**：高电平持续时间\n  - 0.5ms → 0度\n  - 1.5ms → 90度（中位）\n  - 2.5ms → 180度\n\n**控制公式：**\n```\n角度 = (脉宽 - 0.5ms) / 2ms × 180°\n脉宽 = 角度 / 180° × 2ms + 0.5ms\n```\n\n**示例：**\n- 控制到45度：脉宽 = 45/180 × 2 + 0.5 = 1.0ms\n- 控制到135度：脉宽 = 135/180 × 2 + 0.5 = 2.0ms"
+            },
+            {
+              "type": "code",
+              "title": "Arduino控制舵机",
+              "language": "cpp",
+              "code": "#include <Servo.h>\n\nServo myServo;  // 创建舵机对象\n\nvoid setup() {\n  myServo.attach(9);  // 舵机连接到Pin 9\n  Serial.begin(9600);\n}\n\nvoid loop() {\n  // 从0度转到180度\n  for (int angle = 0; angle <= 180; angle += 10) {\n    myServo.write(angle);  // 设置角度\n    Serial.print(\"Angle: \");\n    Serial.println(angle);\n    delay(100);  // 延时100ms\n  }\n  \n  delay(1000);\n  \n  // 从180度转回0度\n  for (int angle = 180; angle >= 0; angle -= 10) {\n    myServo.write(angle);\n    Serial.print(\"Angle: \");\n    Serial.println(angle);\n    delay(100);\n  }\n  \n  delay(1000);\n}",
+              "explanation": "使用Arduino的Servo库可以轻松控制舵机。write()方法接受0-180的角度值，库会自动生成相应的PWM信号。"
+            },
+            {
+              "type": "code",
+              "title": "Python树莓派控制舵机",
+              "language": "python",
+              "code": "import RPi.GPIO as GPIO\nimport time\n\n# 设置GPIO模式\nGPIO.setmode(GPIO.BCM)\nservo_pin = 18\nGPIO.setup(servo_pin, GPIO.OUT)\n\n# 创建PWM对象，频率50Hz\npwm = GPIO.PWM(servo_pin, 50)\npwm.start(0)\n\ndef set_angle(angle):\n    \"\"\"设置舵机角度(0-180度)\"\"\"\n    # 计算占空比\n    # 0度 -> 2.5% (0.5ms/20ms)\n    # 90度 -> 7.5% (1.5ms/20ms)\n    # 180度 -> 12.5% (2.5ms/20ms)\n    duty_cycle = 2.5 + (angle / 180.0) * 10\n    pwm.ChangeDutyCycle(duty_cycle)\n    time.sleep(0.3)\n    pwm.ChangeDutyCycle(0)  # 停止发送信号，防止抖动\n\ntry:\n    while True:\n        print(\"转到0度\")\n        set_angle(0)\n        time.sleep(1)\n        \n        print(\"转到90度\")\n        set_angle(90)\n        time.sleep(1)\n        \n        print(\"转到180度\")\n        set_angle(180)\n        time.sleep(1)\n        \nexcept KeyboardInterrupt:\n    print(\"\\n程序停止\")\nfinally:\n    pwm.stop()\n    GPIO.cleanup()\n    print(\"GPIO清理完成\")",
+              "explanation": "在树莓派上使用RPi.GPIO库控制舵机。需要计算PWM的占空比：duty_cycle = (脉宽/周期) × 100%"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：计算PWM参数",
+              "task": "要控制舵机转到60度，PWM周期20ms，脉宽应该是多少毫秒？(保留两位小数)",
+              "hint": "脉宽 = 角度 / 180 × 2ms + 0.5ms",
+              "solution": "脉宽 = 60 / 180 × 2 + 0.5 = 0.67 + 0.5 = 1.17ms",
+              "exercise": {
+                "question": "脉宽为2.0ms时，舵机转到多少度？",
+                "answer": "135"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "舵机使用PWM信号控制，周期通常20ms(50Hz)",
+                "脉宽0.5-2.5ms对应0-180度",
+                "舵机内置位置反馈，可精确控制角度",
+                "Arduino使用Servo库，树莓派使用GPIO库",
+                "控制舵机时需要设置适当的延时",
+                "舵机分为标准舵机(0-180°)和连续旋转舵机"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": "ros",
+      "categoryName": "ROS系统与导航",
+      "lessons": [
+        {
+          "id": "ros-1",
+          "title": "ROS基础概念",
+          "description": "学习ROS的基本概念和架构",
+          "content": [
+            {
+              "type": "text",
+              "title": "什么是ROS？",
+              "content": "ROS(Robot Operating System)是一个用于机器人软件开发的灵活框架，提供了丰富的工具、库和规范。\n\n**ROS的特点：**\n- **分布式架构**：节点之间通过消息通信\n- **模块化设计**：功能封装为独立节点\n- **丰富的工具**：可视化、仿真、调试工具\n- **开源生态**：大量第三方功能包\n\n**ROS核心概念：**\n- **Node(节点)**：执行特定功能的进程\n- **Topic(话题)**：节点间通信的数据流\n- **Message(消息)**：话题传输的数据类型\n- **Service(服务)**：请求-响应通信\n- **Master(主节点)**：管理节点注册和通信"
+            },
+            {
+              "type": "text",
+              "title": "ROS文件系统",
+              "content": "**Package(功能包)：**\n- ROS软件的基本组织单元\n- 包含节点、配置文件、启动文件等\n- 通过package.xml描述依赖关系\n\n**重要目录：**\n- `src/`: 源代码\n- `launch/`: 启动文件(.launch)\n- `msg/`: 消息定义\n- `srv/`: 服务定义\n- `config/`: 配置文件\n- `CMakeLists.txt`: 编译配置\n- `package.xml`: 功能包信息"
+            },
+            {
+              "type": "code",
+              "title": "ROS常用命令",
+              "language": "bash",
+              "code": "# 启动ROS Master\nroscore\n\n# 运行节点\nrosrun package_name node_name\n\n# 查看节点列表\nrosnode list\n\n# 查看节点信息\nrosnode info /node_name\n\n# 查看话题列表\nrostopic list\n\n# 查看话题信息\nrostopic info /topic_name\n\n# 查看话题数据\nrostopic echo /topic_name\n\n# 发布话题数据\nrostopic pub /topic_name msg_type \"data\"\n\n# 查看话题频率\nrostopic hz /topic_name\n\n# 查看服务列表\nrosservice list\n\n# 调用服务\nrosservice call /service_name \"args\"\n\n# 查看消息类型\nrosmsg show msg_type\n\n# 查看参数\nrosparam list\nrosparam get /param_name\nrosparam set /param_name value",
+              "explanation": "这些是ROS开发中最常用的命令行工具，用于节点管理、话题监控、服务调用等。"
+            },
+            {
+              "type": "code",
+              "title": "创建简单的发布者节点",
+              "language": "python",
+              "code": "#!/usr/bin/env python3\nimport rospy\nfrom std_msgs.msg import String\n\ndef talker():\n    # 初始化节点\n    rospy.init_node('talker', anonymous=True)\n    \n    # 创建发布者，发布到chatter话题\n    pub = rospy.Publisher('chatter', String, queue_size=10)\n    \n    # 设置发布频率10Hz\n    rate = rospy.Rate(10)\n    \n    count = 0\n    while not rospy.is_shutdown():\n        # 准备消息\n        msg = String()\n        msg.data = f\"Hello ROS! Count: {count}\"\n        \n        # 发布消息\n        rospy.loginfo(msg.data)\n        pub.publish(msg)\n        \n        count += 1\n        rate.sleep()\n\nif __name__ == '__main__':\n    try:\n        talker()\n    except rospy.ROSInterruptException:\n        pass",
+              "explanation": "这是一个简单的ROS发布者节点，每秒发布10次消息到chatter话题。"
+            },
+            {
+              "type": "code",
+              "title": "创建简单的订阅者节点",
+              "language": "python",
+              "code": "#!/usr/bin/env python3\nimport rospy\nfrom std_msgs.msg import String\n\ndef callback(msg):\n    \"\"\"接收消息的回调函数\"\"\"\n    rospy.loginfo(f\"收到消息: {msg.data}\")\n\ndef listener():\n    # 初始化节点\n    rospy.init_node('listener', anonymous=True)\n    \n    # 创建订阅者，订阅chatter话题\n    rospy.Subscriber('chatter', String, callback)\n    \n    # 保持节点运行\n    rospy.spin()\n\nif __name__ == '__main__':\n    listener()",
+              "explanation": "这是一个ROS订阅者节点，订阅chatter话题并在接收到消息时调用回调函数。"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：理解ROS通信",
+              "task": "如果一个话题的发布频率是100Hz，每条消息1KB，每秒传输多少数据？",
+              "hint": "数据量 = 频率 × 单条消息大小",
+              "solution": "100Hz × 1KB = 100KB/s",
+              "exercise": {
+                "question": "激光雷达以40Hz发布数据，每条消息2KB，每秒传输多少KB？",
+                "answer": "80"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "ROS是机器人软件开发框架，采用分布式架构",
+                "核心概念：节点、话题、消息、服务、Master",
+                "roscore启动Master，rosrun运行节点",
+                "rostopic用于话题操作，rosnode用于节点管理",
+                "发布者publish消息，订阅者subscribe消息",
+                "使用rospy.Rate()控制循环频率"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ros-2",
+          "title": "ROS导航系统",
+          "description": "学习ROS navigation导航功能包的使用",
+          "content": [
+            {
+              "type": "text",
+              "title": "ROS Navigation简介",
+              "content": "ROS Navigation是一个强大的导航功能包集合，用于实现移动机器人的自主导航。\n\n**主要功能：**\n- 路径规划\n- 障碍物避障\n- 全局定位\n- 局部路径优化\n\n**核心组件：**\n- **move_base**：导航的核心节点\n- **costmap**：代价地图\n- **global_planner**：全局路径规划器\n- **local_planner**：局部路径规划器\n- **amcl**：蒙特卡洛定位\n- **map_server**：地图服务器"
+            },
+            {
+              "type": "text",
+              "title": "move_base工作流程",
+              "content": "1. **接收目标点**：通过/move_base_simple/goal接收导航目标\n\n2. **全局路径规划**：\n   - 使用全局代价地图\n   - 规划从当前位置到目标的最优路径\n   - 常用算法：Dijkstra、A*\n\n3. **局部路径规划**：\n   - 使用局部代价地图\n   - 根据传感器数据实时调整路径\n   - 避开动态障碍物\n   - 常用算法：DWA、TEB\n\n4. **速度控制**：\n   - 生成速度命令(cmd_vel)\n   - 控制机器人移动\n\n5. **监控与反馈**：\n   - 监控机器人状态\n   - 判断是否到达目标\n   - 处理异常情况"
+            },
+            {
+              "type": "code",
+              "title": "启动导航系统",
+              "language": "xml",
+              "code": "<launch>\n  <!-- 加载地图 -->\n  <node name=\"map_server\" pkg=\"map_server\" type=\"map_server\" \n        args=\"$(find my_robot)/maps/my_map.yaml\"/>\n  \n  <!-- AMCL定位 -->\n  <include file=\"$(find my_robot)/launch/amcl.launch\"/>\n  \n  <!-- move_base导航 -->\n  <node pkg=\"move_base\" type=\"move_base\" name=\"move_base\" output=\"screen\">\n    <!-- 加载全局代价地图参数 -->\n    <rosparam file=\"$(find my_robot)/config/costmap_common_params.yaml\" \n              command=\"load\" ns=\"global_costmap\" />\n    <rosparam file=\"$(find my_robot)/config/global_costmap_params.yaml\" \n              command=\"load\" />\n    \n    <!-- 加载局部代价地图参数 -->\n    <rosparam file=\"$(find my_robot)/config/costmap_common_params.yaml\" \n              command=\"load\" ns=\"local_costmap\" />\n    <rosparam file=\"$(find my_robot)/config/local_costmap_params.yaml\" \n              command=\"load\" />\n    \n    <!-- 加载规划器参数 -->\n    <rosparam file=\"$(find my_robot)/config/base_local_planner_params.yaml\" \n              command=\"load\" />\n  </node>\n  \n  <!-- rviz可视化 -->\n  <node name=\"rviz\" pkg=\"rviz\" type=\"rviz\" \n        args=\"-d $(find my_robot)/rviz/navigation.rviz\"/>\n</launch>",
+              "explanation": "这是一个标准的ROS导航启动文件，包含地图服务器、AMCL定位和move_base导航节点。"
+            },
+            {
+              "type": "code",
+              "title": "Python发送导航目标",
+              "language": "python",
+              "code": "#!/usr/bin/env python3\nimport rospy\nimport actionlib\nfrom move_base_msgs.msg import MoveBaseAction, MoveBaseGoal\nfrom geometry_msgs.msg import Quaternion\nfrom tf.transformations import quaternion_from_euler\n\ndef send_goal(x, y, yaw):\n    \"\"\"发送导航目标点\"\"\"\n    # 创建action客户端\n    client = actionlib.SimpleActionClient('move_base', MoveBaseAction)\n    client.wait_for_server()\n    \n    # 创建目标\n    goal = MoveBaseGoal()\n    goal.target_pose.header.frame_id = \"map\"\n    goal.target_pose.header.stamp = rospy.Time.now()\n    \n    # 设置位置\n    goal.target_pose.pose.position.x = x\n    goal.target_pose.pose.position.y = y\n    goal.target_pose.pose.position.z = 0.0\n    \n    # 设置朝向（将欧拉角转换为四元数）\n    q = quaternion_from_euler(0, 0, yaw)\n    goal.target_pose.pose.orientation = Quaternion(*q)\n    \n    # 发送目标\n    rospy.loginfo(f\"发送目标: x={x}, y={y}, yaw={yaw}\")\n    client.send_goal(goal)\n    \n    # 等待结果\n    wait = client.wait_for_result()\n    \n    if not wait:\n        rospy.logerr(\"Action server not available!\")\n        return False\n    else:\n        result = client.get_result()\n        if result:\n            rospy.loginfo(\"目标达成!\")\n            return True\n        else:\n            rospy.logwarn(\"导航失败\")\n            return False\n\nif __name__ == '__main__':\n    rospy.init_node('send_goal_node')\n    \n    # 发送多个目标点\n    waypoints = [\n        (1.0, 0.0, 0.0),\n        (2.0, 1.0, 1.57),\n        (1.0, 2.0, 3.14),\n        (0.0, 0.0, 0.0)\n    ]\n    \n    for x, y, yaw in waypoints:\n        success = send_goal(x, y, yaw)\n        if not success:\n            break\n        rospy.sleep(1)",
+              "explanation": "使用actionlib发送导航目标。MoveBaseAction是ROS的动作接口，支持目标发送、状态查询和结果反馈。"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：理解代价地图",
+              "task": "代价地图中，致命障碍物(Lethal)、膨胀区(Inflation)、自由空间(Free)的代价值范围分别是多少？",
+              "hint": "代价值范围0-255，0是自由空间，254是致命障碍物",
+              "solution": "自由空间: 0, 膨胀区: 1-252, 未知区域: 255(或-1), 致命障碍物: 254",
+              "exercise": {
+                "question": "代价地图中，代价值254表示什么？",
+                "answer": "致命障碍物"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "move_base是ROS导航的核心节点",
+                "代价地图分为全局代价地图和局部代价地图",
+                "全局规划器规划整体路径，局部规划器处理动态障碍",
+                "使用actionlib发送导航目标",
+                "rviz可视化导航过程",
+                "导航需要地图、定位、传感器数据"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": "slam",
+      "categoryName": "SLAM与定位建图",
+      "lessons": [
+        {
+          "id": "slam-1",
+          "title": "SLAM基础概念",
+          "description": "理解SLAM的基本原理和应用",
+          "content": [
+            {
+              "type": "text",
+              "title": "什么是SLAM？",
+              "content": "SLAM(Simultaneous Localization and Mapping)即同时定位与地图构建，是机器人在未知环境中移动时同时完成两个任务：\n\n1. **定位(Localization)**：确定机器人在环境中的位置\n2. **建图(Mapping)**：构建环境的地图\n\n这两个任务相互依赖，形成了一个\"鸡生蛋、蛋生鸡\"的问题：\n- 建图需要知道机器人位置\n- 定位需要环境地图\n\n**SLAM的应用：**\n- 自动驾驶汽车\n- 服务机器人导航\n- 无人机飞行\n- AR/VR定位"
+            },
+            {
+              "type": "text",
+              "title": "SLAM的分类",
+              "content": "**按传感器分类：**\n- **激光SLAM**：使用激光雷达，精度高\n  - Gmapping、Hector SLAM、Karto SLAM、Cartographer\n- **视觉SLAM**：使用摄像头，成本低\n  - ORB-SLAM、LSD-SLAM、RTAB-Map\n- **多传感器融合SLAM**：结合多种传感器\n\n**按地图类型分类：**\n- **2D SLAM**：构建二维栅格地图\n- **3D SLAM**：构建三维点云地图\n\n**按方法分类：**\n- **基于滤波**：EKF-SLAM、粒子滤波\n- **基于图优化**：Graph SLAM、g2o\n- **基于深度学习**：神经网络SLAM"
+            },
+            {
+              "type": "text",
+              "title": "SLAM的关键技术",
+              "content": "**1. 前端(Front-end)：**\n- 数据关联\n- 特征提取与匹配\n- 位姿估计\n\n**2. 后端(Back-end)：**\n- 图优化\n- 位姿图构建\n- 优化求解\n\n**3. 回环检测(Loop Closure)：**\n- 识别机器人是否回到之前访问过的位置\n- 消除累积误差\n- 提高地图一致性\n\n**4. 地图表示：**\n- 栅格地图(Occupancy Grid)\n- 点云地图(Point Cloud)\n- 拓扑地图(Topological Map)\n- 语义地图(Semantic Map)"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：理解SLAM问题",
+              "task": "为什么SLAM被称为\"鸡生蛋、蛋生鸡\"的问题？",
+              "hint": "思考定位和建图之间的相互依赖关系",
+              "solution": "因为定位需要已知地图，而建图需要已知位置。SLAM必须同时解决这两个相互依赖的问题，就像不知道先有鸡还是先有蛋。",
+              "exercise": {
+                "question": "回环检测的主要作用是什么？(减少/增加)累积误差",
+                "answer": "减少"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "SLAM同时完成定位和建图两个任务",
+                "激光SLAM精度高，视觉SLAM成本低",
+                "SLAM分为前端(数据处理)和后端(优化)",
+                "回环检测用于消除累积误差",
+                "常用地图表示：栅格地图、点云地图",
+                "ROS中常用SLAM：Gmapping、Cartographer、Karto"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "slam-2",
+          "title": "Karto SLAM原理",
+          "description": "学习Karto SLAM的工作原理和使用方法",
+          "content": [
+            {
+              "type": "text",
+              "title": "Karto SLAM简介",
+              "content": "Karto SLAM是一个基于图优化的2D激光SLAM算法，由SRI International开发。\n\n**Karto SLAM的特点：**\n- 使用图优化方法减少累积误差\n- 支持回环检测\n- 适合大范围环境建图\n- 建图质量高、精度好\n- 对激光雷达质量要求较高\n\n**与其他SLAM的对比：**\n- **Gmapping**：基于粒子滤波，速度快但精度略低\n- **Hector**：不需要里程计，适合高频激光雷达\n- **Karto**：基于图优化，精度高但计算量大\n- **Cartographer**：Google开发，功能强大，资源消耗大"
+            },
+            {
+              "type": "text",
+              "title": "Karto SLAM工作流程",
+              "content": "**1. 扫描匹配(Scan Matching)：**\n- 将当前激光扫描与地图匹配\n- 估计机器人位姿\n- 使用相关性扫描匹配算法\n\n**2. 约束构建：**\n- 连续帧之间的里程计约束\n- 回环检测产生的闭环约束\n\n**3. 位姿图优化：**\n- 构建位姿图(Pose Graph)\n- 节点表示机器人位姿\n- 边表示位姿之间的约束\n- 使用Sparse Pose Adjustment(SPA)优化\n\n**4. 地图更新：**\n- 根据优化后的位姿更新地图\n- 构建栅格占用地图\n\n**5. 回环检测：**\n- 检测机器人是否回到已访问位置\n- 添加回环约束\n- 触发全局优化"
+            },
+            {
+              "type": "code",
+              "title": "使用Karto SLAM建图",
+              "language": "xml",
+              "code": "<launch>\n  <!-- Karto SLAM节点 -->\n  <node pkg=\"slam_karto\" type=\"slam_karto\" name=\"slam_karto\" output=\"screen\">\n    <!-- 坐标系设置 -->\n    <param name=\"odom_frame\" value=\"odom\"/>\n    <param name=\"map_frame\" value=\"map\"/>\n    <param name=\"base_frame\" value=\"base_footprint\"/>\n    \n    <!-- 地图更新参数 -->\n    <param name=\"map_update_interval\" value=\"5.0\"/>\n    <param name=\"resolution\" value=\"0.05\"/>  <!-- 地图分辨率5cm -->\n    \n    <!-- 扫描匹配参数 -->\n    <param name=\"scan_buffer_size\" value=\"10\"/>\n    <param name=\"scan_buffer_maximum_scan_distance\" value=\"20.0\"/>\n    <param name=\"minimum_travel_distance\" value=\"0.2\"/>  <!-- 最小移动距离 -->\n    <param name=\"minimum_travel_heading\" value=\"0.174\"/>  <!-- 最小转角10度 -->\n    \n    <!-- 回环检测参数 -->\n    <param name=\"loop_search_maximum_distance\" value=\"4.0\"/>  <!-- 回环搜索距离 -->\n    <param name=\"loop_match_minimum_chain_size\" value=\"10\"/>\n    <param name=\"loop_match_maximum_variance_coarse\" value=\"0.4\"/>\n    \n    <!-- 相关性搜索参数 -->\n    <param name=\"correlation_search_space_dimension\" value=\"0.3\"/>\n    <param name=\"correlation_search_space_resolution\" value=\"0.01\"/>\n    <param name=\"correlation_search_space_smear_deviation\" value=\"0.03\"/>\n    \n    <!-- 订阅激光扫描话题 -->\n    <remap from=\"scan\" to=\"/scan\"/>\n  </node>\n  \n  <!-- 保存地图 -->\n  <!-- rosrun map_server map_saver -f mymap -->\n</launch>",
+              "explanation": "Karto SLAM的关键参数：\n- minimum_travel_distance: 添加新扫描的最小移动距离\n- loop_search_maximum_distance: 回环检测的搜索距离\n- resolution: 地图分辨率，越小越精细但占用内存越大"
+            },
+            {
+              "type": "code",
+              "title": "保存和加载地图",
+              "language": "bash",
+              "code": "# 建图过程中保存地图\nrosrun map_server map_saver -f my_map\n\n# 这会生成两个文件：\n# my_map.pgm  - 地图图像文件\n# my_map.yaml - 地图配置文件\n\n# 加载已有地图\nrosrun map_server map_server my_map.yaml\n\n# 或在launch文件中加载\n# <node name=\"map_server\" pkg=\"map_server\" type=\"map_server\" \n#       args=\"$(find my_robot)/maps/my_map.yaml\"/>",
+              "explanation": "map_saver保存当前构建的地图。地图由PGM图像文件和YAML配置文件组成。"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：理解参数设置",
+              "task": "如果机器人移动速度很慢，应该如何调整minimum_travel_distance参数？",
+              "hint": "移动慢意味着相邻帧之间变化小，可能需要更小的阈值",
+              "solution": "应该减小minimum_travel_distance的值（如从0.2m降到0.1m），这样可以在较小的移动距离时就添加新的扫描数据，提高建图密度和精度。",
+              "exercise": {
+                "question": "地图分辨率0.05表示每个栅格代表多少米？",
+                "answer": "0.05"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "Karto SLAM基于图优化，精度高于Gmapping",
+                "使用位姿图表示机器人轨迹和约束关系",
+                "支持回环检测，能消除累积误差",
+                "关键参数：移动阈值、回环距离、地图分辨率",
+                "使用map_saver保存地图",
+                "适合大范围、高精度建图任务"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": "controls",
+      "categoryName": "控制协同与系统集成",
+      "lessons": [
+        {
+          "id": "controls-1",
+          "title": "并发编程基础",
+          "description": "学习线程、进程和协程的概念与应用",
+          "content": [
+            {
+              "type": "text",
+              "title": "并发编程概念",
+              "content": "**并发(Concurrency)：**\n多个任务在同一时间段内执行，通过快速切换给人同时执行的感觉。\n\n**并行(Parallelism)：**\n多个任务在同一时刻真正同时执行，需要多核CPU支持。\n\n**三种并发方式：**\n\n**1. 进程(Process)：**\n- 独立的执行单元，拥有独立内存空间\n- 进程间通信需要特殊机制(管道、共享内存)\n- 创建开销大，但隔离性好\n- 适合CPU密集型任务\n\n**2. 线程(Thread)：**\n- 进程内的执行单元，共享进程内存\n- 线程间通信简单，但需要注意同步\n- 创建开销小于进程\n- 适合I/O密集型任务\n\n**3. 协程(Coroutine)：**\n- 用户态轻量级线程，由程序控制切换\n- 没有线程切换开销\n- 适合大量I/O操作\n- Python中使用async/await实现"
+            },
+            {
+              "type": "code",
+              "title": "Python多线程示例",
+              "language": "python",
+              "code": "import threading\nimport time\n\ndef worker(name, delay):\n    \"\"\"工作线程函数\"\"\"\n    print(f\"线程 {name} 开始\")\n    for i in range(3):\n        time.sleep(delay)\n        print(f\"线程 {name} 执行第 {i+1} 次\")\n    print(f\"线程 {name} 结束\")\n\n# 创建线程\nthread1 = threading.Thread(target=worker, args=(\"A\", 0.5))\nthread2 = threading.Thread(target=worker, args=(\"B\", 0.8))\n\n# 启动线程\nthread1.start()\nthread2.start()\n\n# 等待线程结束\nthread1.join()\nthread2.join()\n\nprint(\"所有线程执行完毕\")\n\n# 使用线程锁避免竞争条件\nlock = threading.Lock()\ncounter = 0\n\ndef increment():\n    global counter\n    for _ in range(100000):\n        with lock:  # 获取锁\n            counter += 1\n        # 锁自动释放\n\nthreads = [threading.Thread(target=increment) for _ in range(10)]\nfor t in threads:\n    t.start()\nfor t in threads:\n    t.join()\n\nprint(f\"Counter: {counter}\")  # 应该是1000000",
+              "explanation": "多线程可以并发执行多个任务。使用Lock可以防止多个线程同时修改共享数据导致的竞争条件。"
+            },
+            {
+              "type": "code",
+              "title": "Python协程示例",
+              "language": "python",
+              "code": "import asyncio\nimport time\n\nasync def fetch_data(name, delay):\n    \"\"\"模拟异步获取数据\"\"\"\n    print(f\"{name} 开始获取数据\")\n    await asyncio.sleep(delay)  # 异步等待\n    print(f\"{name} 数据获取完成\")\n    return f\"{name}的数据\"\n\nasync def main():\n    \"\"\"主协程\"\"\"\n    print(\"开始执行异步任务\")\n    start = time.time()\n    \n    # 并发执行多个协程\n    results = await asyncio.gather(\n        fetch_data(\"任务1\", 2),\n        fetch_data(\"任务2\", 1),\n        fetch_data(\"任务3\", 1.5)\n    )\n    \n    print(f\"结果: {results}\")\n    print(f\"总耗时: {time.time() - start:.2f}秒\")\n\n# 运行协程\nif __name__ == \"__main__\":\n    asyncio.run(main())\n\n# 输出说明：虽然总延时是2+1+1.5=4.5秒，\n# 但并发执行只需约2秒（最长任务的时间）",
+              "explanation": "协程使用async/await语法。asyncio.gather()可以并发执行多个协程，比顺序执行更高效。"
+            },
+            {
+              "type": "code",
+              "title": "机器人多任务控制示例",
+              "language": "python",
+              "code": "import threading\nimport time\nimport queue\n\nclass RobotController:\n    def __init__(self):\n        self.running = True\n        self.cmd_queue = queue.Queue()\n        \n    def sensor_thread(self):\n        \"\"\"传感器读取线程\"\"\"\n        while self.running:\n            # 模拟读取传感器\n            distance = self.read_sensor()\n            print(f\"距离: {distance}cm\")\n            \n            if distance < 30:\n                # 检测到障碍物，发送停止命令\n                self.cmd_queue.put('STOP')\n            \n            time.sleep(0.1)\n    \n    def control_thread(self):\n        \"\"\"控制线程\"\"\"\n        while self.running:\n            try:\n                # 非阻塞获取命令\n                cmd = self.cmd_queue.get(timeout=0.1)\n                self.execute_command(cmd)\n            except queue.Empty:\n                # 没有命令时继续前进\n                self.move_forward()\n    \n    def vision_thread(self):\n        \"\"\"视觉处理线程\"\"\"\n        while self.running:\n            # 模拟图像处理\n            objects = self.detect_objects()\n            print(f\"检测到 {len(objects)} 个物体\")\n            time.sleep(0.5)\n    \n    def read_sensor(self):\n        # 模拟传感器读数\n        import random\n        return random.randint(10, 100)\n    \n    def detect_objects(self):\n        # 模拟物体检测\n        import random\n        return list(range(random.randint(0, 5)))\n    \n    def execute_command(self, cmd):\n        print(f\"执行命令: {cmd}\")\n        if cmd == 'STOP':\n            print(\"紧急停止！\")\n    \n    def move_forward(self):\n        pass  # 控制机器人前进\n    \n    def start(self):\n        # 启动所有线程\n        threads = [\n            threading.Thread(target=self.sensor_thread, name=\"Sensor\"),\n            threading.Thread(target=self.control_thread, name=\"Control\"),\n            threading.Thread(target=self.vision_thread, name=\"Vision\")\n        ]\n        \n        for t in threads:\n            t.daemon = True  # 设为守护线程\n            t.start()\n        \n        try:\n            while True:\n                time.sleep(1)\n        except KeyboardInterrupt:\n            print(\"\\n停止机器人\")\n            self.running = False\n\nif __name__ == \"__main__\":\n    robot = RobotController()\n    robot.start()",
+              "explanation": "这个示例展示了机器人系统中的典型多线程架构：\n- 传感器线程：持续读取传感器数据\n- 控制线程：执行运动控制\n- 视觉线程：处理图像识别\n使用队列进行线程间通信，保证线程安全。"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：理解并发执行时间",
+              "task": "如果有3个任务分别需要2秒、3秒、1秒，顺序执行需要多少秒？并发执行最少需要多少秒？",
+              "hint": "顺序执行是累加，并发执行取最大值",
+              "solution": "顺序执行: 2+3+1=6秒\n并发执行: max(2,3,1)=3秒",
+              "exercise": {
+                "question": "5个各需要4秒的任务并发执行需要多少秒？",
+                "answer": "4"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "进程独立内存，线程共享内存，协程更轻量",
+                "使用线程锁(Lock)防止竞争条件",
+                "队列(Queue)用于线程间安全通信",
+                "协程使用async/await语法",
+                "机器人系统常用多线程处理并发任务",
+                "守护线程会随主线程结束而结束"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": "general",
+      "categoryName": "综合拓展与行业认知",
+      "lessons": [
+        {
+          "id": "general-1",
+          "title": "机器人发展历史",
+          "description": "了解机器人技术的发展历程和里程碑",
+          "content": [
+            {
+              "type": "text",
+              "title": "机器人发展简史",
+              "content": "**早期阶段(1950s-1970s)：**\n- 1954年：第一台可编程机器人Unimate诞生\n- 1961年：Unimate进入通用汽车工厂，开启工业机器人时代\n- 1970年：斯坦福大学研发移动机器人Shakey\n\n**发展阶段(1980s-1990s)：**\n- 1986年：本田开始研发人形机器人\n- 1997年：索尼发布宠物机器人AIBO\n- 移动机器人和传感技术快速发展\n\n**智能化阶段(2000s-至今)：**\n- 2002年：iRobot推出Roomba扫地机器人\n- 2004年：Boston Dynamics成立，研发动态机器人\n- 2011年：IBM Watson赢得智力竞赛\n- 2016年：AlphaGo战胜围棋世界冠军\n- 2020s：服务机器人、协作机器人广泛应用"
+            },
+            {
+              "type": "text",
+              "title": "著名机器人品牌",
+              "content": "**工业机器人：**\n- **ABB**（瑞士）：全球四大机器人厂商之一\n- **FANUC**（日本）：黄色机器人，市场占有率高\n- **KUKA**（德国）：橙色机器人，技术先进\n- **Yaskawa**（日本）：安川电机，运动控制专家\n\n**服务机器人：**\n- **iRobot**（美国）：扫地机器人领导者\n- **Softbank**（日本）：Pepper社交机器人\n- **优必选**（中国）：人形机器人\n- **科沃斯**（中国）：家用服务机器人\n\n**特种机器人：**\n- **Boston Dynamics**：Spot、Atlas动态机器人\n- **DJI**：无人机领导者\n- **达闼科技**：云端智能机器人"
+            },
+            {
+              "type": "text",
+              "title": "机器人应用领域",
+              "content": "**制造业：**\n- 焊接、喷涂、装配\n- 搬运、码垛\n- 质量检测\n\n**服务业：**\n- 餐饮服务（送餐、烹饪）\n- 酒店服务（引导、配送）\n- 零售（导购、盘点）\n\n**医疗健康：**\n- 手术机器人（达芬奇手术系统）\n- 康复机器人\n- 护理机器人\n- 消毒机器人\n\n**教育娱乐：**\n- 教育机器人（编程教学）\n- 陪伴机器人\n- 展览讲解\n\n**特殊环境：**\n- 水下探测\n- 灾害救援\n- 太空探索\n- 农业采摘"
+            },
+            {
+              "type": "interactive",
+              "title": "试一试：机器人知识",
+              "task": "全球工业机器人四大家族是哪四个品牌？",
+              "hint": "两个日本品牌，一个瑞士品牌，一个德国品牌",
+              "solution": "ABB（瑞士）、FANUC（日本）、KUKA（德国）、Yaskawa（日本）",
+              "exercise": {
+                "question": "第一台工业机器人的名字是什么？",
+                "answer": "Unimate"
+              }
+            },
+            {
+              "type": "keypoints",
+              "title": "重点总结",
+              "points": [
+                "1954年第一台可编程机器人Unimate诞生",
+                "工业机器人四大家族：ABB、FANUC、KUKA、Yaskawa",
+                "服务机器人快速发展，应用场景广泛",
+                "Boston Dynamics以动态机器人著称",
+                "中国在服务机器人领域发展迅速",
+                "机器人正在向智能化、协作化方向发展"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
