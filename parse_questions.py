@@ -83,6 +83,18 @@ def normalize_punctuation(text):
     return text.replace('．', '.').replace('：', ':').replace('（', '(').replace('）', ')')
 
 
+INLINE_TRUE_FALSE_SUFFIX = re.compile(
+    r'\s*[（(]\s*([TFtf√×对错真假是否YN])\s*[)）]\s*(?P<tail>[。．.!！?？、,，]*)\s*(?:改)?\s*$'
+)
+
+def strip_inline_true_false(text):
+    match = INLINE_TRUE_FALSE_SUFFIX.search(text)
+    if not match:
+        return text.strip()
+    tail = match.group('tail') or ''
+    cleaned = text[:match.start()].rstrip()
+    return f"{cleaned}{tail}".strip()
+
 def parse_choice_section(section_text, qtype):
     lines = [normalize_punctuation(line.rstrip()) for line in section_text.strip().split('\n')]
     questions = []
@@ -169,6 +181,11 @@ for raw_line in judgment_lines:
             current['question'] += ' ' + line
 if current:
     judgment_questions.append(current)
+
+for item in judgment_questions:
+    cleaned = strip_inline_true_false(item['question'])
+    if cleaned:
+        item['question'] = cleaned
 
 # Parse judgment answers
 judgment_answer_map = {}
