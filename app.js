@@ -541,6 +541,9 @@ function initialize() {
   renderHome();
   updateProgressDisplay();
   setupEventListeners();
+
+  document.querySelector(`.nav-btn[data-view="${currentView}"]`)?.classList.add('active');
+  document.querySelector(`.mobile-nav-item[data-view="${currentView}"]`)?.classList.add('active');
   
   window.addEventListener('beforeunload', endStudySession);
 }
@@ -620,8 +623,13 @@ function switchView(view) {
   document.querySelectorAll('.view').forEach((element) => element.classList.remove('active'));
   document.getElementById(`${view}View`)?.classList.add('active');
 
-  document.querySelectorAll('.nav-btn').forEach((btn) => btn.classList.remove('active'));
+  document.querySelectorAll('.nav-btn, .mobile-nav-item').forEach((btn) => btn.classList.remove('active'));
   document.querySelector(`.nav-btn[data-view="${view}"]`)?.classList.add('active');
+  document.querySelector(`.mobile-nav-item[data-view="${view}"]`)?.classList.add('active');
+
+  // Close mobile menu
+  const mobileNav = document.getElementById('mobileNav');
+  if (mobileNav) mobileNav.classList.remove('active');
 
   if (view === 'home') {
     renderHome();
@@ -639,6 +647,10 @@ function switchView(view) {
     renderAnalytics();
   } else if (view === 'review') {
     renderReview();
+  } else if (view === 'documents') {
+    if (typeof DocumentManager !== 'undefined') {
+      DocumentManager.init();
+    }
   }
 }
 
@@ -2032,6 +2044,18 @@ function createNoteEditor(type, id) {
 
 if (localStorage.getItem('theme') === 'dark') {
   document.body.classList.add('dark');
+}
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then((registration) => {
+        console.log('Service Worker registered:', registration);
+      })
+      .catch((error) => {
+        console.error('Service Worker registration failed:', error);
+      });
+  });
 }
 
 loadData();
