@@ -307,10 +307,12 @@ const DocumentManager = (function() {
       const downloadBtn = document.getElementById('downloadDocument');
       const deleteBtn = document.getElementById('deleteDocument');
       const copyBtn = document.getElementById('copyOcrText');
+      const generateBtn = document.getElementById('generateQuestionsBtn');
       
       if (downloadBtn) downloadBtn.disabled = false;
       if (deleteBtn) deleteBtn.disabled = false;
       if (copyBtn) copyBtn.disabled = !doc.ocrText;
+      if (generateBtn) generateBtn.disabled = !doc.ocrText;
 
       // Render preview
       const previewEl = document.getElementById('documentPreview');
@@ -425,9 +427,11 @@ const DocumentManager = (function() {
       const downloadBtn = document.getElementById('downloadDocument');
       const deleteBtn = document.getElementById('deleteDocument');
       const copyBtn = document.getElementById('copyOcrText');
+      const generateBtn = document.getElementById('generateQuestionsBtn');
       if (downloadBtn) downloadBtn.disabled = true;
       if (deleteBtn) deleteBtn.disabled = true;
       if (copyBtn) copyBtn.disabled = true;
+      if (generateBtn) generateBtn.disabled = true;
 
       await renderDocuments();
     } catch (error) {
@@ -570,6 +574,12 @@ const DocumentManager = (function() {
       copyBtn.addEventListener('click', copyOCRText);
     }
 
+    // Generate questions button
+    const generateBtn = document.getElementById('generateQuestionsBtn');
+    if (generateBtn) {
+      generateBtn.addEventListener('click', generateQuestionsFromDocument);
+    }
+
     // Clear all documents button
     const clearAllBtn = document.getElementById('clearAllDocuments');
     if (clearAllBtn) {
@@ -636,11 +646,276 @@ const DocumentManager = (function() {
     }
   }
 
+  /**
+   * 生成题库（一键流程）
+   */
+  async function generateQuestionsFromDocument() {
+    if (!currentDocument) {
+      alert('请先选择一个文档');
+      return;
+    }
+
+    let text = '';
+    
+    // 获取文本内容
+    if (currentDocument.ocrText) {
+      text = currentDocument.ocrText;
+    } else if (currentDocument.type.startsWith('image/')) {
+      alert('该图片尚未进行OCR识别，请等待OCR完成后再生成题库');
+      return;
+    } else {
+      alert('该文件类型不支持自动生成题库，请上传图片或包含OCR文本的文档');
+      return;
+    }
+
+    // 检查文本长度
+    if (text.trim().length < 50) {
+      alert('文本内容太少，无法生成题目（至少需要50个字符）');
+      return;
+    }
+
+    // 显示生成对话框
+    showGenerateDialog(text);
+  }
+
+  /**
+   * 显示生成题库对话框
+   */
+  function showGenerateDialog(text) {
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+      <div class="modal-content generate-modal">
+        <div class="modal-header">
+          <h2>🎯 一键生成题库</h2>
+          <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="generate-form">
+            <div class="form-group">
+              <label for="questionCount">生成题目数量：</label>
+              <input type="number" id="questionCount" min="5" max="50" value="10" />
+            </div>
+            
+            <div class="form-group">
+              <label>题目类型：</label>
+              <div class="checkbox-group">
+                <label><input type="checkbox" value="single" checked /> 单选题</label>
+                <label><input type="checkbox" value="multiple" checked /> 多选题</label>
+                <label><input type="checkbox" value="truefalse" checked /> 判断题</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="questionModule">题目模块：</label>
+              <select id="questionModule">
+                <option value="custom">自定义题库</option>
+                <option value="basics">机器人基础</option>
+                <option value="sensors">传感器技术</option>
+                <option value="control">控制系统</option>
+                <option value="programming">编程基础</option>
+                <option value="kinematics">运动学</option>
+                <option value="vision">视觉系统</option>
+                <option value="ai">人工智能</option>
+                <option value="applications">应用实践</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="addToReview" checked />
+                自动添加到复习计划
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="createMockExam" />
+                立即生成模拟考试
+              </label>
+            </div>
+
+            <div class="generate-info">
+              <p>📝 文本长度：<strong>${text.length}</strong> 字符</p>
+              <p>✨ 将使用AI智能算法从文档内容中提取知识点并生成题目</p>
+            </div>
+          </div>
+
+          <div id="generateProgress" class="generate-progress" style="display: none;">
+            <div class="progress-bar">
+              <div class="progress-fill"></div>
+            </div>
+            <p class="progress-text">正在生成题库...</p>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="secondary-btn" onclick="this.closest('.modal-overlay').remove()">取消</button>
+          <button class="cta-btn" id="startGenerate">🚀 开始生成</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // 绑定开始生成按钮
+    const startBtn = modal.querySelector('#startGenerate');
+    startBtn.addEventListener('click', () => {
+      performQuestionGeneration(text, modal);
+    });
+  }
+
+  /**
+   * 执行题目生成
+   */
+  async function performQuestionGeneration(text, modal) {
+    const countInput = modal.querySelector('#questionCount');
+    const moduleSelect = modal.querySelector('#questionModule');
+    const addToReview = modal.querySelector('#addToReview');
+    const createMockExam = modal.querySelector('#createMockExam');
+    const typeCheckboxes = modal.querySelectorAll('.checkbox-group input[type="checkbox"]:checked');
+
+    const count = parseInt(countInput.value) || 10;
+    const module = moduleSelect.value;
+    const types = Array.from(typeCheckboxes).map(cb => cb.value);
+
+    if (types.length === 0) {
+      alert('请至少选择一种题目类型');
+      return;
+    }
+
+    // 显示进度
+    const form = modal.querySelector('.generate-form');
+    const progress = modal.querySelector('#generateProgress');
+    const progressFill = progress.querySelector('.progress-fill');
+    const progressText = progress.querySelector('.progress-text');
+    const startBtn = modal.querySelector('#startGenerate');
+
+    form.style.display = 'none';
+    progress.style.display = 'block';
+    startBtn.disabled = true;
+
+    try {
+      // 模拟进度
+      progressText.textContent = '正在分析文档内容...';
+      progressFill.style.width = '20%';
+
+      await sleep(500);
+
+      // 调用题目生成器
+      if (typeof QuestionGenerator === 'undefined') {
+        throw new Error('题目生成器未加载，请刷新页面重试');
+      }
+
+      progressText.textContent = '正在提取关键知识点...';
+      progressFill.style.width = '40%';
+
+      const questions = QuestionGenerator.generateQuestions(text, {
+        module,
+        count,
+        types
+      });
+
+      progressText.textContent = '正在生成题目...';
+      progressFill.style.width = '60%';
+
+      await sleep(500);
+
+      // 保存题目到系统
+      progressText.textContent = '正在保存到题库...';
+      progressFill.style.width = '80%';
+
+      if (typeof window.addGeneratedQuestions === 'function') {
+        window.addGeneratedQuestions(questions, {
+          addToReview: addToReview.checked,
+          createMockExam: createMockExam.checked
+        });
+      } else {
+        console.warn('addGeneratedQuestions 函数未定义');
+      }
+
+      progressText.textContent = '✓ 题库生成完成！';
+      progressFill.style.width = '100%';
+
+      await sleep(1000);
+
+      // 显示结果
+      showGenerationResult(questions, modal, createMockExam.checked);
+
+    } catch (error) {
+      console.error('生成题目失败:', error);
+      progressText.textContent = '❌ 生成失败: ' + error.message;
+      progressFill.style.width = '100%';
+      progressFill.style.backgroundColor = 'var(--error-color, #f44336)';
+
+      setTimeout(() => {
+        form.style.display = 'block';
+        progress.style.display = 'none';
+        startBtn.disabled = false;
+        progressFill.style.width = '0%';
+        progressFill.style.backgroundColor = '';
+      }, 3000);
+    }
+  }
+
+  /**
+   * 显示生成结果
+   */
+  function showGenerationResult(questions, modal, createMockExam) {
+    const singleCount = questions.filter(q => q.type === 'single').length;
+    const multipleCount = questions.filter(q => q.type === 'multiple').length;
+    const trueFalseCount = questions.filter(q => q.type === 'truefalse').length;
+
+    const resultHtml = `
+      <div class="generate-result">
+        <div class="result-icon">🎉</div>
+        <h3>题库生成成功！</h3>
+        <div class="result-stats">
+          <div class="stat-item">
+            <div class="stat-number">${questions.length}</div>
+            <div class="stat-label">题目总数</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">${singleCount}</div>
+            <div class="stat-label">单选题</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">${multipleCount}</div>
+            <div class="stat-label">多选题</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">${trueFalseCount}</div>
+            <div class="stat-label">判断题</div>
+          </div>
+        </div>
+        <div class="result-actions">
+          ${createMockExam ? '<button class="cta-btn" onclick="window.startMockExam && window.startMockExam()">🚀 开始模拟考试</button>' : ''}
+          <button class="cta-btn" onclick="window.switchView && window.switchView(\'practice\')">📝 进入练习</button>
+          <button class="secondary-btn" onclick="this.closest(\'.modal-overlay\').remove()">关闭</button>
+        </div>
+      </div>
+    `;
+
+    const modalBody = modal.querySelector('.modal-body');
+    modalBody.innerHTML = resultHtml;
+
+    const modalFooter = modal.querySelector('.modal-footer');
+    modalFooter.style.display = 'none';
+  }
+
+  /**
+   * 辅助函数：延迟
+   */
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   // Public API
   return {
     init,
     renderDocuments,
     downloadCurrentDocument,
-    getCurrentDocument: () => currentDocument
+    getCurrentDocument: () => currentDocument,
+    generateQuestionsFromDocument
   };
 })();

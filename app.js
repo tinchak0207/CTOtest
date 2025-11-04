@@ -2046,6 +2046,138 @@ if (localStorage.getItem('theme') === 'dark') {
   document.body.classList.add('dark');
 }
 
+/**
+ * 添加生成的题目到题库系统
+ */
+function addGeneratedQuestions(questions, options = {}) {
+  if (!questionsData || !questions || questions.length === 0) {
+    console.warn('无法添加题目：题库未初始化或题目为空');
+    return;
+  }
+
+  const { addToReview = true, createMockExam = false } = options;
+
+  // 添加到questionsData
+  questions.forEach(question => {
+    // 确保题目格式正确
+    const formattedQuestion = {
+      id: question.id,
+      question: question.text,
+      category: question.module || 'custom',
+      type: question.type,
+      options: [],
+      correctOptions: [],
+      explanation: '本题由AI自动生成'
+    };
+
+    // 格式化选项
+    if (question.type === 'single' || question.type === 'multiple') {
+      formattedQuestion.options = question.options.map((opt, index) => ({
+        key: String.fromCharCode(65 + index),
+        text: opt
+      }));
+
+      // 格式化答案
+      if (question.type === 'single') {
+        formattedQuestion.correctOptions = [String.fromCharCode(65 + question.answer)];
+      } else {
+        formattedQuestion.correctOptions = question.answer.map(idx => 
+          String.fromCharCode(65 + idx)
+        );
+      }
+    } else if (question.type === 'truefalse') {
+      formattedQuestion.options = [
+        { key: 'A', text: '正确' },
+        { key: 'B', text: '错误' }
+      ];
+      formattedQuestion.correctOptions = [question.answer === 0 ? 'A' : 'B'];
+    }
+
+    // 添加到题库
+    questionsData.questions.push(formattedQuestion);
+
+    // 如果需要添加到复习计划
+    if (addToReview) {
+      scheduleReview(question.id, 'question', false);
+    }
+  });
+
+  // 保存数据
+  saveQuestionProgress();
+  saveReviewSchedule();
+
+  // 如果需要创建模拟考试
+  if (createMockExam) {
+    window.generatedExamQuestions = questions;
+  }
+
+  console.log(`成功添加 ${questions.length} 道题目到题库`);
+  
+  // 刷新当前视图
+  if (currentView === 'practice') {
+    renderPractice();
+  }
+}
+
+/**
+ * 启动基于生成题目的模拟考试
+ */
+function startMockExam() {
+  if (!window.generatedExamQuestions || window.generatedExamQuestions.length === 0) {
+    alert('没有可用的题目进行考试');
+    return;
+  }
+
+  const generatedQuestions = window.generatedExamQuestions;
+  
+  // 转换为考试格式
+  const examQuestions = generatedQuestions.map(q => {
+    const formatted = {
+      id: q.id,
+      question: q.text,
+      type: q.type,
+      options: [],
+      correctOptions: []
+    };
+
+    if (q.type === 'single' || q.type === 'multiple') {
+      formatted.options = q.options.map((opt, index) => ({
+        key: String.fromCharCode(65 + index),
+        text: opt
+      }));
+
+      if (q.type === 'single') {
+        formatted.correctOptions = [String.fromCharCode(65 + q.answer)];
+      } else {
+        formatted.correctOptions = q.answer.map(idx => String.fromCharCode(65 + idx));
+      }
+    } else if (q.type === 'truefalse') {
+      formatted.options = [
+        { key: 'A', text: '正确' },
+        { key: 'B', text: '错误' }
+      ];
+      formatted.correctOptions = [q.answer === 0 ? 'A' : 'B'];
+    }
+
+    return formatted;
+  });
+
+  examMode = {
+    questions: examQuestions,
+    answers: {},
+    startTime: Date.now()
+  };
+
+  switchView('exam');
+  renderExamQuestions();
+  startExamTimer();
+}
+
+// 暴露函数到全局
+window.addGeneratedQuestions = addGeneratedQuestions;
+window.startMockExam = startMockExam;
+window.switchView = switchView;
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js')
