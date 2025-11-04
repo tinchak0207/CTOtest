@@ -4,20 +4,12 @@ const DocumentManager = (function() {
   const STORE_NAME = 'documents';
   const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
   const SUPPORTED_FILE_TYPES = [
-    'image/jpeg',
-    'image/jpg',
-    'image/png',
-    'application/pdf',
-    'application/vnd.openxmlformats-officedocument.presentationml.presentation', // .pptx
-    'application/vnd.ms-powerpoint', // .ppt
-    'application/msword', // .doc
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
     'text/markdown', // .md
+    'text/plain', // .txt
   ];
   
   let db = null;
   let currentDocument = null;
-  let ocrWorker = null;
   let initialized = false;
   let listenersBound = false;
 
@@ -52,108 +44,29 @@ const DocumentManager = (function() {
     });
   }
 
-  function initOCR() {
-    if (typeof Tesseract !== 'undefined') {
-      ocrWorker = Tesseract.createWorker({
-        langPath: 'https://cdn.jsdelivr.net/npm/tesseract.js@5/tessdata',
-        logger: (m) => {
-          if (m.status === 'recognizing text') {
-            updateOCRProgress(Math.round(m.progress * 100));
-          }
-        }
-      });
-    }
-  }
-
-  function updateOCRProgress(percent) {
-    const ocrContent = document.getElementById('ocrContent');
-    if (ocrContent && percent < 100) {
-      ocrContent.innerHTML = `
-        <div class="ocr-loading">
-          <div class="spinner"></div>
-          <p>正在识别文字... ${percent}%</p>
-        </div>
-      `;
-    }
-  }
-
-  async function performOCR(file) {
-    if (!ocrWorker) {
-      initOCR();
-      if (!ocrWorker) {
-        throw new Error('OCR功能不可用');
-      }
-    }
-
-    try {
-      const ocrContent = document.getElementById('ocrContent');
-      ocrContent.innerHTML = `
-        <div class="ocr-loading">
-          <div class="spinner"></div>
-          <p>正在初始化OCR引擎...</p>
-        </div>
-      `;
-
-      await ocrWorker.load();
-      await ocrWorker.loadLanguage('chi_sim+eng');
-      await ocrWorker.initialize('chi_sim+eng');
-
-      const { data: { text } } = await ocrWorker.recognize(file);
-      return text;
-    } catch (error) {
-      console.error('OCR error:', error);
-      throw new Error('OCR识别失败: ' + error.message);
-    }
-  }
-
-  function readFileAsArrayBuffer(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = () => reject(reader.error);
-      reader.readAsArrayBuffer(file);
-    });
   }
 
 async function extractTextFromFile(file) {
-    if (file.type.startsWith('image/')) {
-      return performOCR(file);
-    }
-
-    const arrayBuffer = await readFileAsArrayBuffer(file);
-
-    if (file.type === 'application/pdf') {
-      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-      let text = '';
-      for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i);
-        const content = await page.getTextContent();
-        text += content.items.map(item => item.str).join(' ');
-      }
-      return text;
-    }
-
-    if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-      const result = await mammoth.extractRawText({ arrayBuffer });
-      return result.value;
-    }
-
-    if (file.type === 'text/markdown') {
-      return new Promise((resolve, reject) => {
+    const text = await new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = () => {
-          const html = marked.parse(reader.result);
-          const tempDiv = document.createElement('div');
-          tempDiv.innerHTML = html;
-          resolve(tempDiv.textContent || tempDiv.innerText || '');
-        };
+        reader.onload = () => resolve(reader.result);
         reader.onerror = reject;
         reader.readAsText(file);
-      });
+    });
+
+    if (file.type === 'text/markdown') {
+        const html = marked.parse(text);
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        return tempDiv.textContent || tempDiv.innerText || '';
+    }
+
+    if (file.type === 'text/plain') {
+        return text;
     }
 
     return null;
-  }
+}
 
   async function saveDocument(file) {
     if (!db) await initIndexedDB();
@@ -266,20 +179,14 @@ async function extractTextFromFile(file) {
   }
 
   function getFileIcon(type) {
-    if (type.startsWith('image/')) return '🖼️';
-    if (type === 'application/pdf') return '📄';
-    if (type.includes('presentation') || type.includes('powerpoint')) return '📊';
-    if (type.includes('word')) return '📝';
     if (type === 'text/markdown') return '✍️';
+    if (type === 'text/plain') return '📄';
     return '📎';
   }
 
   function getFileTypeLabel(type) {
-    if (type.startsWith('image/')) return 'image';
-    if (type === 'application/pdf') return 'pdf';
-    if (type.includes('presentation') || type.includes('powerpoint')) return 'ppt';
-    if (type.includes('word')) return 'doc';
     if (type === 'text/markdown') return 'md';
+    if (type === 'text/plain') return 'txt';
     return 'other';
   }
 
@@ -382,24 +289,11 @@ async function extractTextFromFile(file) {
       const previewEl = document.getElementById('documentPreview');
       if (!previewEl) return;
 
-      const safeName = escapeHtml(doc.name);
-      const dataUrl = doc.data;
-
-      if (doc.type.startsWith('image/')) {
+      if (doc.ocrText) {
+        const safeOcr = escapeHtml(doc.ocrText);
         previewEl.innerHTML = `
-          <div class="preview-image-container">
-            <img src="${dataUrl}" alt="${safeName}" class="preview-image">
-          </div>
-        `;
-      } else if (doc.type === 'application/pdf') {
-        previewEl.innerHTML = `
-          <div class="preview-pdf-container">
-            <iframe src="${dataUrl}" class="preview-pdf" title="PDF预览"></iframe>
-            <p class="preview-hint">
-              <a href="${dataUrl}" download="${safeName}" class="preview-download-link">
-                下载PDF查看完整内容
-              </a>
-            </p>
+          <div class="preview-text-container">
+            <pre class="preview-text">${safeOcr}</pre>
           </div>
         `;
       } else {
@@ -409,7 +303,7 @@ async function extractTextFromFile(file) {
               <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
               <polyline points="13 2 13 9 20 9"/>
             </svg>
-            <p>无法预览此文件类型</p>
+            <p>无法预览此文件内容</p>
             <button class="cta-btn" onclick="DocumentManager.downloadCurrentDocument()">下载文件</button>
           </div>
         `;
@@ -529,19 +423,28 @@ async function extractTextFromFile(file) {
       }
 
       // Validate file type
-      if (!SUPPORTED_FILE_TYPES.includes(file.type)) {
-        const extension = file.name.split('.').pop().toLowerCase();
-        const genericTypes = {
-          'ppt': 'application/vnd.ms-powerpoint',
-          'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-          'doc': 'application/msword',
-          'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-          'md': 'text/markdown'
-        };
-        if (!Object.values(genericTypes).some(type => SUPPORTED_FILE_TYPES.includes(type))) {
-          alert(`文件 "${file.name}" 类型不支持`);
-          continue;
-        }
+      const fileType = file.type;
+      const fileName = file.name.toLowerCase();
+      
+      let isSupported = SUPPORTED_FILE_TYPES.includes(fileType);
+
+      // Fallback for systems that might not assign a MIME type to .md files
+      if (!isSupported && fileName.endsWith('.md') && file.type === '') {
+        isSupported = true;
+        // Correct the type for later use
+        Object.defineProperty(file, 'type', { value: 'text/markdown' });
+      }
+      
+      // Fallback for .txt files
+      if (!isSupported && fileName.endsWith('.txt') && file.type === '') {
+        isSupported = true;
+        // Correct the type for later use
+        Object.defineProperty(file, 'type', { value: 'text/plain' });
+      }
+
+      if (!isSupported) {
+        alert(`文件 "${file.name}" 类型不支持. 只支持 .md 和 .txt 文件.`);
+        continue;
       }
 
       try {

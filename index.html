@@ -263,7 +263,7 @@
                 <div class="documents-container">
                     <div class="documents-header">
                         <h2>📄 文档中心</h2>
-                        <p class="documents-subtitle">上传学习资料，支持PDF、图片及OCR文字识别</p>
+                        <p class="documents-subtitle">上传 .md 或 .txt 文件来提取文本内容</p>
                     </div>
                     
                     <div class="upload-section">
@@ -274,8 +274,8 @@
                                 <line x1="12" y1="3" x2="12" y2="15"/>
                             </svg>
                             <p class="upload-text">拖拽文件到此处或点击上传</p>
-                            <p class="upload-hint">支持 PDF、JPG、PNG、JPEG 格式，单个文件最大 10MB</p>
-                            <input type="file" id="documentInput" accept=".pdf,.jpg,.jpeg,.png" multiple hidden>
+                            <p class="upload-hint">支持 .md, .txt 格式，单个文件最大 10MB</p>
+                            <input type="file" id="documentInput" accept=".md,.txt" multiple hidden>
                             <button class="cta-btn" id="selectFilesBtn">选择文件</button>
                         </div>
                     </div>
@@ -325,14 +325,14 @@
                             </div>
                             <div class="ocr-panel">
                                 <div class="ocr-header">
-                                    <h4>OCR 识别内容</h4>
+                                    <h4>提取的文本内容</h4>
                                     <div class="ocr-actions">
                                         <button class="secondary-btn" id="copyOcrText" disabled>复制文字</button>
                                         <button class="cta-btn" id="generateQuestionsBtn" disabled>🚀 一键生成题库</button>
                                     </div>
                                 </div>
                                 <div class="ocr-content" id="ocrContent">
-                                    <p>当上传图片时，系统会自动识别文字并显示在此处。</p>
+                                    <p>上传文件后，系统会自动提取文字并显示在此处。</p>
                                 </div>
                             </div>
                         </div>
@@ -405,7 +405,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.18/mammoth.browser.min.js"></script>
