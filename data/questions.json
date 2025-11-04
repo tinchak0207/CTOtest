@@ -6126,7 +6126,7 @@
       "id": "TF-6",
       "order": 6,
       "type": "truefalse",
-      "question": "Pocketsphinx可以不依赖于SphinxBase，因此可以不用安装SphinxBase，也能直接使用Pocketsphinx。  ( F  )",
+      "question": "Pocketsphinx可以不依赖于SphinxBase，因此可以不用安装SphinxBase，也能直接使用Pocketsphinx。",
       "options": [
         {
           "key": "A",
@@ -6142,14 +6142,14 @@
       ],
       "category": "speech",
       "sourceIndex": 6,
-      "learningPoint": "Pocketsphinx可以不依赖于SphinxBase，因此可以不用安装SphinxBase，也能直接使用Pocketsphinx。  ( F  ) 判断：错误",
+      "learningPoint": "Pocketsphinx可以不依赖于SphinxBase，因此可以不用安装SphinxBase，也能直接使用Pocketsphinx。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-7",
       "order": 7,
       "type": "truefalse",
-      "question": "当我们进行较大场景的建图时，由于激光雷达累计误差的影响，走重复路径时机器人的位姿可能有一定的偏差，需要等待回环检测进行修正，以降低建图误差。( T  )",
+      "question": "当我们进行较大场景的建图时，由于激光雷达累计误差的影响，走重复路径时机器人的位姿可能有一定的偏差，需要等待回环检测进行修正，以降低建图误差。",
       "options": [
         {
           "key": "A",
@@ -6165,14 +6165,14 @@
       ],
       "category": "slam",
       "sourceIndex": 7,
-      "learningPoint": "当我们进行较大场景的建图时，由于激光雷达累计误差的影响，走重复路径时机器人的位姿可能有一定的偏差，需要等待回环检测进行修正，以降低建图误差。( T  ) 判断：正确",
+      "learningPoint": "当我们进行较大场景的建图时，由于激光雷达累计误差的影响，走重复路径时机器人的位姿可能有一定的偏差，需要等待回环检测进行修正，以降低建图误差。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-8",
       "order": 8,
       "type": "truefalse",
-      "question": "决定语音感知的基本因素是共振峰，音色各异的语音共振峰模式是一样的。 (  F )",
+      "question": "决定语音感知的基本因素是共振峰，音色各异的语音共振峰模式是一样的。",
       "options": [
         {
           "key": "A",
@@ -6188,14 +6188,14 @@
       ],
       "category": "speech",
       "sourceIndex": 8,
-      "learningPoint": "决定语音感知的基本因素是共振峰，音色各异的语音共振峰模式是一样的。 (  F ) 判断：错误",
+      "learningPoint": "决定语音感知的基本因素是共振峰，音色各异的语音共振峰模式是一样的。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-9",
       "order": 9,
       "type": "truefalse",
-      "question": "共振峰合成器控制十分复杂，控制参数经常多达几十个，实现起来较为困难。  ( T  )",
+      "question": "共振峰合成器控制十分复杂，控制参数经常多达几十个，实现起来较为困难。",
       "options": [
         {
           "key": "A",
@@ -6211,14 +6211,14 @@
       ],
       "category": "controls",
       "sourceIndex": 9,
-      "learningPoint": "共振峰合成器控制十分复杂，控制参数经常多达几十个，实现起来较为困难。  ( T  ) 判断：正确",
+      "learningPoint": "共振峰合成器控制十分复杂，控制参数经常多达几十个，实现起来较为困难。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-10",
       "order": 10,
       "type": "truefalse",
-      "question": "作为一个社交机器人，它也应该满足社会的伦理道德，需要伦理知识。  (  T )",
+      "question": "作为一个社交机器人，它也应该满足社会的伦理道德，需要伦理知识。",
       "options": [
         {
           "key": "A",
@@ -6234,14 +6234,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 10,
-      "learningPoint": "作为一个社交机器人，它也应该满足社会的伦理道德，需要伦理知识。  (  T ) 判断：正确",
+      "learningPoint": "作为一个社交机器人，它也应该满足社会的伦理道德，需要伦理知识。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-11",
       "order": 11,
       "type": "truefalse",
-      "question": "相比语音识别技术，语音合成技术相对更成熟。  ( T  )",
+      "question": "相比语音识别技术，语音合成技术相对更成熟。",
       "options": [
         {
           "key": "A",
@@ -6257,14 +6257,14 @@
       ],
       "category": "speech",
       "sourceIndex": 11,
-      "learningPoint": "相比语音识别技术，语音合成技术相对更成熟。  ( T  ) 判断：正确",
+      "learningPoint": "相比语音识别技术，语音合成技术相对更成熟。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-12",
       "order": 12,
       "type": "truefalse",
-      "question": "espeak命令中，如果设置参数为-s150，则含义为设置每分钟读150个字符。  ( F  )",
+      "question": "espeak命令中，如果设置参数为-s150，则含义为设置每分钟读150个字符。",
       "options": [
         {
           "key": "A",
@@ -6280,14 +6280,14 @@
       ],
       "category": "speech",
       "sourceIndex": 12,
-      "learningPoint": "espeak命令中，如果设置参数为-s150，则含义为设置每分钟读150个字符。  ( F  ) 判断：错误",
+      "learningPoint": "espeak命令中，如果设置参数为-s150，则含义为设置每分钟读150个字符。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-13",
       "order": 13,
       "type": "truefalse",
-      "question": "eSpeak软件是一款用计算机语言编写的开源计算机视频软件。  (  F )",
+      "question": "eSpeak软件是一款用计算机语言编写的开源计算机视频软件。",
       "options": [
         {
           "key": "A",
@@ -6303,14 +6303,14 @@
       ],
       "category": "speech",
       "sourceIndex": 13,
-      "learningPoint": "eSpeak软件是一款用计算机语言编写的开源计算机视频软件。  (  F ) 判断：错误",
+      "learningPoint": "eSpeak软件是一款用计算机语言编写的开源计算机视频软件。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-14",
       "order": 14,
       "type": "truefalse",
-      "question": "espeak不能控制男性还是女性进行发音。  (F   )",
+      "question": "espeak不能控制男性还是女性进行发音。",
       "options": [
         {
           "key": "A",
@@ -6326,14 +6326,14 @@
       ],
       "category": "speech",
       "sourceIndex": 14,
-      "learningPoint": "espeak不能控制男性还是女性进行发音。  (F   ) 判断：错误",
+      "learningPoint": "espeak不能控制男性还是女性进行发音。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-15",
       "order": 15,
       "type": "truefalse",
-      "question": "espeak的—stdout是指将文本信息转换成音信息到标准输出，而不是说出来。  ( T  )",
+      "question": "espeak的—stdout是指将文本信息转换成音信息到标准输出，而不是说出来。",
       "options": [
         {
           "key": "A",
@@ -6349,14 +6349,14 @@
       ],
       "category": "speech",
       "sourceIndex": 15,
-      "learningPoint": "espeak的—stdout是指将文本信息转换成音信息到标准输出，而不是说出来。  ( T  ) 判断：正确",
+      "learningPoint": "espeak的—stdout是指将文本信息转换成音信息到标准输出，而不是说出来。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-16",
       "order": 16,
       "type": "truefalse",
-      "question": "cv2模块circle函数的color参数意思为绘制圆内部的颜色。  ( F  )",
+      "question": "cv2模块circle函数的color参数意思为绘制圆内部的颜色。",
       "options": [
         {
           "key": "A",
@@ -6372,14 +6372,14 @@
       ],
       "category": "vision",
       "sourceIndex": 16,
-      "learningPoint": "cv2模块circle函数的color参数意思为绘制圆内部的颜色。  ( F  ) 判断：错误",
+      "learningPoint": "cv2模块circle函数的color参数意思为绘制圆内部的颜色。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-17",
       "order": 17,
       "type": "truefalse",
-      "question": "OpenCV 是一个基于BSD许可(开源)的跨平台计算机语音和机器学习软件库。( F  )",
+      "question": "OpenCV 是一个基于BSD许可(开源)的跨平台计算机语音和机器学习软件库。",
       "options": [
         {
           "key": "A",
@@ -6395,14 +6395,14 @@
       ],
       "category": "speech",
       "sourceIndex": 17,
-      "learningPoint": "OpenCV 是一个基于BSD许可(开源)的跨平台计算机语音和机器学习软件库。( F  ) 判断：错误",
+      "learningPoint": "OpenCV 是一个基于BSD许可(开源)的跨平台计算机语音和机器学习软件库。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-18",
       "order": 18,
       "type": "truefalse",
-      "question": "机器人识别颜色的原理依据是:每个点的像素值(彩色为三通道的RGB)呈现出来的颜色的判决条件是，该点的像素值是否在此颜色的像素值(彩色为三通道的RGB)范围内。(  T )",
+      "question": "机器人识别颜色的原理依据是:每个点的像素值(彩色为三通道的RGB)呈现出来的颜色的判决条件是，该点的像素值是否在此颜色的像素值(彩色为三通道的RGB)范围内。",
       "options": [
         {
           "key": "A",
@@ -6418,14 +6418,14 @@
       ],
       "category": "vision",
       "sourceIndex": 18,
-      "learningPoint": "机器人识别颜色的原理依据是:每个点的像素值(彩色为三通道的RGB)呈现出来的颜色的判决条件是，该点的像素值是否在此颜色的像素值(彩色为三通道的RGB)范围内。(  T ) 判断：正确",
+      "learningPoint": "机器人识别颜色的原理依据是:每个点的像素值(彩色为三通道的RGB)呈现出来的颜色的判决条件是，该点的像素值是否在此颜色的像素值(彩色为三通道的RGB)范围内。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-19",
       "order": 19,
       "type": "truefalse",
-      "question": "R、G、B代表可见光谱中的红、绿、蓝三种基本颜色。 (  T )",
+      "question": "R、G、B代表可见光谱中的红、绿、蓝三种基本颜色。",
       "options": [
         {
           "key": "A",
@@ -6441,14 +6441,14 @@
       ],
       "category": "vision",
       "sourceIndex": 19,
-      "learningPoint": "R、G、B代表可见光谱中的红、绿、蓝三种基本颜色。 (  T ) 判断：正确",
+      "learningPoint": "R、G、B代表可见光谱中的红、绿、蓝三种基本颜色。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-20",
       "order": 20,
       "type": "truefalse",
-      "question": "HSV色彩空间的模型对应于圆柱坐标系中的一个圆锥形子集，绕中心轴的角度对应于“色相”，红色对应于角度0°(360°)，绿色对应于角度120°，蓝色对应于角度240°。(  T )",
+      "question": "HSV色彩空间的模型对应于圆柱坐标系中的一个圆锥形子集，绕中心轴的角度对应于“色相”，红色对应于角度0°(360°)，绿色对应于角度120°，蓝色对应于角度240°。",
       "options": [
         {
           "key": "A",
@@ -6464,14 +6464,14 @@
       ],
       "category": "vision",
       "sourceIndex": 20,
-      "learningPoint": "HSV色彩空间的模型对应于圆柱坐标系中的一个圆锥形子集，绕中心轴的角度对应于“色相”，红色对应于角度0°(360°)，绿色对应于角度120°，蓝色对应于角度240°。(  T ) 判断：正确",
+      "learningPoint": "HSV色彩空间的模型对应于圆柱坐标系中的一个圆锥形子集，绕中心轴的角度对应于“色相”，红色对应于角度0°(360°)，绿色对应于角度120°，蓝色对应于角度240°。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-21",
       "order": 21,
       "type": "truefalse",
-      "question": "在HSV色彩空间中，每一种颜色和它的补色相差120°。(  F )",
+      "question": "在HSV色彩空间中，每一种颜色和它的补色相差120°。",
       "options": [
         {
           "key": "A",
@@ -6487,14 +6487,14 @@
       ],
       "category": "vision",
       "sourceIndex": 21,
-      "learningPoint": "在HSV色彩空间中，每一种颜色和它的补色相差120°。(  F ) 判断：错误",
+      "learningPoint": "在HSV色彩空间中，每一种颜色和它的补色相差120°。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-22",
       "order": 22,
       "type": "truefalse",
-      "question": "OpenCV中色彩空间之间的转换可以使用cv2.cvtColor()函数来实现。( T  )",
+      "question": "OpenCV中色彩空间之间的转换可以使用cv2.cvtColor()函数来实现。",
       "options": [
         {
           "key": "A",
@@ -6510,14 +6510,14 @@
       ],
       "category": "vision",
       "sourceIndex": 22,
-      "learningPoint": "OpenCV中色彩空间之间的转换可以使用cv2.cvtColor()函数来实现。( T  ) 判断：正确",
+      "learningPoint": "OpenCV中色彩空间之间的转换可以使用cv2.cvtColor()函数来实现。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-23",
       "order": 23,
       "type": "truefalse",
-      "question": "cv2.VideoCapture(0)的意思是以0号摄像头为视频捕获设备创建视频捕获器对象。(  T )",
+      "question": "cv2.VideoCapture(0)的意思是以0号摄像头为视频捕获设备创建视频捕获器对象。",
       "options": [
         {
           "key": "A",
@@ -6533,14 +6533,14 @@
       ],
       "category": "vision",
       "sourceIndex": 23,
-      "learningPoint": "cv2.VideoCapture(0)的意思是以0号摄像头为视频捕获设备创建视频捕获器对象。(  T ) 判断：正确",
+      "learningPoint": "cv2.VideoCapture(0)的意思是以0号摄像头为视频捕获设备创建视频捕获器对象。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-24",
       "order": 24,
       "type": "truefalse",
-      "question": "OpenCV中一般对颜色空间的图像进行有效处理都是在BGR颜色空间进行。(  F )",
+      "question": "OpenCV中一般对颜色空间的图像进行有效处理都是在BGR颜色空间进行。",
       "options": [
         {
           "key": "A",
@@ -6556,14 +6556,14 @@
       ],
       "category": "vision",
       "sourceIndex": 24,
-      "learningPoint": "OpenCV中一般对颜色空间的图像进行有效处理都是在BGR颜色空间进行。(  F ) 判断：错误",
+      "learningPoint": "OpenCV中一般对颜色空间的图像进行有效处理都是在BGR颜色空间进行。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-25",
       "order": 25,
       "type": "truefalse",
-      "question": "为了在程序中跟踪某一种颜色，一般需要把图像转换到HSV色彩空间。( T  )",
+      "question": "为了在程序中跟踪某一种颜色，一般需要把图像转换到HSV色彩空间。",
       "options": [
         {
           "key": "A",
@@ -6579,14 +6579,14 @@
       ],
       "category": "vision",
       "sourceIndex": 25,
-      "learningPoint": "为了在程序中跟踪某一种颜色，一般需要把图像转换到HSV色彩空间。( T  ) 判断：正确",
+      "learningPoint": "为了在程序中跟踪某一种颜色，一般需要把图像转换到HSV色彩空间。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-26",
       "order": 26,
       "type": "truefalse",
-      "question": "颜色空间按照基本机构可以分为两大类:基色颜色空间和色、亮分离颜色空间(  T )",
+      "question": "颜色空间按照基本机构可以分为两大类:基色颜色空间和色、亮分离颜色空间",
       "options": [
         {
           "key": "A",
@@ -6602,14 +6602,14 @@
       ],
       "category": "vision",
       "sourceIndex": 26,
-      "learningPoint": "颜色空间按照基本机构可以分为两大类:基色颜色空间和色、亮分离颜色空间(  T ) 判断：正确",
+      "learningPoint": "颜色空间按照基本机构可以分为两大类:基色颜色空间和色、亮分离颜色空间 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-27",
       "order": 27,
       "type": "truefalse",
-      "question": "Gray图像指的是彩色图像。( F  )",
+      "question": "Gray图像指的是彩色图像。",
       "options": [
         {
           "key": "A",
@@ -6625,14 +6625,14 @@
       ],
       "category": "vision",
       "sourceIndex": 27,
-      "learningPoint": "Gray图像指的是彩色图像。( F  ) 判断：错误",
+      "learningPoint": "Gray图像指的是彩色图像。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-28",
       "order": 28,
       "type": "truefalse",
-      "question": "就色彩空间的原理而言，计算机色彩显示器和彩色电视机显示色彩的原理一样。( T  )",
+      "question": "就色彩空间的原理而言，计算机色彩显示器和彩色电视机显示色彩的原理一样。",
       "options": [
         {
           "key": "A",
@@ -6648,14 +6648,14 @@
       ],
       "category": "general",
       "sourceIndex": 28,
-      "learningPoint": "就色彩空间的原理而言，计算机色彩显示器和彩色电视机显示色彩的原理一样。( T  ) 判断：正确",
+      "learningPoint": "就色彩空间的原理而言，计算机色彩显示器和彩色电视机显示色彩的原理一样。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-29",
       "order": 29,
       "type": "truefalse",
-      "question": "Python中，面向对象编程最重要的概念就是类(Class)和实例(Instance)(  T )",
+      "question": "Python中，面向对象编程最重要的概念就是类(Class)和实例(Instance)",
       "options": [
         {
           "key": "A",
@@ -6671,14 +6671,14 @@
       ],
       "category": "general",
       "sourceIndex": 29,
-      "learningPoint": "Python中，面向对象编程最重要的概念就是类(Class)和实例(Instance)(  T ) 判断：正确",
+      "learningPoint": "Python中，面向对象编程最重要的概念就是类(Class)和实例(Instance) 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-30",
       "order": 30,
       "type": "truefalse",
-      "question": "SDK(Software Development Kit)是指硬件开发工具包。( F  )",
+      "question": "SDK(Software Development Kit)是指硬件开发工具包。",
       "options": [
         {
           "key": "A",
@@ -6694,14 +6694,14 @@
       ],
       "category": "general",
       "sourceIndex": 30,
-      "learningPoint": "SDK(Software Development Kit)是指硬件开发工具包。( F  ) 判断：错误",
+      "learningPoint": "SDK(Software Development Kit)是指硬件开发工具包。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-31",
       "order": 31,
       "type": "truefalse",
-      "question": "API(Application Programming Interface)，即应用程序接口，是预先定义的接口，开发人员可以直接调用这些接口来应用功能。(  T )",
+      "question": "API(Application Programming Interface)，即应用程序接口，是预先定义的接口，开发人员可以直接调用这些接口来应用功能。",
       "options": [
         {
           "key": "A",
@@ -6717,14 +6717,14 @@
       ],
       "category": "general",
       "sourceIndex": 31,
-      "learningPoint": "API(Application Programming Interface)，即应用程序接口，是预先定义的接口，开发人员可以直接调用这些接口来应用功能。(  T ) 判断：正确",
+      "learningPoint": "API(Application Programming Interface)，即应用程序接口，是预先定义的接口，开发人员可以直接调用这些接口来应用功能。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-32",
       "order": 32,
       "type": "truefalse",
-      "question": "Python中的，类(Class)是指创建出来的一个个具体的“对象”。( F  )",
+      "question": "Python中的，类(Class)是指创建出来的一个个具体的“对象”。",
       "options": [
         {
           "key": "A",
@@ -6740,14 +6740,14 @@
       ],
       "category": "general",
       "sourceIndex": 32,
-      "learningPoint": "Python中的，类(Class)是指创建出来的一个个具体的“对象”。( F  ) 判断：错误",
+      "learningPoint": "Python中的，类(Class)是指创建出来的一个个具体的“对象”。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-33",
       "order": 33,
       "type": "truefalse",
-      "question": "waitKey(10)函数表示等待用户按键交互，这里等待时间是10毫秒。( T  )",
+      "question": "waitKey(10)函数表示等待用户按键交互，这里等待时间是10毫秒。",
       "options": [
         {
           "key": "A",
@@ -6763,14 +6763,14 @@
       ],
       "category": "general",
       "sourceIndex": 33,
-      "learningPoint": "waitKey(10)函数表示等待用户按键交互，这里等待时间是10毫秒。( T  ) 判断：正确",
+      "learningPoint": "waitKey(10)函数表示等待用户按键交互，这里等待时间是10毫秒。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-34",
       "order": 34,
       "type": "truefalse",
-      "question": "waitKey(10)函数表示等待用户按键交互，这里等待时间是10秒。( F  )",
+      "question": "waitKey(10)函数表示等待用户按键交互，这里等待时间是10秒。",
       "options": [
         {
           "key": "A",
@@ -6786,14 +6786,14 @@
       ],
       "category": "general",
       "sourceIndex": 34,
-      "learningPoint": "waitKey(10)函数表示等待用户按键交互，这里等待时间是10秒。( F  ) 判断：错误",
+      "learningPoint": "waitKey(10)函数表示等待用户按键交互，这里等待时间是10秒。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-35",
       "order": 35,
       "type": "truefalse",
-      "question": "imshow()之后必须调用waitkey()，给imshow()提供时间来展示图像，否则只能显示空窗口。( T  )",
+      "question": "imshow()之后必须调用waitkey()，给imshow()提供时间来展示图像，否则只能显示空窗口。",
       "options": [
         {
           "key": "A",
@@ -6809,14 +6809,14 @@
       ],
       "category": "vision",
       "sourceIndex": 35,
-      "learningPoint": "imshow()之后必须调用waitkey()，给imshow()提供时间来展示图像，否则只能显示空窗口。( T  ) 判断：正确",
+      "learningPoint": "imshow()之后必须调用waitkey()，给imshow()提供时间来展示图像，否则只能显示空窗口。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-36",
       "order": 36,
       "type": "truefalse",
-      "question": "imshow()之后无须调用waitkey()也能正常显示窗口中的图。( F  )",
+      "question": "imshow()之后无须调用waitkey()也能正常显示窗口中的图。",
       "options": [
         {
           "key": "A",
@@ -6832,14 +6832,14 @@
       ],
       "category": "general",
       "sourceIndex": 36,
-      "learningPoint": "imshow()之后无须调用waitkey()也能正常显示窗口中的图。( F  ) 判断：错误",
+      "learningPoint": "imshow()之后无须调用waitkey()也能正常显示窗口中的图。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-37",
       "order": 37,
       "type": "truefalse",
-      "question": "彩色图像数据的形状是三维的，这三个维度分别是宽、高和通道数。( F  )",
+      "question": "彩色图像数据的形状是三维的，这三个维度分别是宽、高和通道数。",
       "options": [
         {
           "key": "A",
@@ -6855,14 +6855,14 @@
       ],
       "category": "vision",
       "sourceIndex": 37,
-      "learningPoint": "彩色图像数据的形状是三维的，这三个维度分别是宽、高和通道数。( F  ) 判断：错误",
+      "learningPoint": "彩色图像数据的形状是三维的，这三个维度分别是宽、高和通道数。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-38",
       "order": 38,
       "type": "truefalse",
-      "question": "灰度图像数据的形状是三维的，这三个维度分别是R、G、B。(  F )",
+      "question": "灰度图像数据的形状是三维的，这三个维度分别是R、G、B。",
       "options": [
         {
           "key": "A",
@@ -6878,14 +6878,14 @@
       ],
       "category": "vision",
       "sourceIndex": 38,
-      "learningPoint": "灰度图像数据的形状是三维的，这三个维度分别是R、G、B。(  F ) 判断：错误",
+      "learningPoint": "灰度图像数据的形状是三维的，这三个维度分别是R、G、B。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-39",
       "order": 39,
       "type": "truefalse",
-      "question": "MNIST是我国国家标准与技术研究院收集整理的大型手写数字数据库。( T  )",
+      "question": "MNIST是我国国家标准与技术研究院收集整理的大型手写数字数据库。",
       "options": [
         {
           "key": "A",
@@ -6901,14 +6901,14 @@
       ],
       "category": "ml",
       "sourceIndex": 39,
-      "learningPoint": "MNIST是我国国家标准与技术研究院收集整理的大型手写数字数据库。( T  ) 判断：正确",
+      "learningPoint": "MNIST是我国国家标准与技术研究院收集整理的大型手写数字数据库。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-40",
       "order": 40,
       "type": "truefalse",
-      "question": "在MNIST数据集中，手写数字一共10种:即0、1、2、3、4、5、6、7、8和9。( T  )",
+      "question": "在MNIST数据集中，手写数字一共10种:即0、1、2、3、4、5、6、7、8和9。",
       "options": [
         {
           "key": "A",
@@ -6924,14 +6924,14 @@
       ],
       "category": "ml",
       "sourceIndex": 40,
-      "learningPoint": "在MNIST数据集中，手写数字一共10种:即0、1、2、3、4、5、6、7、8和9。( T  ) 判断：正确",
+      "learningPoint": "在MNIST数据集中，手写数字一共10种:即0、1、2、3、4、5、6、7、8和9。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-41",
       "order": 41,
       "type": "truefalse",
-      "question": "MNIST数据集中原始图片均为三通道彩色图片。( F  )",
+      "question": "MNIST数据集中原始图片均为三通道彩色图片。",
       "options": [
         {
           "key": "A",
@@ -6947,14 +6947,14 @@
       ],
       "category": "vision",
       "sourceIndex": 41,
-      "learningPoint": "MNIST数据集中原始图片均为三通道彩色图片。( F  ) 判断：错误",
+      "learningPoint": "MNIST数据集中原始图片均为三通道彩色图片。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-42",
       "order": 42,
       "type": "truefalse",
-      "question": "连杆坐标系是建立在连杆上，与连杆固定连接的坐标系。( T  )",
+      "question": "连杆坐标系是建立在连杆上，与连杆固定连接的坐标系。",
       "options": [
         {
           "key": "A",
@@ -6970,14 +6970,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 42,
-      "learningPoint": "连杆坐标系是建立在连杆上，与连杆固定连接的坐标系。( T  ) 判断：正确",
+      "learningPoint": "连杆坐标系是建立在连杆上，与连杆固定连接的坐标系。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-43",
       "order": 43,
       "type": "truefalse",
-      "question": "机器人的运动控制系统是提高机器人性能的关键因素，主要包含位置控制、速度控制、加速度控制、转矩或力矩控制等。( T  )",
+      "question": "机器人的运动控制系统是提高机器人性能的关键因素，主要包含位置控制、速度控制、加速度控制、转矩或力矩控制等。",
       "options": [
         {
           "key": "A",
@@ -6993,14 +6993,14 @@
       ],
       "category": "controls",
       "sourceIndex": 43,
-      "learningPoint": "机器人的运动控制系统是提高机器人性能的关键因素，主要包含位置控制、速度控制、加速度控制、转矩或力矩控制等。( T  ) 判断：正确",
+      "learningPoint": "机器人的运动控制系统是提高机器人性能的关键因素，主要包含位置控制、速度控制、加速度控制、转矩或力矩控制等。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-44",
       "order": 44,
       "type": "truefalse",
-      "question": "服务机器人中，通过电机系统和液压系统两种都可以实现机器人的运动控制。( T  )",
+      "question": "服务机器人中，通过电机系统和液压系统两种都可以实现机器人的运动控制。",
       "options": [
         {
           "key": "A",
@@ -7016,14 +7016,14 @@
       ],
       "category": "controls",
       "sourceIndex": 44,
-      "learningPoint": "服务机器人中，通过电机系统和液压系统两种都可以实现机器人的运动控制。( T  ) 判断：正确",
+      "learningPoint": "服务机器人中，通过电机系统和液压系统两种都可以实现机器人的运动控制。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-45",
       "order": 45,
       "type": "truefalse",
-      "question": "机器人多模态是指机器人可以实现多种形态变化，与机器人感官无关。( F  )",
+      "question": "机器人多模态是指机器人可以实现多种形态变化，与机器人感官无关。",
       "options": [
         {
           "key": "A",
@@ -7039,14 +7039,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 45,
-      "learningPoint": "机器人多模态是指机器人可以实现多种形态变化，与机器人感官无关。( F  ) 判断：错误",
+      "learningPoint": "机器人多模态是指机器人可以实现多种形态变化，与机器人感官无关。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-46",
       "order": 46,
       "type": "truefalse",
-      "question": "中国电子学会结合中国机器人产业发展特性，将机器人分为工业机器人、服务机器人两大类。( F  )",
+      "question": "中国电子学会结合中国机器人产业发展特性，将机器人分为工业机器人、服务机器人两大类。",
       "options": [
         {
           "key": "A",
@@ -7062,14 +7062,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 46,
-      "learningPoint": "中国电子学会结合中国机器人产业发展特性，将机器人分为工业机器人、服务机器人两大类。( F  ) 判断：错误",
+      "learningPoint": "中国电子学会结合中国机器人产业发展特性，将机器人分为工业机器人、服务机器人两大类。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-47",
       "order": 47,
       "type": "truefalse",
-      "question": "机器人颜色跟踪用到的图像预处理技术用到的cv2.inRange函数的目的，是通过设置阈值，从而过滤掉背景部分的图象。  ( T  )",
+      "question": "机器人颜色跟踪用到的图像预处理技术用到的cv2.inRange函数的目的，是通过设置阈值，从而过滤掉背景部分的图象。",
       "options": [
         {
           "key": "A",
@@ -7085,14 +7085,14 @@
       ],
       "category": "vision",
       "sourceIndex": 47,
-      "learningPoint": "机器人颜色跟踪用到的图像预处理技术用到的cv2.inRange函数的目的，是通过设置阈值，从而过滤掉背景部分的图象。  ( T  ) 判断：正确",
+      "learningPoint": "机器人颜色跟踪用到的图像预处理技术用到的cv2.inRange函数的目的，是通过设置阈值，从而过滤掉背景部分的图象。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-48",
       "order": 48,
       "type": "truefalse",
-      "question": "图像预处理中的腐蚀操作的原理，是一个可变尺寸的kernel在图像中不断平移，在该kernel方框中，哪一种颜色所占比重大，kernel中所有方格中都将是这种颜色。  ( T  )",
+      "question": "图像预处理中的腐蚀操作的原理，是一个可变尺寸的kernel在图像中不断平移，在该kernel方框中，哪一种颜色所占比重大，kernel中所有方格中都将是这种颜色。",
       "options": [
         {
           "key": "A",
@@ -7108,14 +7108,14 @@
       ],
       "category": "vision",
       "sourceIndex": 48,
-      "learningPoint": "图像预处理中的腐蚀操作的原理，是一个可变尺寸的kernel在图像中不断平移，在该kernel方框中，哪一种颜色所占比重大，kernel中所有方格中都将是这种颜色。  ( T  ) 判断：正确",
+      "learningPoint": "图像预处理中的腐蚀操作的原理，是一个可变尺寸的kernel在图像中不断平移，在该kernel方框中，哪一种颜色所占比重大，kernel中所有方格中都将是这种颜色。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-49",
       "order": 49,
       "type": "truefalse",
-      "question": "机器人颜色跟踪项目，需要使用多线程协同技术。  ( T  )",
+      "question": "机器人颜色跟踪项目，需要使用多线程协同技术。",
       "options": [
         {
           "key": "A",
@@ -7131,14 +7131,14 @@
       ],
       "category": "vision",
       "sourceIndex": 49,
-      "learningPoint": "机器人颜色跟踪项目，需要使用多线程协同技术。  ( T  ) 判断：正确",
+      "learningPoint": "机器人颜色跟踪项目，需要使用多线程协同技术。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-50",
       "order": 50,
       "type": "truefalse",
-      "question": "机器人追踪目标物体，需首先调用forward_step函数，控制机器人接近目标物体。  ( F )",
+      "question": "机器人追踪目标物体，需首先调用forward_step函数，控制机器人接近目标物体。",
       "options": [
         {
           "key": "A",
@@ -7154,14 +7154,14 @@
       ],
       "category": "controls",
       "sourceIndex": 50,
-      "learningPoint": "机器人追踪目标物体，需首先调用forward_step函数，控制机器人接近目标物体。  ( F ) 判断：错误",
+      "learningPoint": "机器人追踪目标物体，需首先调用forward_step函数，控制机器人接近目标物体。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-51",
       "order": 51,
       "type": "truefalse",
-      "question": "机器人追踪目标物体，主要是靠机器人追踪函数walk_track的调用。该函数在项目启动到最终追踪到目标物体，总共调用1次函数即可。  ( F  )",
+      "question": "机器人追踪目标物体，主要是靠机器人追踪函数walk_track的调用。该函数在项目启动到最终追踪到目标物体，总共调用1次函数即可。",
       "options": [
         {
           "key": "A",
@@ -7177,14 +7177,14 @@
       ],
       "category": "controls",
       "sourceIndex": 51,
-      "learningPoint": "机器人追踪目标物体，主要是靠机器人追踪函数walk_track的调用。该函数在项目启动到最终追踪到目标物体，总共调用1次函数即可。  ( F  ) 判断：错误",
+      "learningPoint": "机器人追踪目标物体，主要是靠机器人追踪函数walk_track的调用。该函数在项目启动到最终追踪到目标物体，总共调用1次函数即可。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-52",
       "order": 52,
       "type": "truefalse",
-      "question": "机器人追踪目标物体需要根据实时拍摄的图片，首先判断目标物体是否在机器人的正前方。  ( T  )",
+      "question": "机器人追踪目标物体需要根据实时拍摄的图片，首先判断目标物体是否在机器人的正前方。",
       "options": [
         {
           "key": "A",
@@ -7200,14 +7200,14 @@
       ],
       "category": "vision",
       "sourceIndex": 52,
-      "learningPoint": "机器人追踪目标物体需要根据实时拍摄的图片，首先判断目标物体是否在机器人的正前方。  ( T  ) 判断：正确",
+      "learningPoint": "机器人追踪目标物体需要根据实时拍摄的图片，首先判断目标物体是否在机器人的正前方。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-53",
       "order": 53,
       "type": "truefalse",
-      "question": "机器人追踪到目标物体后，需要通过设置一个动作，来判断机器人是否已经完成了追踪动作。  ( T  )",
+      "question": "机器人追踪到目标物体后，需要通过设置一个动作，来判断机器人是否已经完成了追踪动作。",
       "options": [
         {
           "key": "A",
@@ -7223,14 +7223,14 @@
       ],
       "category": "controls",
       "sourceIndex": 53,
-      "learningPoint": "机器人追踪到目标物体后，需要通过设置一个动作，来判断机器人是否已经完成了追踪动作。  ( T  ) 判断：正确",
+      "learningPoint": "机器人追踪到目标物体后，需要通过设置一个动作，来判断机器人是否已经完成了追踪动作。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-54",
       "order": 54,
       "type": "truefalse",
-      "question": "机器人追踪目标物体时需要进行机器人获取的初始图像的预处理。  ( T  )",
+      "question": "机器人追踪目标物体时需要进行机器人获取的初始图像的预处理。",
       "options": [
         {
           "key": "A",
@@ -7246,14 +7246,14 @@
       ],
       "category": "vision",
       "sourceIndex": 54,
-      "learningPoint": "机器人追踪目标物体时需要进行机器人获取的初始图像的预处理。  ( T  ) 判断：正确",
+      "learningPoint": "机器人追踪目标物体时需要进行机器人获取的初始图像的预处理。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-55",
       "order": 55,
       "type": "truefalse",
-      "question": "机器人追踪目标物体，当已经判断目标物体处于视线的正前方，即可执行抱球动作。  (  F )",
+      "question": "机器人追踪目标物体，当已经判断目标物体处于视线的正前方，即可执行抱球动作。",
       "options": [
         {
           "key": "A",
@@ -7269,14 +7269,14 @@
       ],
       "category": "controls",
       "sourceIndex": 55,
-      "learningPoint": "机器人追踪目标物体，当已经判断目标物体处于视线的正前方，即可执行抱球动作。  (  F ) 判断：错误",
+      "learningPoint": "机器人追踪目标物体，当已经判断目标物体处于视线的正前方，即可执行抱球动作。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-56",
       "order": 56,
       "type": "truefalse",
-      "question": "KartoSLAM算法中运动更新主要是利用里程计数据和激光数据对机器人位姿进行更新。 ( T  )",
+      "question": "KartoSLAM算法中运动更新主要是利用里程计数据和激光数据对机器人位姿进行更新。",
       "options": [
         {
           "key": "A",
@@ -7292,14 +7292,14 @@
       ],
       "category": "slam",
       "sourceIndex": 56,
-      "learningPoint": "KartoSLAM算法中运动更新主要是利用里程计数据和激光数据对机器人位姿进行更新。 ( T  ) 判断：正确",
+      "learningPoint": "KartoSLAM算法中运动更新主要是利用里程计数据和激光数据对机器人位姿进行更新。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-57",
       "order": 57,
       "type": "truefalse",
-      "question": "蒙特卡罗定位方法能实现机器人全局定位，也能从机器人全局定位失效中迅速恢复。( F  )",
+      "question": "蒙特卡罗定位方法能实现机器人全局定位，也能从机器人全局定位失效中迅速恢复。",
       "options": [
         {
           "key": "A",
@@ -7315,14 +7315,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 57,
-      "learningPoint": "蒙特卡罗定位方法能实现机器人全局定位，也能从机器人全局定位失效中迅速恢复。( F  ) 判断：错误",
+      "learningPoint": "蒙特卡罗定位方法能实现机器人全局定位，也能从机器人全局定位失效中迅速恢复。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-58",
       "order": 58,
       "type": "truefalse",
-      "question": "最佳优先搜索(BFS)算法基于贪心策略，得到的搜索结果就是指定节点对之间的最短代价路径。( F  )",
+      "question": "最佳优先搜索(BFS)算法基于贪心策略，得到的搜索结果就是指定节点对之间的最短代价路径。",
       "options": [
         {
           "key": "A",
@@ -7338,14 +7338,14 @@
       ],
       "category": "general",
       "sourceIndex": 58,
-      "learningPoint": "最佳优先搜索(BFS)算法基于贪心策略，得到的搜索结果就是指定节点对之间的最短代价路径。( F  ) 判断：错误",
+      "learningPoint": "最佳优先搜索(BFS)算法基于贪心策略，得到的搜索结果就是指定节点对之间的最短代价路径。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-59",
       "order": 59,
       "type": "truefalse",
-      "question": "A*搜索算法是一种启发式搜索算法，利用启发式信息来引导搜索范围、降低问题复杂度，搜索出指定节点对之间的最短代价路径。( T  )",
+      "question": "A*搜索算法是一种启发式搜索算法，利用启发式信息来引导搜索范围、降低问题复杂度，搜索出指定节点对之间的最短代价路径。",
       "options": [
         {
           "key": "A",
@@ -7361,14 +7361,14 @@
       ],
       "category": "general",
       "sourceIndex": 59,
-      "learningPoint": "A*搜索算法是一种启发式搜索算法，利用启发式信息来引导搜索范围、降低问题复杂度，搜索出指定节点对之间的最短代价路径。( T  ) 判断：正确",
+      "learningPoint": "A*搜索算法是一种启发式搜索算法，利用启发式信息来引导搜索范围、降低问题复杂度，搜索出指定节点对之间的最短代价路径。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-60",
       "order": 60,
       "type": "truefalse",
-      "question": "A*算法中，close list包含待检测的节点，记录路径中可能会经过的，或可能不经过的节点。( F  )",
+      "question": "A*算法中，close list包含待检测的节点，记录路径中可能会经过的，或可能不经过的节点。",
       "options": [
         {
           "key": "A",
@@ -7384,14 +7384,14 @@
       ],
       "category": "general",
       "sourceIndex": 60,
-      "learningPoint": "A*算法中，close list包含待检测的节点，记录路径中可能会经过的，或可能不经过的节点。( F  ) 判断：错误",
+      "learningPoint": "A*算法中，close list包含待检测的节点，记录路径中可能会经过的，或可能不经过的节点。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-61",
       "order": 61,
       "type": "truefalse",
-      "question": "Dijkstra算法是一种经典的深度优先的状态空间搜索算法。( F  )",
+      "question": "Dijkstra算法是一种经典的深度优先的状态空间搜索算法。",
       "options": [
         {
           "key": "A",
@@ -7407,14 +7407,14 @@
       ],
       "category": "general",
       "sourceIndex": 61,
-      "learningPoint": "Dijkstra算法是一种经典的深度优先的状态空间搜索算法。( F  ) 判断：错误",
+      "learningPoint": "Dijkstra算法是一种经典的深度优先的状态空间搜索算法。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-62",
       "order": 62,
       "type": "truefalse",
-      "question": "TEB算法的核心思想，是通过加权多目标优化模型，考虑各种约束的目标函数，来调整与优化机器人位姿和时间间隔，即获取最优路径点( T  )。",
+      "question": "TEB算法的核心思想，是通过加权多目标优化模型，考虑各种约束的目标函数，来调整与优化机器人位姿和时间间隔，即获取最优路径点。",
       "options": [
         {
           "key": "A",
@@ -7430,14 +7430,14 @@
       ],
       "category": "ml",
       "sourceIndex": 62,
-      "learningPoint": "TEB算法的核心思想，是通过加权多目标优化模型，考虑各种约束的目标函数，来调整与优化机器人位姿和时间间隔，即获取最优路径点( T  )。 判断：正确",
+      "learningPoint": "TEB算法的核心思想，是通过加权多目标优化模型，考虑各种约束的目标函数，来调整与优化机器人位姿和时间间隔，即获取最优路径点。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-63",
       "order": 63,
       "type": "truefalse",
-      "question": "全局路径规划(global path planning)是在已知的环境中，给机器人规划一条路径，路径规划的精度取决于环境获取的准确度。(  T )",
+      "question": "全局路径规划(global path planning)是在已知的环境中，给机器人规划一条路径，路径规划的精度取决于环境获取的准确度。",
       "options": [
         {
           "key": "A",
@@ -7453,14 +7453,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 63,
-      "learningPoint": "全局路径规划(global path planning)是在已知的环境中，给机器人规划一条路径，路径规划的精度取决于环境获取的准确度。(  T ) 判断：正确",
+      "learningPoint": "全局路径规划(global path planning)是在已知的环境中，给机器人规划一条路径，路径规划的精度取决于环境获取的准确度。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-64",
       "order": 64,
       "type": "truefalse",
-      "question": "最佳优先搜索(BFS)算法基于贪心策略，即搜索最优路径时会搜索全局最优的节点来选择。( F  )",
+      "question": "最佳优先搜索(BFS)算法基于贪心策略，即搜索最优路径时会搜索全局最优的节点来选择。",
       "options": [
         {
           "key": "A",
@@ -7476,14 +7476,14 @@
       ],
       "category": "general",
       "sourceIndex": 64,
-      "learningPoint": "最佳优先搜索(BFS)算法基于贪心策略，即搜索最优路径时会搜索全局最优的节点来选择。( F  ) 判断：错误",
+      "learningPoint": "最佳优先搜索(BFS)算法基于贪心策略，即搜索最优路径时会搜索全局最优的节点来选择。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-65",
       "order": 65,
       "type": "truefalse",
-      "question": "移动机器人SLAM建图可基于激光雷达，采用2D或3D激光雷达都可以。(  T )",
+      "question": "移动机器人SLAM建图可基于激光雷达，采用2D或3D激光雷达都可以。",
       "options": [
         {
           "key": "A",
@@ -7499,14 +7499,14 @@
       ],
       "category": "slam",
       "sourceIndex": 65,
-      "learningPoint": "移动机器人SLAM建图可基于激光雷达，采用2D或3D激光雷达都可以。(  T ) 判断：正确",
+      "learningPoint": "移动机器人SLAM建图可基于激光雷达，采用2D或3D激光雷达都可以。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-66",
       "order": 66,
       "type": "truefalse",
-      "question": "根据激光雷达的不同，可进一步分为2D或3D激光SLAM；另一类是基于视觉的VSLAM(Visual SLAM)。比较这两种SLAM技术，激光SLAM比视觉SLAM起步早，激光雷达测距准确，在理论、技术和产品落地上都更成熟，落地产品更加丰富。( T  )",
+      "question": "根据激光雷达的不同，可进一步分为2D或3D激光SLAM；另一类是基于视觉的VSLAM(Visual SLAM)。比较这两种SLAM技术，激光SLAM比视觉SLAM起步早，激光雷达测距准确，在理论、技术和产品落地上都更成熟，落地产品更加丰富。",
       "options": [
         {
           "key": "A",
@@ -7522,14 +7522,14 @@
       ],
       "category": "slam",
       "sourceIndex": 66,
-      "learningPoint": "根据激光雷达的不同，可进一步分为2D或3D激光SLAM；另一类是基于视觉的VSLAM(Visual SLAM)。比较这两种SLAM技术，激光SLAM比视觉SLAM起步早，激光雷达测距准确，在理论、技术和产品落地上都更成熟，落地产品更加丰富。( T  ) 判断：正确",
+      "learningPoint": "根据激光雷达的不同，可进一步分为2D或3D激光SLAM；另一类是基于视觉的VSLAM(Visual SLAM)。比较这两种SLAM技术，激光SLAM比视觉SLAM起步早，激光雷达测距准确，在理论、技术和产品落地上都更成熟，落地产品更加丰富。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-67",
       "order": 67,
       "type": "truefalse",
-      "question": "所谓的图优化，就是把一个常规的优化问题，以图(Graph)的形式来表述。基于图优化的SLAM问题的目标，就是构建图并且找到一个最优的配置，即各节点的位姿，使得预测与观测的误差最小。( T  )",
+      "question": "所谓的图优化，就是把一个常规的优化问题，以图(Graph)的形式来表述。基于图优化的SLAM问题的目标，就是构建图并且找到一个最优的配置，即各节点的位姿，使得预测与观测的误差最小。",
       "options": [
         {
           "key": "A",
@@ -7545,14 +7545,14 @@
       ],
       "category": "slam",
       "sourceIndex": 67,
-      "learningPoint": "所谓的图优化，就是把一个常规的优化问题，以图(Graph)的形式来表述。基于图优化的SLAM问题的目标，就是构建图并且找到一个最优的配置，即各节点的位姿，使得预测与观测的误差最小。( T  ) 判断：正确",
+      "learningPoint": "所谓的图优化，就是把一个常规的优化问题，以图(Graph)的形式来表述。基于图优化的SLAM问题的目标，就是构建图并且找到一个最优的配置，即各节点的位姿，使得预测与观测的误差最小。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-68",
       "order": 68,
       "type": "truefalse",
-      "question": "KartoSLAM算法是基于图优化的思想，这种方法是以图的方式表示地图。(  T )",
+      "question": "KartoSLAM算法是基于图优化的思想，这种方法是以图的方式表示地图。",
       "options": [
         {
           "key": "A",
@@ -7568,14 +7568,14 @@
       ],
       "category": "slam",
       "sourceIndex": 68,
-      "learningPoint": "KartoSLAM算法是基于图优化的思想，这种方法是以图的方式表示地图。(  T ) 判断：正确",
+      "learningPoint": "KartoSLAM算法是基于图优化的思想，这种方法是以图的方式表示地图。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-69",
       "order": 69,
       "type": "truefalse",
-      "question": "对于服务机器人而言，机器人手臂能够够到的最大工作范围，就是它的，工作空间。(T   )",
+      "question": "对于服务机器人而言，机器人手臂能够够到的最大工作范围，就是它的，工作空间。",
       "options": [
         {
           "key": "A",
@@ -7591,14 +7591,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 69,
-      "learningPoint": "对于服务机器人而言，机器人手臂能够够到的最大工作范围，就是它的，工作空间。(T   ) 判断：正确",
+      "learningPoint": "对于服务机器人而言，机器人手臂能够够到的最大工作范围，就是它的，工作空间。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-70",
       "order": 70,
       "type": "truefalse",
-      "question": "当代机器人大军中最主要的机器人为服务机器人。( F  )",
+      "question": "当代机器人大军中最主要的机器人为服务机器人。",
       "options": [
         {
           "key": "A",
@@ -7614,14 +7614,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 70,
-      "learningPoint": "当代机器人大军中最主要的机器人为服务机器人。( F  ) 判断：错误",
+      "learningPoint": "当代机器人大军中最主要的机器人为服务机器人。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-71",
       "order": 71,
       "type": "truefalse",
-      "question": "机器人工作时，工作范围可以站人，不会有任何伤害人的隐患。(  F )",
+      "question": "机器人工作时，工作范围可以站人，不会有任何伤害人的隐患。",
       "options": [
         {
           "key": "A",
@@ -7637,14 +7637,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 71,
-      "learningPoint": "机器人工作时，工作范围可以站人，不会有任何伤害人的隐患。(  F ) 判断：错误",
+      "learningPoint": "机器人工作时，工作范围可以站人，不会有任何伤害人的隐患。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-72",
       "order": 72,
       "type": "truefalse",
-      "question": "机器人不用定期保养。 ( F  )",
+      "question": "机器人不用定期保养。",
       "options": [
         {
           "key": "A",
@@ -7660,14 +7660,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 72,
-      "learningPoint": "机器人不用定期保养。 ( F  ) 判断：错误",
+      "learningPoint": "机器人不用定期保养。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-73",
       "order": 73,
       "type": "truefalse",
-      "question": "机器人可以做搬运，焊接，打磨等项目。  ( T  )",
+      "question": "机器人可以做搬运，焊接，打磨等项目。",
       "options": [
         {
           "key": "A",
@@ -7683,14 +7683,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 73,
-      "learningPoint": "机器人可以做搬运，焊接，打磨等项目。  ( T  ) 判断：正确",
+      "learningPoint": "机器人可以做搬运，焊接，打磨等项目。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-74",
       "order": 74,
       "type": "truefalse",
-      "question": "机器人可以有六轴以上。  ( T  )",
+      "question": "机器人可以有六轴以上。",
       "options": [
         {
           "key": "A",
@@ -7706,14 +7706,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 74,
-      "learningPoint": "机器人可以有六轴以上。  ( T  ) 判断：正确",
+      "learningPoint": "机器人可以有六轴以上。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-75",
       "order": 75,
       "type": "truefalse",
-      "question": "机器人程序模块只能有一个。  ( F  )",
+      "question": "机器人程序模块只能有一个。",
       "options": [
         {
           "key": "A",
@@ -7729,14 +7729,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 75,
-      "learningPoint": "机器人程序模块只能有一个。  ( F  ) 判断：错误",
+      "learningPoint": "机器人程序模块只能有一个。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-76",
       "order": 76,
       "type": "truefalse",
-      "question": "从广义上说机器人只包括服务机器人和工业机器人。( F  )改",
+      "question": "从广义上说机器人只包括服务机器人和工业机器人。",
       "options": [
         {
           "key": "A",
@@ -7752,14 +7752,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 76,
-      "learningPoint": "从广义上说机器人只包括服务机器人和工业机器人。( F  )改 判断：错误",
+      "learningPoint": "从广义上说机器人只包括服务机器人和工业机器人。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-77",
       "order": 77,
       "type": "truefalse",
-      "question": "服务机器人应用范围涵盖了维护保养、运输、保洁、安防等工作。( T  )",
+      "question": "服务机器人应用范围涵盖了维护保养、运输、保洁、安防等工作。",
       "options": [
         {
           "key": "A",
@@ -7775,14 +7775,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 77,
-      "learningPoint": "服务机器人应用范围涵盖了维护保养、运输、保洁、安防等工作。( T  ) 判断：正确",
+      "learningPoint": "服务机器人应用范围涵盖了维护保养、运输、保洁、安防等工作。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-78",
       "order": 78,
       "type": "truefalse",
-      "question": "机器人腕部的单自由度有偏转、俯仰和翻转。( T  )",
+      "question": "机器人腕部的单自由度有偏转、俯仰和翻转。",
       "options": [
         {
           "key": "A",
@@ -7798,14 +7798,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 78,
-      "learningPoint": "机器人腕部的单自由度有偏转、俯仰和翻转。( T  ) 判断：正确",
+      "learningPoint": "机器人腕部的单自由度有偏转、俯仰和翻转。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-79",
       "order": 79,
       "type": "truefalse",
-      "question": "机器人的执行机构，常称为机器人关节，关节个数通常为机器人的自由度数( T  )",
+      "question": "机器人的执行机构，常称为机器人关节，关节个数通常为机器人的自由度数",
       "options": [
         {
           "key": "A",
@@ -7821,14 +7821,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 79,
-      "learningPoint": "机器人的执行机构，常称为机器人关节，关节个数通常为机器人的自由度数( T  ) 判断：正确",
+      "learningPoint": "机器人的执行机构，常称为机器人关节，关节个数通常为机器人的自由度数 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-80",
       "order": 80,
       "type": "truefalse",
-      "question": "服务机器人跟工业机器人不一样，它(服务机器人)在最开始使用时不需要进行坐标校准。(  F )",
+      "question": "服务机器人跟工业机器人不一样，它(服务机器人)在最开始使用时不需要进行坐标校准。",
       "options": [
         {
           "key": "A",
@@ -7844,14 +7844,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 80,
-      "learningPoint": "服务机器人跟工业机器人不一样，它(服务机器人)在最开始使用时不需要进行坐标校准。(  F ) 判断：错误",
+      "learningPoint": "服务机器人跟工业机器人不一样，它(服务机器人)在最开始使用时不需要进行坐标校准。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-81",
       "order": 81,
       "type": "truefalse",
-      "question": "服务机器人的控制系统一般包括主机、转接板、配套电源等部分。(T   )",
+      "question": "服务机器人的控制系统一般包括主机、转接板、配套电源等部分。",
       "options": [
         {
           "key": "A",
@@ -7867,14 +7867,14 @@
       ],
       "category": "controls",
       "sourceIndex": 81,
-      "learningPoint": "服务机器人的控制系统一般包括主机、转接板、配套电源等部分。(T   ) 判断：正确",
+      "learningPoint": "服务机器人的控制系统一般包括主机、转接板、配套电源等部分。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-82",
       "order": 82,
       "type": "truefalse",
-      "question": "机器人对传感器没有特定要求，只要能用就不影响它的感知稳定性。( F  )",
+      "question": "机器人对传感器没有特定要求，只要能用就不影响它的感知稳定性。",
       "options": [
         {
           "key": "A",
@@ -7890,14 +7890,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 82,
-      "learningPoint": "机器人对传感器没有特定要求，只要能用就不影响它的感知稳定性。( F  ) 判断：错误",
+      "learningPoint": "机器人对传感器没有特定要求，只要能用就不影响它的感知稳定性。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-83",
       "order": 83,
       "type": "truefalse",
-      "question": "机器人二自由度腕部关节有RR、BB、RB三种表示方法。( F  )",
+      "question": "机器人二自由度腕部关节有RR、BB、RB三种表示方法。",
       "options": [
         {
           "key": "A",
@@ -7913,14 +7913,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 83,
-      "learningPoint": "机器人二自由度腕部关节有RR、BB、RB三种表示方法。( F  ) 判断：错误",
+      "learningPoint": "机器人二自由度腕部关节有RR、BB、RB三种表示方法。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-84",
       "order": 84,
       "type": "truefalse",
-      "question": "机器人的感知功能通常需要通过各类传感器来实现。(T   )",
+      "question": "机器人的感知功能通常需要通过各类传感器来实现。",
       "options": [
         {
           "key": "A",
@@ -7936,14 +7936,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 84,
-      "learningPoint": "机器人的感知功能通常需要通过各类传感器来实现。(T   ) 判断：正确",
+      "learningPoint": "机器人的感知功能通常需要通过各类传感器来实现。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-85",
       "order": 85,
       "type": "truefalse",
-      "question": "和人长的很像的机器才能称为机器人。(F   )",
+      "question": "和人长的很像的机器才能称为机器人。",
       "options": [
         {
           "key": "A",
@@ -7959,14 +7959,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 85,
-      "learningPoint": "和人长的很像的机器才能称为机器人。(F   ) 判断：错误",
+      "learningPoint": "和人长的很像的机器才能称为机器人。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-86",
       "order": 86,
       "type": "truefalse",
-      "question": "机械手亦可称之为机器人。(  T )",
+      "question": "机械手亦可称之为机器人。",
       "options": [
         {
           "key": "A",
@@ -7982,14 +7982,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 86,
-      "learningPoint": "机械手亦可称之为机器人。(  T ) 判断：正确",
+      "learningPoint": "机械手亦可称之为机器人。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-87",
       "order": 87,
       "type": "truefalse",
-      "question": "完成某一特定作业时具有多余自由度的机器人称为冗余自由度机器人。( T  )",
+      "question": "完成某一特定作业时具有多余自由度的机器人称为冗余自由度机器人。",
       "options": [
         {
           "key": "A",
@@ -8005,14 +8005,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 87,
-      "learningPoint": "完成某一特定作业时具有多余自由度的机器人称为冗余自由度机器人。( T  ) 判断：正确",
+      "learningPoint": "完成某一特定作业时具有多余自由度的机器人称为冗余自由度机器人。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-88",
       "order": 88,
       "type": "truefalse",
-      "question": "关节空间是由全部关节参数构成的。(  T )",
+      "question": "关节空间是由全部关节参数构成的。",
       "options": [
         {
           "key": "A",
@@ -8028,14 +8028,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 88,
-      "learningPoint": "关节空间是由全部关节参数构成的。(  T ) 判断：正确",
+      "learningPoint": "关节空间是由全部关节参数构成的。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-89",
       "order": 89,
       "type": "truefalse",
-      "question": "任何复杂的运动都可以分解为由多个平移和绕轴转动的简单运动的合成。(  T )",
+      "question": "任何复杂的运动都可以分解为由多个平移和绕轴转动的简单运动的合成。",
       "options": [
         {
           "key": "A",
@@ -8051,14 +8051,14 @@
       ],
       "category": "general",
       "sourceIndex": 89,
-      "learningPoint": "任何复杂的运动都可以分解为由多个平移和绕轴转动的简单运动的合成。(  T ) 判断：正确",
+      "learningPoint": "任何复杂的运动都可以分解为由多个平移和绕轴转动的简单运动的合成。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-90",
       "order": 90,
       "type": "truefalse",
-      "question": "艾伦·麦席森·图灵被称为“机器人学之父”。 ( F  )",
+      "question": "艾伦·麦席森·图灵被称为“机器人学之父”。",
       "options": [
         {
           "key": "A",
@@ -8074,14 +8074,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 90,
-      "learningPoint": "艾伦·麦席森·图灵被称为“机器人学之父”。 ( F  ) 判断：错误",
+      "learningPoint": "艾伦·麦席森·图灵被称为“机器人学之父”。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-91",
       "order": 91,
       "type": "truefalse",
-      "question": "机器人的执行机构，常称为机器人关节，但关节个数和自由度数无关( F  )",
+      "question": "机器人的执行机构，常称为机器人关节，但关节个数和自由度数无关",
       "options": [
         {
           "key": "A",
@@ -8097,14 +8097,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 91,
-      "learningPoint": "机器人的执行机构，常称为机器人关节，但关节个数和自由度数无关( F  ) 判断：错误",
+      "learningPoint": "机器人的执行机构，常称为机器人关节，但关节个数和自由度数无关 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-92",
       "order": 92,
       "type": "truefalse",
-      "question": "因为机器人是人类发明创造，所以它无论如何都不会伤害到人。( F  )",
+      "question": "因为机器人是人类发明创造，所以它无论如何都不会伤害到人。",
       "options": [
         {
           "key": "A",
@@ -8120,14 +8120,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 92,
-      "learningPoint": "因为机器人是人类发明创造，所以它无论如何都不会伤害到人。( F  ) 判断：错误",
+      "learningPoint": "因为机器人是人类发明创造，所以它无论如何都不会伤害到人。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-93",
       "order": 93,
       "type": "truefalse",
-      "question": "机器人只能做直线运动，不能做有弧度的运动。(  F )",
+      "question": "机器人只能做直线运动，不能做有弧度的运动。",
       "options": [
         {
           "key": "A",
@@ -8143,14 +8143,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 93,
-      "learningPoint": "机器人只能做直线运动，不能做有弧度的运动。(  F ) 判断：错误",
+      "learningPoint": "机器人只能做直线运动，不能做有弧度的运动。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-94",
       "order": 94,
       "type": "truefalse",
-      "question": "完成某一特定作业时具有多余自由度的机器人称为冗余自由度机器人。( T  )",
+      "question": "完成某一特定作业时具有多余自由度的机器人称为冗余自由度机器人。",
       "options": [
         {
           "key": "A",
@@ -8166,14 +8166,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 94,
-      "learningPoint": "完成某一特定作业时具有多余自由度的机器人称为冗余自由度机器人。( T  ) 判断：正确",
+      "learningPoint": "完成某一特定作业时具有多余自由度的机器人称为冗余自由度机器人。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-95",
       "order": 95,
       "type": "truefalse",
-      "question": "承载能力是指机器人在工作围的任何位姿上所能承受的最大质量。( T  )",
+      "question": "承载能力是指机器人在工作围的任何位姿上所能承受的最大质量。",
       "options": [
         {
           "key": "A",
@@ -8189,14 +8189,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 95,
-      "learningPoint": "承载能力是指机器人在工作围的任何位姿上所能承受的最大质量。( T  ) 判断：正确",
+      "learningPoint": "承载能力是指机器人在工作围的任何位姿上所能承受的最大质量。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-96",
       "order": 96,
       "type": "truefalse",
-      "question": "工业机器人最早出现在日本。( F  )",
+      "question": "工业机器人最早出现在日本。",
       "options": [
         {
           "key": "A",
@@ -8212,14 +8212,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 96,
-      "learningPoint": "工业机器人最早出现在日本。( F  ) 判断：错误",
+      "learningPoint": "工业机器人最早出现在日本。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-97",
       "order": 97,
       "type": "truefalse",
-      "question": "美国在军用机器人的研究、应用等方面处于绝对的领先地位。(  T )",
+      "question": "美国在军用机器人的研究、应用等方面处于绝对的领先地位。",
       "options": [
         {
           "key": "A",
@@ -8235,14 +8235,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 97,
-      "learningPoint": "美国在军用机器人的研究、应用等方面处于绝对的领先地位。(  T ) 判断：正确",
+      "learningPoint": "美国在军用机器人的研究、应用等方面处于绝对的领先地位。 判断：正确",
       "explanation": "判断结果：正确"
     },
     {
       "id": "TF-98",
       "order": 98,
       "type": "truefalse",
-      "question": "机器人的分辨率和精度之间不一定相关联。(  F )",
+      "question": "机器人的分辨率和精度之间不一定相关联。",
       "options": [
         {
           "key": "A",
@@ -8258,14 +8258,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 98,
-      "learningPoint": "机器人的分辨率和精度之间不一定相关联。(  F ) 判断：错误",
+      "learningPoint": "机器人的分辨率和精度之间不一定相关联。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-99",
       "order": 99,
       "type": "truefalse",
-      "question": "机器人的自由度数大于关节数目。( F  )",
+      "question": "机器人的自由度数大于关节数目。",
       "options": [
         {
           "key": "A",
@@ -8281,14 +8281,14 @@
       ],
       "category": "robotics",
       "sourceIndex": 99,
-      "learningPoint": "机器人的自由度数大于关节数目。( F  ) 判断：错误",
+      "learningPoint": "机器人的自由度数大于关节数目。 判断：错误",
       "explanation": "判断结果：错误"
     },
     {
       "id": "TF-100",
       "order": 100,
       "type": "truefalse",
-      "question": "机器人三原则是捷克作家卡雷尔·卡佩克提出的。( F  )",
+      "question": "机器人三原则是捷克作家卡雷尔·卡佩克提出的。",
       "options": [
         {
           "key": "A",
@@ -8304,7 +8304,7 @@
       ],
       "category": "robotics",
       "sourceIndex": 100,
-      "learningPoint": "机器人三原则是捷克作家卡雷尔·卡佩克提出的。( F  ) 判断：错误",
+      "learningPoint": "机器人三原则是捷克作家卡雷尔·卡佩克提出的。 判断：错误",
       "explanation": "判断结果：错误"
     }
   ]
