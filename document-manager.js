@@ -3,6 +3,17 @@ const DocumentManager = (function() {
   const DB_VERSION = 1;
   const STORE_NAME = 'documents';
   const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+  const SUPPORTED_FILE_TYPES = [
+    'image/jpeg',
+    'image/jpg',
+    'image/png',
+    'application/pdf',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation', // .pptx
+    'application/vnd.ms-powerpoint', // .ppt
+    'application/msword', // .doc
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+    'text/markdown', // .md
+  ];
   
   let db = null;
   let currentDocument = null;
@@ -95,44 +106,94 @@ const DocumentManager = (function() {
     }
   }
 
-  async function saveDocument(file) {
-    if (!db) await initIndexedDB();
-    
+  function readFileAsArrayBuffer(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      
-      reader.onload = async (e) => {
-        const doc = {
-          id: Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-          name: file.name,
-          type: file.type,
-          size: file.size,
-          data: e.target.result,
-          uploadDate: Date.now(),
-          ocrText: null
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
+async function extractTextFromFile(file) {
+    if (file.type.startsWith('image/')) {
+      return performOCR(file);
+    }
+
+    const arrayBuffer = await readFileAsArrayBuffer(file);
+
+    if (file.type === 'application/pdf') {
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      let text = '';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        text += content.items.map(item => item.str).join(' ');
+      }
+      return text;
+    }
+
+    if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+      const result = await mammoth.extractRawText({ arrayBuffer });
+      return result.value;
+    }
+
+    if (file.type === 'text/markdown') {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const html = marked.parse(reader.result);
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = html;
+          resolve(tempDiv.textContent || tempDiv.innerText || '');
         };
+        reader.onerror = reject;
+        reader.readAsText(file);
+      });
+    }
 
-        // 如果是图片，执行OCR
-        if (file.type.startsWith('image/')) {
-          try {
-            const ocrText = await performOCR(file);
-            doc.ocrText = ocrText;
-          } catch (error) {
-            console.warn('OCR failed:', error);
-          }
-        }
+    return null;
+  }
 
-        const transaction = db.transaction([STORE_NAME], 'readwrite');
-        const store = transaction.objectStore(STORE_NAME);
-        const request = store.add(doc);
-        
+  async function saveDocument(file) {
+    if (!db) await initIndexedDB();
+
+    try {
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      const doc = {
+        id: Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        data: dataUrl,
+        uploadDate: Date.now(),
+        ocrText: null
+      };
+
+      try {
+        doc.ocrText = await extractTextFromFile(file);
+      } catch (error) {
+        console.warn(`Text extraction failed for ${file.name}:`, error);
+      }
+
+      const transaction = db.transaction([STORE_NAME], 'readwrite');
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.add(doc);
+
+      return new Promise((resolve, reject) => {
         request.onsuccess = () => resolve(doc);
         request.onerror = () => reject(request.error);
-      };
-      
-      reader.onerror = () => reject(reader.error);
-      reader.readAsDataURL(file);
-    });
+      });
+    } catch (error) {
+      console.error('Error saving document:', error);
+      throw error;
+    }
   }
 
   async function getAllDocuments() {
@@ -205,17 +266,20 @@ const DocumentManager = (function() {
   }
 
   function getFileIcon(type) {
-    if (type.startsWith('image/')) {
-      return '🖼️';
-    } else if (type === 'application/pdf') {
-      return '📄';
-    }
+    if (type.startsWith('image/')) return '🖼️';
+    if (type === 'application/pdf') return '📄';
+    if (type.includes('presentation') || type.includes('powerpoint')) return '📊';
+    if (type.includes('word')) return '📝';
+    if (type === 'text/markdown') return '✍️';
     return '📎';
   }
 
   function getFileTypeLabel(type) {
     if (type.startsWith('image/')) return 'image';
     if (type === 'application/pdf') return 'pdf';
+    if (type.includes('presentation') || type.includes('powerpoint')) return 'ppt';
+    if (type.includes('word')) return 'doc';
+    if (type === 'text/markdown') return 'md';
     return 'other';
   }
 
@@ -359,13 +423,9 @@ const DocumentManager = (function() {
           ocrContentEl.innerHTML = `
             <div class="ocr-text">${safeOcr.replace(/\n/g, '<br>')}</div>
           `;
-        } else if (doc.type.startsWith('image/')) {
-          ocrContentEl.innerHTML = `
-            <p class="ocr-empty">该图片尚未进行OCR识别</p>
-          `;
         } else {
           ocrContentEl.innerHTML = `
-            <p class="ocr-empty">该文件类型不支持OCR识别</p>
+            <p class="ocr-empty">无法提取文件中的文本内容，或该文件类型不支持文本提取。</p>
           `;
         }
       }
@@ -469,10 +529,19 @@ const DocumentManager = (function() {
       }
 
       // Validate file type
-      const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
-      if (!validTypes.includes(file.type)) {
-        alert(`文件 "${file.name}" 类型不支持`);
-        continue;
+      if (!SUPPORTED_FILE_TYPES.includes(file.type)) {
+        const extension = file.name.split('.').pop().toLowerCase();
+        const genericTypes = {
+          'ppt': 'application/vnd.ms-powerpoint',
+          'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+          'doc': 'application/msword',
+          'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+          'md': 'text/markdown'
+        };
+        if (!Object.values(genericTypes).some(type => SUPPORTED_FILE_TYPES.includes(type))) {
+          alert(`文件 "${file.name}" 类型不支持`);
+          continue;
+        }
       }
 
       try {
