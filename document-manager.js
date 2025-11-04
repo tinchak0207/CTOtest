@@ -44,29 +44,36 @@ const DocumentManager = (function() {
     });
   }
 
-  }
-
-async function extractTextFromFile(file) {
-    const text = await new Promise((resolve, reject) => {
+  async function extractTextFromFile(file) {
+    try {
+      const text = await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
+        reader.onerror = () => reject(new Error('文件读取失败'));
         reader.readAsText(file);
-    });
+      });
 
-    if (file.type === 'text/markdown') {
+      if (file.type === 'text/markdown') {
+        if (typeof marked === 'undefined') {
+          console.warn('marked库未加载，返回原始文本');
+          return text;
+        }
         const html = marked.parse(text);
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
         return tempDiv.textContent || tempDiv.innerText || '';
-    }
+      }
 
-    if (file.type === 'text/plain') {
+      if (file.type === 'text/plain') {
         return text;
-    }
+      }
 
-    return null;
-}
+      return null;
+    } catch (error) {
+      console.warn(`文本提取失败 for ${file.name}:`, error);
+      return null;
+    }
+  }
 
   async function saveDocument(file) {
     if (!db) await initIndexedDB();
@@ -415,10 +422,18 @@ async function extractTextFromFile(file) {
   async function handleFileUpload(files) {
     const uploadArea = document.getElementById('uploadArea');
     
+    if (!files || files.length === 0) {
+      return;
+    }
+
+    const validFiles = [];
+    const errors = [];
+
+    // 第一步：验证所有文件
     for (const file of files) {
       // Validate file size
       if (file.size > MAX_FILE_SIZE) {
-        alert(`文件 "${file.name}" 超过10MB大小限制`);
+        errors.push(`文件 "${file.name}" 超过10MB大小限制`);
         continue;
       }
 
@@ -431,21 +446,44 @@ async function extractTextFromFile(file) {
       // Fallback for systems that might not assign a MIME type to .md files
       if (!isSupported && fileName.endsWith('.md') && file.type === '') {
         isSupported = true;
-        // Correct the type for later use
         Object.defineProperty(file, 'type', { value: 'text/markdown' });
       }
       
       // Fallback for .txt files
       if (!isSupported && fileName.endsWith('.txt') && file.type === '') {
         isSupported = true;
-        // Correct the type for later use
         Object.defineProperty(file, 'type', { value: 'text/plain' });
       }
 
       if (!isSupported) {
-        alert(`文件 "${file.name}" 类型不支持. 只支持 .md 和 .txt 文件.`);
+        errors.push(`文件 "${file.name}" 类型不支持（仅支持 .md 和 .txt）`);
         continue;
       }
+
+      validFiles.push(file);
+    }
+
+    // 显示验证错误
+    if (errors.length > 0 && validFiles.length === 0) {
+      alert(`文件验证失败：\n${errors.join('\n')}`);
+      return;
+    }
+
+    if (errors.length > 0) {
+      console.warn('文件验证警告：', errors);
+    }
+
+    if (validFiles.length === 0) {
+      return;
+    }
+
+    // 第二步：上传文件
+    const uploadProgress = [];
+    const uploadedFiles = [];
+
+    for (let i = 0; i < validFiles.length; i++) {
+      const file = validFiles[i];
+      const progress = `${i + 1}/${validFiles.length}`;
 
       try {
         // Show loading state
@@ -453,78 +491,135 @@ async function extractTextFromFile(file) {
           uploadArea.classList.add('uploading');
           const uploadText = uploadArea.querySelector('.upload-text');
           if (uploadText) {
-            uploadText.textContent = `正在上传 ${file.name}...`;
+            uploadText.textContent = `上传中... [${progress}] ${file.name}`;
           }
         }
 
-        await saveDocument(file);
+        const doc = await saveDocument(file);
+        uploadedFiles.push(doc);
+        uploadProgress.push({ name: file.name, status: 'success' });
 
-        // Show success
-        if (uploadArea) {
-          const uploadText = uploadArea.querySelector('.upload-text');
-          if (uploadText) {
-            uploadText.textContent = '✓ 上传成功！';
-            setTimeout(() => {
-              uploadText.textContent = '拖拽文件到此处或点击上传';
-            }, 2000);
-          }
-        }
       } catch (error) {
         console.error('Upload error:', error);
-        alert(`上传 "${file.name}" 失败: ${error.message}`);
-      } finally {
-        if (uploadArea) {
-          uploadArea.classList.remove('uploading');
-        }
+        uploadProgress.push({ name: file.name, status: 'error', message: error.message });
       }
+    }
+
+    // Show result
+    if (uploadArea) {
+      const uploadText = uploadArea.querySelector('.upload-text');
+      if (uploadText) {
+        const successCount = uploadProgress.filter(p => p.status === 'success').length;
+        const failCount = uploadProgress.filter(p => p.status === 'error').length;
+        
+        if (failCount > 0) {
+          uploadText.textContent = `✓ 成功上传 ${successCount} 个，失败 ${failCount} 个`;
+        } else {
+          uploadText.textContent = `✓ 已上传 ${successCount} 个文件`;
+        }
+        
+        setTimeout(() => {
+          uploadText.textContent = '拖拽文件到此处或点击上传';
+        }, 3000);
+      }
+      uploadArea.classList.remove('uploading');
+    }
+
+    // Show detailed errors if any
+    const failedUploads = uploadProgress.filter(p => p.status === 'error');
+    if (failedUploads.length > 0) {
+      const failedList = failedUploads.map(p => `• ${p.name}: ${p.message}`).join('\n');
+      alert(`以下文件上传失败：\n${failedList}`);
     }
 
     // Refresh document list
     await renderDocuments();
+
+    return uploadedFiles;
   }
 
   function setupEventListeners() {
     if (listenersBound) return;
     listenersBound = true;
 
-    // Select files button
     const selectFilesBtn = document.getElementById('selectFilesBtn');
     const documentInput = document.getElementById('documentInput');
+    const uploadArea = document.getElementById('uploadArea');
     
-    if (selectFilesBtn && documentInput) {
-      selectFilesBtn.addEventListener('click', () => {
+    // 处理文件选择
+    const triggerFileSelect = () => {
+      if (documentInput) {
         documentInput.click();
+      }
+    };
+
+    // 设置选择文件按钮
+    if (selectFilesBtn) {
+      selectFilesBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        triggerFileSelect();
       });
     }
 
+    // 设置上传区域本身可点击
+    if (uploadArea) {
+      uploadArea.addEventListener('click', (e) => {
+        // 只在点击上传区域但不是点击按钮时触发
+        if (e.target.id !== 'selectFilesBtn' && !e.target.closest('#selectFilesBtn')) {
+          triggerFileSelect();
+        }
+      });
+    }
+
+    // 设置文件输入变化事件
     if (documentInput) {
       documentInput.addEventListener('change', (e) => {
-        if (e.target.files.length > 0) {
+        if (e.target.files && e.target.files.length > 0) {
           handleFileUpload(Array.from(e.target.files));
           e.target.value = ''; // Reset input
         }
       });
     }
 
-    // Drag and drop
-    const uploadArea = document.getElementById('uploadArea');
+    // 设置拖拽功能
     if (uploadArea) {
+      // 阻止浏览器默认行为
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach((eventName) => {
+        uploadArea.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        });
+      });
+
+      // 处理dragover - 显示视觉反馈
       uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
         uploadArea.classList.add('drag-over');
       });
 
-      uploadArea.addEventListener('dragleave', () => {
-        uploadArea.classList.remove('drag-over');
+      // 处理dragleave - 移除视觉反馈
+      uploadArea.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        // 确保只在离开uploadArea时移除，而不是离开子元素时
+        if (e.target === uploadArea) {
+          uploadArea.classList.remove('drag-over');
+        }
       });
 
+      // 处理drop - 上传文件
       uploadArea.addEventListener('drop', (e) => {
         e.preventDefault();
         uploadArea.classList.remove('drag-over');
         
-        if (e.dataTransfer.files.length > 0) {
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
           handleFileUpload(Array.from(e.dataTransfer.files));
         }
+      });
+
+      // 处理dragend（以防万一）
+      uploadArea.addEventListener('dragend', (e) => {
+        uploadArea.classList.remove('drag-over');
       });
     }
 
@@ -632,28 +727,40 @@ async function extractTextFromFile(file) {
     // 获取文本内容
     if (currentDocument.ocrText) {
       text = currentDocument.ocrText;
-    } else if (currentDocument.type.startsWith('image/')) {
-      alert('该图片尚未进行OCR识别，请等待OCR完成后再生成题库');
+    } else if (currentDocument.type && currentDocument.type.startsWith('image/')) {
+      alert('该图片尚未进行OCR识别，请等待处理完成后再生成题库');
       return;
     } else {
-      alert('该文件类型不支持自动生成题库，请上传图片或包含OCR文本的文档');
+      const fileType = currentDocument.type || '未知';
+      alert(`该文件类型不支持生成题库。\n文件类型: ${fileType}\n\n请上传 .md 或 .txt 文件。`);
       return;
     }
 
     // 检查文本长度
-    if (text.trim().length < 50) {
-      alert('文本内容太少，无法生成题目（至少需要50个字符）');
+    const trimmedText = text ? text.trim() : '';
+    if (trimmedText.length === 0) {
+      alert('文档中未检测到文本内容。\n\n请确保文件包含有效的文本信息。');
+      return;
+    }
+
+    if (trimmedText.length < 50) {
+      alert(`文本内容不足以生成题目。\n当前文本长度: ${trimmedText.length} 字符\n最少需要: 50 字符`);
       return;
     }
 
     // 显示生成对话框
-    showGenerateDialog(text);
+    showGenerateDialog(trimmedText);
   }
 
   /**
    * 显示生成题库对话框
    */
   function showGenerateDialog(text) {
+    if (!text || typeof text !== 'string') {
+      alert('无效的文本内容');
+      return;
+    }
+
     const modal = document.createElement('div');
     modal.className = 'modal-overlay';
     modal.innerHTML = `
@@ -666,7 +773,10 @@ async function extractTextFromFile(file) {
           <div class="generate-form">
             <div class="form-group">
               <label for="questionCount">生成题目数量：</label>
-              <input type="number" id="questionCount" min="5" max="50" value="10" />
+              <div class="input-group">
+                <input type="number" id="questionCount" min="5" max="50" value="10" />
+                <span class="input-hint">5-50题</span>
+              </div>
             </div>
             
             <div class="form-group">
@@ -696,20 +806,20 @@ async function extractTextFromFile(file) {
             <div class="form-group">
               <label>
                 <input type="checkbox" id="addToReview" checked />
-                自动添加到复习计划
+                自动添加到复习计划（使用间隔重复算法）
               </label>
             </div>
 
             <div class="form-group">
               <label>
                 <input type="checkbox" id="createMockExam" />
-                立即生成模拟考试
+                生成后立即开始模拟考试
               </label>
             </div>
 
             <div class="generate-info">
               <p>📝 文本长度：<strong>${text.length}</strong> 字符</p>
-              <p>✨ 将使用AI智能算法从文档内容中提取知识点并生成题目</p>
+              <p>✨ 系统会自动分析文本内容并智能生成题目</p>
             </div>
           </div>
 
@@ -732,9 +842,21 @@ async function extractTextFromFile(file) {
 
     // 绑定开始生成按钮
     const startBtn = modal.querySelector('#startGenerate');
-    startBtn.addEventListener('click', () => {
-      performQuestionGeneration(text, modal);
-    });
+    if (startBtn) {
+      startBtn.addEventListener('click', () => {
+        performQuestionGeneration(text, modal);
+      });
+    }
+
+    // 验证 count input
+    const countInput = modal.querySelector('#questionCount');
+    if (countInput) {
+      countInput.addEventListener('change', (e) => {
+        let val = parseInt(e.target.value) || 10;
+        val = Math.max(5, Math.min(50, val));
+        e.target.value = val;
+      });
+    }
   }
 
   /**
@@ -747,8 +869,15 @@ async function extractTextFromFile(file) {
     const createMockExam = modal.querySelector('#createMockExam');
     const typeCheckboxes = modal.querySelectorAll('.checkbox-group input[type="checkbox"]:checked');
 
-    const count = parseInt(countInput.value) || 10;
-    const module = moduleSelect.value;
+    // 验证输入
+    if (!countInput || !moduleSelect) {
+      console.error('对话框元素缺失');
+      alert('对话框错误，请重试');
+      return;
+    }
+
+    const count = Math.max(5, Math.min(50, parseInt(countInput.value) || 10));
+    const module = moduleSelect.value || 'custom';
     const types = Array.from(typeCheckboxes).map(cb => cb.value);
 
     if (types.length === 0) {
@@ -756,76 +885,119 @@ async function extractTextFromFile(file) {
       return;
     }
 
+    if (!text || text.trim().length === 0) {
+      alert('文本内容为空，无法生成题目');
+      return;
+    }
+
     // 显示进度
     const form = modal.querySelector('.generate-form');
     const progress = modal.querySelector('#generateProgress');
+    
+    if (!form || !progress) {
+      alert('对话框结构错误，请重试');
+      return;
+    }
+
     const progressFill = progress.querySelector('.progress-fill');
     const progressText = progress.querySelector('.progress-text');
     const startBtn = modal.querySelector('#startGenerate');
 
+    if (!progressFill || !progressText) {
+      alert('进度显示组件缺失');
+      return;
+    }
+
     form.style.display = 'none';
     progress.style.display = 'block';
-    startBtn.disabled = true;
+    if (startBtn) startBtn.disabled = true;
 
     try {
-      // 模拟进度
+      // Step 1: 分析文档内容
       progressText.textContent = '正在分析文档内容...';
       progressFill.style.width = '20%';
+      progressFill.style.backgroundColor = '';
 
-      await sleep(500);
+      await sleep(300);
 
-      // 调用题目生成器
+      // Step 2: 验证生成器
       if (typeof QuestionGenerator === 'undefined') {
-        throw new Error('题目生成器未加载，请刷新页面重试');
+        throw new Error('题目生成器未加载。请确保页面完全加载后再试。');
+      }
+
+      if (typeof QuestionGenerator.generateQuestions !== 'function') {
+        throw new Error('题目生成器函数不可用');
       }
 
       progressText.textContent = '正在提取关键知识点...';
       progressFill.style.width = '40%';
+      await sleep(300);
 
-      const questions = QuestionGenerator.generateQuestions(text, {
-        module,
-        count,
-        types
-      });
+      // Step 3: 生成题目
+      let questions;
+      try {
+        questions = QuestionGenerator.generateQuestions(text, {
+          module,
+          count,
+          types
+        });
+      } catch (genError) {
+        throw new Error(`题目生成失败: ${genError.message}`);
+      }
 
-      progressText.textContent = '正在生成题目...';
+      if (!Array.isArray(questions) || questions.length === 0) {
+        throw new Error('生成的题目为空，请检查文本内容是否足够丰富');
+      }
+
+      progressText.textContent = `已生成 ${questions.length} 道题目...`;
       progressFill.style.width = '60%';
+      await sleep(300);
 
-      await sleep(500);
-
-      // 保存题目到系统
+      // Step 4: 保存题目
       progressText.textContent = '正在保存到题库...';
       progressFill.style.width = '80%';
 
-      if (typeof window.addGeneratedQuestions === 'function') {
-        window.addGeneratedQuestions(questions, {
-          addToReview: addToReview.checked,
-          createMockExam: createMockExam.checked
-        });
-      } else {
-        console.warn('addGeneratedQuestions 函数未定义');
+      try {
+        if (typeof window.addGeneratedQuestions === 'function') {
+          window.addGeneratedQuestions(questions, {
+            addToReview: addToReview && addToReview.checked,
+            createMockExam: createMockExam && createMockExam.checked
+          });
+        } else {
+          console.warn('addGeneratedQuestions 函数未定义，题目可能未正确保存');
+          throw new Error('保存函数不可用');
+        }
+      } catch (saveError) {
+        throw new Error(`保存题目失败: ${saveError.message}`);
       }
 
       progressText.textContent = '✓ 题库生成完成！';
       progressFill.style.width = '100%';
 
-      await sleep(1000);
+      await sleep(800);
 
       // 显示结果
-      showGenerationResult(questions, modal, createMockExam.checked);
+      showGenerationResult(questions, modal, createMockExam && createMockExam.checked);
 
     } catch (error) {
-      console.error('生成题目失败:', error);
-      progressText.textContent = '❌ 生成失败: ' + error.message;
+      console.error('生成题目过程中出错:', error);
+      
+      const errorMsg = error.message || '未知错误';
+      progressText.textContent = `❌ 生成失败: ${errorMsg}`;
       progressFill.style.width = '100%';
       progressFill.style.backgroundColor = 'var(--error-color, #f44336)';
 
+      // 3秒后允许重试
       setTimeout(() => {
-        form.style.display = 'block';
-        progress.style.display = 'none';
-        startBtn.disabled = false;
-        progressFill.style.width = '0%';
-        progressFill.style.backgroundColor = '';
+        try {
+          form.style.display = 'block';
+          progress.style.display = 'none';
+          if (startBtn) startBtn.disabled = false;
+          progressFill.style.width = '0%';
+          progressFill.style.backgroundColor = '';
+        } catch (e) {
+          console.error('重置对话框失败:', e);
+        }
       }, 3000);
     }
   }
@@ -834,6 +1006,12 @@ async function extractTextFromFile(file) {
    * 显示生成结果
    */
   function showGenerationResult(questions, modal, createMockExam) {
+    if (!Array.isArray(questions)) {
+      console.error('Invalid questions array');
+      alert('生成结果无效，请重试');
+      return;
+    }
+
     const singleCount = questions.filter(q => q.type === 'single').length;
     const multipleCount = questions.filter(q => q.type === 'multiple').length;
     const trueFalseCount = questions.filter(q => q.type === 'truefalse').length;
@@ -845,7 +1023,7 @@ async function extractTextFromFile(file) {
         <div class="result-stats">
           <div class="stat-item">
             <div class="stat-number">${questions.length}</div>
-            <div class="stat-label">题目总数</div>
+            <div class="stat-label">题目已生成</div>
           </div>
           <div class="stat-item">
             <div class="stat-number">${singleCount}</div>
@@ -860,6 +1038,9 @@ async function extractTextFromFile(file) {
             <div class="stat-label">判断题</div>
           </div>
         </div>
+        <div class="result-note">
+          <p>✅ 题目已保存到题库，可在"练习"中查看</p>
+        </div>
         <div class="result-actions">
           ${createMockExam ? '<button class="cta-btn" onclick="window.startMockExam && window.startMockExam()">🚀 开始模拟考试</button>' : ''}
           <button class="cta-btn" onclick="window.switchView && window.switchView(\'practice\')">📝 进入练习</button>
@@ -868,11 +1049,20 @@ async function extractTextFromFile(file) {
       </div>
     `;
 
-    const modalBody = modal.querySelector('.modal-body');
-    modalBody.innerHTML = resultHtml;
+    try {
+      const modalBody = modal.querySelector('.modal-body');
+      if (modalBody) {
+        modalBody.innerHTML = resultHtml;
+      }
 
-    const modalFooter = modal.querySelector('.modal-footer');
-    modalFooter.style.display = 'none';
+      const modalFooter = modal.querySelector('.modal-footer');
+      if (modalFooter) {
+        modalFooter.style.display = 'none';
+      }
+    } catch (error) {
+      console.error('Error displaying result:', error);
+      alert('显示生成结果时出错: ' + error.message);
+    }
   }
 
   /**
