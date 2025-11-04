@@ -1,15 +1,42 @@
+function createDefaultAnalytics() {
+  return {
+    totalStudyTime: 0,
+    sessionHistory: [],
+    streakDays: 0,
+    lastStudyDate: null,
+    dailyActivity: {},
+    accuracyByType: {
+      single: { attempted: 0, correct: 0 },
+      multiple: { attempted: 0, correct: 0 },
+      truefalse: { attempted: 0, correct: 0 }
+    },
+    modulePerformance: {},
+    questionHistory: []
+  };
+}
+
 let questionsData = null;
 let tutorialsData = null;
 let userProgress = {};
 let lessonProgress = {};
+let userNotes = {};
+let reviewSchedule = {};
+let studyAnalytics = createDefaultAnalytics();
 let currentView = 'home';
 let currentTutorialCategory = null;
 let currentTutorialLesson = null;
 let examMode = null;
 let examTimer = null;
+let sessionStartTime = null;
+let eventListenersBound = false;
 
 const QUESTION_PROGRESS_KEY = 'robotics_learning_progress';
 const LESSON_PROGRESS_KEY = 'robotics_learning_lessons';
+const USER_NOTES_KEY = 'robotics_learning_notes';
+const REVIEW_SCHEDULE_KEY = 'robotics_learning_review';
+const ANALYTICS_KEY = 'robotics_learning_analytics';
+const DAY_MS = 86400000;
+const HOUR_MS = 3600000;
 
 function loadQuestionProgress() {
   const stored = localStorage.getItem(QUESTION_PROGRESS_KEY);
@@ -47,6 +74,360 @@ function saveLessonProgress() {
   localStorage.setItem(LESSON_PROGRESS_KEY, JSON.stringify(lessonProgress));
 }
 
+function loadUserNotes() {
+  const stored = localStorage.getItem(USER_NOTES_KEY);
+  if (stored) {
+    try {
+      userNotes = JSON.parse(stored);
+    } catch (error) {
+      console.warn('Failed to parse user notes, resetting.', error);
+      userNotes = {};
+    }
+  } else {
+    userNotes = {};
+  }
+
+  Object.entries(userNotes).forEach(([key, value]) => {
+    if (!value || typeof value !== 'object') {
+      userNotes[key] = {
+        text: String(value || ''),
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      };
+    } else {
+      if (typeof value.text !== 'string') {
+        value.text = '';
+      }
+      if (!value.createdAt) {
+        value.createdAt = Date.now();
+      }
+      if (!value.updatedAt) {
+        value.updatedAt = value.createdAt;
+      }
+      if (!value.type) {
+        const [type, targetId] = key.split(':');
+        value.type = type;
+        value.targetId = targetId;
+      }
+    }
+  });
+}
+
+function saveUserNotes() {
+  localStorage.setItem(USER_NOTES_KEY, JSON.stringify(userNotes));
+}
+
+function loadReviewSchedule() {
+  const stored = localStorage.getItem(REVIEW_SCHEDULE_KEY);
+  if (stored) {
+    try {
+      reviewSchedule = JSON.parse(stored);
+    } catch (error) {
+      console.warn('Failed to parse review schedule, resetting.', error);
+      reviewSchedule = {};
+    }
+  } else {
+    reviewSchedule = {};
+  }
+}
+
+function saveReviewSchedule() {
+  localStorage.setItem(REVIEW_SCHEDULE_KEY, JSON.stringify(reviewSchedule));
+}
+
+function loadAnalytics() {
+  const stored = localStorage.getItem(ANALYTICS_KEY);
+  if (stored) {
+    try {
+      const loaded = JSON.parse(stored);
+      studyAnalytics = Object.assign(createDefaultAnalytics(), loaded);
+    } catch (error) {
+      console.warn('Failed to parse analytics, resetting.', error);
+      studyAnalytics = createDefaultAnalytics();
+    }
+  } else {
+    studyAnalytics = createDefaultAnalytics();
+  }
+}
+
+function ensureAnalyticsShape() {
+  if (!studyAnalytics.dailyActivity) {
+    studyAnalytics.dailyActivity = {};
+  }
+  if (!studyAnalytics.accuracyByType) {
+    studyAnalytics.accuracyByType = {
+      single: { attempted: 0, correct: 0 },
+      multiple: { attempted: 0, correct: 0 },
+      truefalse: { attempted: 0, correct: 0 }
+    };
+  }
+  const types = ['single', 'multiple', 'truefalse'];
+  types.forEach((type) => {
+    if (!studyAnalytics.accuracyByType[type]) {
+      studyAnalytics.accuracyByType[type] = { attempted: 0, correct: 0 };
+    }
+    if (typeof studyAnalytics.accuracyByType[type].attempted !== 'number') {
+      studyAnalytics.accuracyByType[type].attempted = Number(studyAnalytics.accuracyByType[type].attempted) || 0;
+    }
+    if (typeof studyAnalytics.accuracyByType[type].correct !== 'number') {
+      studyAnalytics.accuracyByType[type].correct = Number(studyAnalytics.accuracyByType[type].correct) || 0;
+    }
+  });
+  if (!studyAnalytics.modulePerformance || typeof studyAnalytics.modulePerformance !== 'object') {
+    studyAnalytics.modulePerformance = {};
+  }
+  if (!Array.isArray(studyAnalytics.questionHistory)) {
+    studyAnalytics.questionHistory = [];
+  }
+}
+
+function getNoteKey(type, id) {
+  return `${type}:${id}`;
+}
+
+function getNoteRecord(type, id) {
+  const key = getNoteKey(type, id);
+  const record = userNotes[key];
+  if (!record || typeof record.text !== 'string') {
+    return {
+      key,
+      type,
+      targetId: id,
+      text: '',
+      createdAt: null,
+      updatedAt: null
+    };
+  }
+  return {
+    key,
+    type: record.type || type,
+    targetId: record.targetId || id,
+    text: record.text,
+    createdAt: record.createdAt || null,
+    updatedAt: record.updatedAt || null
+  };
+}
+
+function saveNoteRecord(type, id, text) {
+  const key = getNoteKey(type, id);
+  const trimmed = (text || '').trim();
+  if (!trimmed) {
+    delete userNotes[key];
+  } else {
+    const existing = userNotes[key] || {};
+    userNotes[key] = {
+      ...existing,
+      type,
+      targetId: id,
+      text: trimmed,
+      createdAt: existing.createdAt || Date.now(),
+      updatedAt: Date.now()
+    };
+  }
+  saveUserNotes();
+}
+
+function removeNoteRecord(type, id) {
+  delete userNotes[getNoteKey(type, id)];
+  saveUserNotes();
+}
+
+function getAllNotes() {
+  return Object.entries(userNotes)
+    .map(([key, value]) => ({
+      key,
+      type: value.type || key.split(':')[0],
+      targetId: value.targetId || key.split(':')[1],
+      text: value.text || '',
+      createdAt: value.createdAt || Date.now(),
+      updatedAt: value.updatedAt || value.createdAt || Date.now()
+    }))
+    .filter((note) => note.text.trim().length > 0)
+    .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+}
+
+function formatDateTime(timestamp) {
+  if (!timestamp) return '—';
+  const date = new Date(timestamp);
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  const h = String(date.getHours()).padStart(2, '0');
+  const min = String(date.getMinutes()).padStart(2, '0');
+  return `${y}-${m}-${d} ${h}:${min}`;
+}
+
+function formatDurationSeconds(seconds) {
+  if (!seconds) return '0 分钟';
+  const totalMinutes = Math.round(seconds / 60);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  if (hours === 0) {
+    return `${minutes} 分钟`;
+  }
+  return `${hours} 小时 ${minutes} 分钟`;
+}
+
+function saveAnalytics() {
+  localStorage.setItem(ANALYTICS_KEY, JSON.stringify(studyAnalytics));
+}
+
+function exportAllData() {
+  const exportData = {
+    version: '1.0.0',
+    exportDate: new Date().toISOString(),
+    data: {
+      questionProgress: userProgress,
+      lessonProgress: lessonProgress,
+      notes: userNotes,
+      reviewSchedule: reviewSchedule,
+      analytics: studyAnalytics
+    }
+  };
+  
+  const dataStr = JSON.stringify(exportData, null, 2);
+  const dataBlob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(dataBlob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `learning-data-${Date.now()}.json`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+  
+  return true;
+}
+
+function importAllData(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const importedData = JSON.parse(event.target.result);
+        
+        if (!importedData.data) {
+          reject(new Error('Invalid data format'));
+          return;
+        }
+        
+        if (importedData.data.questionProgress) {
+          userProgress = importedData.data.questionProgress;
+          saveQuestionProgress();
+        }
+        
+        if (importedData.data.lessonProgress) {
+          lessonProgress = importedData.data.lessonProgress;
+          saveLessonProgress();
+        }
+        
+        if (importedData.data.notes) {
+          userNotes = importedData.data.notes;
+          saveUserNotes();
+        }
+        
+        if (importedData.data.reviewSchedule) {
+          reviewSchedule = importedData.data.reviewSchedule;
+          saveReviewSchedule();
+        }
+        
+        if (importedData.data.analytics) {
+          studyAnalytics = importedData.data.analytics;
+          saveAnalytics();
+        }
+        
+        resolve(importedData);
+      } catch (error) {
+        reject(error);
+      }
+    };
+    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.readAsText(file);
+  });
+}
+
+function updateStudySession() {
+  if (!sessionStartTime) {
+    sessionStartTime = Date.now();
+  }
+  
+  const today = new Date().toDateString();
+  const lastStudy = studyAnalytics.lastStudyDate ? new Date(studyAnalytics.lastStudyDate).toDateString() : null;
+  
+  if (lastStudy !== today) {
+    if (lastStudy === new Date(Date.now() - 86400000).toDateString()) {
+      studyAnalytics.streakDays += 1;
+    } else if (lastStudy !== today) {
+      studyAnalytics.streakDays = 1;
+    }
+    studyAnalytics.lastStudyDate = new Date().toISOString();
+  }
+  
+  saveAnalytics();
+}
+
+function endStudySession() {
+  if (sessionStartTime) {
+    const duration = Math.floor((Date.now() - sessionStartTime) / 1000);
+    studyAnalytics.totalStudyTime += duration;
+    studyAnalytics.sessionHistory.push({
+      date: new Date().toISOString(),
+      duration: duration
+    });
+    
+    if (studyAnalytics.sessionHistory.length > 100) {
+      studyAnalytics.sessionHistory = studyAnalytics.sessionHistory.slice(-100);
+    }
+    
+    saveAnalytics();
+    sessionStartTime = null;
+  }
+}
+
+function scheduleReview(itemId, itemType = 'question', correct = true) {
+  const now = Date.now();
+  const intervals = [1, 3, 7, 14, 30];
+  const schedule = reviewSchedule[itemId] || {
+    itemType,
+    reviewCount: 0,
+    intervalIndex: 0,
+    interval: intervals[0],
+    lastReview: now,
+    nextReview: now + intervals[0] * DAY_MS,
+    successStreak: 0,
+    lastResult: null
+  };
+
+  schedule.itemType = itemType;
+  schedule.reviewCount = (schedule.reviewCount || 0) + 1;
+  schedule.lastReview = now;
+
+  if (correct) {
+    schedule.successStreak = (schedule.successStreak || 0) + 1;
+    const currentIndex = typeof schedule.intervalIndex === 'number' ? schedule.intervalIndex : intervals.indexOf(schedule.interval) || 0;
+    const nextIndex = Math.min(currentIndex + 1, intervals.length - 1);
+    schedule.intervalIndex = nextIndex;
+    schedule.interval = intervals[nextIndex];
+    schedule.nextReview = now + schedule.interval * DAY_MS;
+  } else {
+    schedule.successStreak = 0;
+    schedule.intervalIndex = 0;
+    schedule.interval = intervals[0];
+    schedule.nextReview = now + Math.max(0.5, intervals[0]) * DAY_MS;
+  }
+
+  schedule.lastResult = correct ? 'correct' : 'incorrect';
+  reviewSchedule[itemId] = schedule;
+  saveReviewSchedule();
+}
+
+function getDueReviews() {
+  const now = Date.now();
+  return Object.entries(reviewSchedule)
+    .filter(([, data]) => data.nextReview <= now)
+    .map(([itemId]) => itemId);
+}
+
 function getQuestionProgress(qid) {
   return userProgress[qid] || { attempted: false, correct: false, attempts: 0 };
 }
@@ -82,6 +463,56 @@ function updateQuestionProgress(qid, correct) {
   userProgress[qid].attempts += 1;
   userProgress[qid].lastAttempt = Date.now();
   saveQuestionProgress();
+  
+  if (questionsData) {
+    const question = questionsData.questions.find((q) => q.id === qid);
+    if (question) {
+      updateAnalyticsForQuestion(question, correct);
+      scheduleReview(qid, 'question', correct);
+    }
+  }
+}
+
+function updateAnalyticsForQuestion(question, correct) {
+  ensureAnalyticsShape();
+  
+  const today = new Date().toISOString().split('T')[0];
+  if (!studyAnalytics.dailyActivity[today]) {
+    studyAnalytics.dailyActivity[today] = { attempted: 0, correct: 0 };
+  }
+  studyAnalytics.dailyActivity[today].attempted += 1;
+  if (correct) {
+    studyAnalytics.dailyActivity[today].correct += 1;
+  }
+  
+  if (studyAnalytics.accuracyByType[question.type]) {
+    studyAnalytics.accuracyByType[question.type].attempted += 1;
+    if (correct) {
+      studyAnalytics.accuracyByType[question.type].correct += 1;
+    }
+  }
+  
+  if (!studyAnalytics.modulePerformance[question.category]) {
+    studyAnalytics.modulePerformance[question.category] = { attempted: 0, correct: 0 };
+  }
+  studyAnalytics.modulePerformance[question.category].attempted += 1;
+  if (correct) {
+    studyAnalytics.modulePerformance[question.category].correct += 1;
+  }
+  
+  if (Array.isArray(studyAnalytics.questionHistory)) {
+    studyAnalytics.questionHistory.push({
+      questionId: question.id,
+      correct,
+      timestamp: Date.now()
+    });
+    
+    if (studyAnalytics.questionHistory.length > 500) {
+      studyAnalytics.questionHistory = studyAnalytics.questionHistory.slice(-500);
+    }
+  }
+  
+  saveAnalytics();
 }
 
 async function loadData() {
@@ -103,12 +534,21 @@ async function loadData() {
 function initialize() {
   loadQuestionProgress();
   loadLessonProgress();
+  loadUserNotes();
+  loadReviewSchedule();
+  loadAnalytics();
+  updateStudySession();
   renderHome();
   updateProgressDisplay();
   setupEventListeners();
+  
+  window.addEventListener('beforeunload', endStudySession);
 }
 
 function setupEventListeners() {
+  if (eventListenersBound) return;
+  eventListenersBound = true;
+
   document.querySelectorAll('.nav-btn').forEach((btn) => {
     btn.addEventListener('click', (event) => {
       const view = event.currentTarget.dataset.view;
@@ -138,8 +578,36 @@ function setupEventListeners() {
 
   document.getElementById('categoryFilter')?.addEventListener('change', renderPractice);
   document.getElementById('typeFilter')?.addEventListener('change', renderPractice);
+  document.getElementById('reviewOnly')?.addEventListener('change', renderPractice);
   document.getElementById('resetPractice')?.addEventListener('click', resetProgress);
   document.getElementById('startExam')?.addEventListener('click', startExam);
+  
+  document.getElementById('exportDataBtn')?.addEventListener('click', () => {
+    const success = exportAllData();
+    if (success) {
+      alert('数据导出成功！文件已保存到下载目录。');
+    }
+  });
+  
+  document.getElementById('importDataBtn')?.addEventListener('click', () => {
+    document.getElementById('importDataInput')?.click();
+  });
+  
+  document.getElementById('importDataInput')?.addEventListener('change', async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    try {
+      const importedData = await importAllData(file);
+      alert(`数据导入成功！\n导出日期：${new Date(importedData.exportDate).toLocaleString('zh-CN')}`);
+      location.reload();
+    } catch (error) {
+      alert(`数据导入失败：${error.message}`);
+      console.error('Import failed:', error);
+    }
+    
+    event.target.value = '';
+  });
 }
 
 function toggleTheme() {
@@ -167,6 +635,10 @@ function switchView(view) {
     renderExam();
   } else if (view === 'progress') {
     renderProgress();
+  } else if (view === 'analytics') {
+    renderAnalytics();
+  } else if (view === 'review') {
+    renderReview();
   }
 }
 
@@ -877,10 +1349,15 @@ function renderPractice() {
 
   const categoryFilter = document.getElementById('categoryFilter').value;
   const typeFilter = document.getElementById('typeFilter').value;
+  const reviewOnly = document.getElementById('reviewOnly')?.checked || false;
+
+  const dueReviewIds = getDueReviews();
+  const dueReviewSet = new Set(dueReviewIds);
 
   const filteredQuestions = questionsData.questions.filter((question) => {
     if (categoryFilter && question.category !== categoryFilter) return false;
     if (typeFilter && question.type !== typeFilter) return false;
+    if (reviewOnly && !dueReviewSet.has(question.id)) return false;
     return true;
   });
 
@@ -907,6 +1384,13 @@ function renderPractice() {
     card.className = 'practice-card';
 
     const progress = getQuestionProgress(question.id);
+    const isDue = dueReviewSet.has(question.id);
+    const reviewPlan = reviewSchedule[question.id];
+    
+    if (isDue) {
+      card.classList.add('review-due');
+    }
+    
     const typeText = question.type === 'single' ? '单选题' : question.type === 'multiple' ? '多选题' : '判断题';
     const statusIcon = progress.correct ? '✅' : progress.attempted ? '❌' : '⚪';
 
@@ -919,15 +1403,47 @@ function renderPractice() {
         </label>
       `;
     }).join('');
+    
+    const reviewBadge = isDue && reviewPlan ? `<span class="review-badge" title="下次复盘：${formatDateTime(reviewPlan.nextReview)}">📌 待复习</span>` : '';
 
     card.innerHTML = `
-      <h4>${statusIcon} ${typeText} ${index + 1}. ${question.question}</h4>
+      <div class="practice-meta">
+        <h4>${statusIcon} ${typeText} ${index + 1}. ${question.question}</h4>
+        ${reviewBadge}
+      </div>
       <div class="practice-options" id="options-${question.id}">${optionsHtml}</div>
       <button class="cta-btn" data-question="${question.id}">提交答案</button>
       <div class="feedback" id="feedback-${question.id}"></div>
     `;
 
-    card.querySelector('button').addEventListener('click', () => checkAnswer(question.id));
+    const submitButton = card.querySelector('button[data-question]');
+    submitButton.addEventListener('click', () => checkAnswer(question.id));
+
+    const noteEditor = createNoteEditor('question', question.id);
+    card.appendChild(noteEditor);
+    
+    const saveNoteBtn = noteEditor.querySelector('.note-save');
+    const clearNoteBtn = noteEditor.querySelector('.note-clear');
+    const noteTextarea = noteEditor.querySelector('textarea');
+    const noteTimestamp = noteEditor.querySelector('.note-timestamp');
+    
+    saveNoteBtn.addEventListener('click', () => {
+      const text = noteTextarea.value;
+      saveNoteRecord('question', question.id, text);
+      const updatedNote = getNoteRecord('question', question.id);
+      const timestampText = updatedNote.updatedAt ? `上次更新：${formatDateTime(updatedNote.updatedAt)}` : '尚无笔记';
+      noteTimestamp.textContent = timestampText;
+      clearNoteBtn.disabled = !text.trim();
+    });
+    
+    clearNoteBtn.addEventListener('click', () => {
+      if (confirm('确定要清空笔记吗？')) {
+        noteTextarea.value = '';
+        removeNoteRecord('question', question.id);
+        noteTimestamp.textContent = '尚无笔记';
+        clearNoteBtn.disabled = true;
+      }
+    });
 
     container.appendChild(card);
   });
@@ -1209,6 +1725,309 @@ function handleSearch(event) {
 
 function closeModal() {
   document.getElementById('questionModal')?.classList.remove('show');
+}
+
+function renderAnalytics() {
+  ensureAnalyticsShape();
+  
+  const streakDaysEl = document.getElementById('streakDays');
+  const totalStudyTimeEl = document.getElementById('totalStudyTime');
+  const dueReviewCountEl = document.getElementById('dueReviewCount');
+  const notesCountEl = document.getElementById('notesCount');
+  
+  if (streakDaysEl) {
+    streakDaysEl.textContent = studyAnalytics.streakDays || 0;
+  }
+  
+  if (totalStudyTimeEl) {
+    const hours = Math.round(studyAnalytics.totalStudyTime / 3600 * 10) / 10;
+    totalStudyTimeEl.textContent = hours;
+  }
+  
+  if (dueReviewCountEl) {
+    dueReviewCountEl.textContent = getDueReviews().length;
+  }
+  
+  if (notesCountEl) {
+    notesCountEl.textContent = getAllNotes().length;
+  }
+  
+  renderStudyTrendChart();
+  renderKnowledgeDistChart();
+}
+
+function renderStudyTrendChart() {
+  const chartContainer = document.getElementById('studyTrendChart');
+  if (!chartContainer) return;
+  
+  const dailyActivity = studyAnalytics.dailyActivity || {};
+  const dates = Object.keys(dailyActivity).sort().slice(-14);
+  
+  if (dates.length === 0) {
+    chartContainer.innerHTML = '<p class="chart-empty">暂无学习数据</p>';
+    return;
+  }
+  
+  const maxAttempted = Math.max(...dates.map((d) => dailyActivity[d].attempted), 1);
+  
+  let html = '<div class="trend-chart">';
+  dates.forEach((date) => {
+    const activity = dailyActivity[date];
+    const heightPercent = (activity.attempted / maxAttempted) * 100;
+    const accuracy = activity.attempted > 0 ? Math.round((activity.correct / activity.attempted) * 100) : 0;
+    const dateObj = new Date(date);
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    
+    html += `
+      <div class="trend-bar-container" title="${date}: ${activity.correct}/${activity.attempted} (${accuracy}%)">
+        <div class="trend-bar" style="height: ${heightPercent}%"></div>
+        <div class="trend-label">${month}/${day}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  
+  chartContainer.innerHTML = html;
+}
+
+function renderKnowledgeDistChart() {
+  const chartContainer = document.getElementById('knowledgeDistChart');
+  if (!chartContainer || !questionsData) return;
+  
+  const modulePerf = studyAnalytics.modulePerformance || {};
+  
+  let html = '<div class="knowledge-chart">';
+  
+  questionsData.categories.forEach((category) => {
+    const perf = modulePerf[category.id] || { attempted: 0, correct: 0 };
+    const accuracy = perf.attempted > 0 ? Math.round((perf.correct / perf.attempted) * 100) : 0;
+    const questions = questionsData.questions.filter((q) => q.category === category.id);
+    const completed = questions.filter((q) => getQuestionProgress(q.id).correct).length;
+    const total = questions.length;
+    const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+    
+    html += `
+      <div class="knowledge-item">
+        <div class="knowledge-header">
+          <span class="knowledge-name">${category.name}</span>
+          <span class="knowledge-progress">${progress}%</span>
+        </div>
+        <div class="knowledge-bar">
+          <div class="knowledge-bar-fill" style="width: ${progress}%"></div>
+        </div>
+        <div class="knowledge-stats">
+          <span>已完成: ${completed}/${total}</span>
+          <span>准确率: ${accuracy}%</span>
+        </div>
+      </div>
+    `;
+  });
+  
+  html += '</div>';
+  chartContainer.innerHTML = html;
+}
+
+function renderReview() {
+  const dueCount = document.getElementById('dueCount');
+  const noteCount = document.getElementById('noteCount');
+  
+  if (dueCount) {
+    dueCount.textContent = getDueReviews().length;
+  }
+  
+  if (noteCount) {
+    noteCount.textContent = getAllNotes().length;
+  }
+  
+  setupReviewTabs();
+  renderDueReview();
+}
+
+function setupReviewTabs() {
+  const tabs = document.querySelectorAll('.review-tabs .tab-btn');
+  const contents = document.querySelectorAll('.review-tab-content');
+  
+  tabs.forEach((tab) => {
+    if (tab.dataset.bound === 'true') return;
+    tab.dataset.bound = 'true';
+
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.classList.remove('active'));
+      contents.forEach((c) => c.classList.remove('active'));
+      
+      tab.classList.add('active');
+      const tabName = tab.dataset.tab;
+      const content = document.getElementById(`${tabName}Content`);
+      if (content) {
+        content.classList.add('active');
+      }
+      
+      if (tabName === 'dueReview') {
+        renderDueReview();
+      } else if (tabName === 'notes') {
+        renderNotes();
+      } else if (tabName === 'mistakes') {
+        renderMistakes();
+      }
+    });
+  });
+}
+
+function renderDueReview() {
+  const container = document.getElementById('dueReviewContent');
+  if (!container || !questionsData) return;
+  
+  const dueIds = getDueReviews();
+  
+  if (dueIds.length === 0) {
+    container.innerHTML = '<p class="review-empty">✅ 太棒了！暂无待复习题目。</p>';
+    return;
+  }
+  
+  container.innerHTML = '';
+  dueIds.forEach((itemId) => {
+    const question = questionsData.questions.find((q) => q.id === itemId);
+    if (!question) return;
+    
+    const schedule = reviewSchedule[itemId];
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    
+    const typeText = question.type === 'single' ? '单选题' : question.type === 'multiple' ? '多选题' : '判断题';
+    const progress = getQuestionProgress(question.id);
+    
+    card.innerHTML = `
+      <div class="review-header">
+        <span class="review-type">${typeText}</span>
+        <span class="review-interval">复习间隔: ${schedule.interval}天</span>
+      </div>
+      <h4>${question.question}</h4>
+      <p class="review-meta">
+        已复习 ${schedule.reviewCount} 次 | 
+        连续成功 ${schedule.successStreak || 0} 次 | 
+        正确率: ${progress.attempts > 0 ? Math.round((progress.correct ? 100 : 0)) : 0}%
+      </p>
+      <button class="cta-btn review-btn" data-question="${question.id}">开始复习</button>
+    `;
+    
+    card.querySelector('.review-btn').addEventListener('click', () => {
+      switchView('practice');
+      document.getElementById('categoryFilter').value = question.category;
+      renderPractice();
+    });
+    
+    container.appendChild(card);
+  });
+}
+
+function renderNotes() {
+  const container = document.getElementById('notesContent');
+  if (!container) return;
+  
+  const noteEntries = Object.entries(userNotes);
+  
+  if (noteEntries.length === 0) {
+    container.innerHTML = '<p class="review-empty">暂无笔记。在做题时可以添加笔记。</p>';
+    return;
+  }
+  
+  container.innerHTML = '';
+  const allNotes = getAllNotes();
+  
+  if (allNotes.length === 0) {
+    container.innerHTML = '<p class="review-empty">暂无笔记。在做题时可以添加笔记。</p>';
+    return;
+  }
+  
+  allNotes.forEach((note) => {
+    const card = document.createElement('div');
+    card.className = 'note-card';
+    
+    const question = questionsData?.questions.find((q) => q.id === note.targetId);
+    const title = question ? question.question.substring(0, 60) + (question.question.length > 60 ? '...' : '') : note.targetId;
+    
+    card.innerHTML = `
+      <h4>${title}</h4>
+      <div class="note-content">${note.text}</div>
+      <div class="note-meta">
+        创建时间: ${formatDateTime(note.createdAt)} | 更新时间: ${formatDateTime(note.updatedAt)}
+      </div>
+      <button class="secondary-btn note-delete" data-note="${note.key}">删除笔记</button>
+    `;
+    
+    card.querySelector('.note-delete').addEventListener('click', () => {
+      if (confirm('确定要删除这条笔记吗？')) {
+        removeNoteRecord(note.type, note.targetId);
+        renderNotes();
+      }
+    });
+    
+    container.appendChild(card);
+  });
+}
+
+function renderMistakes() {
+  const container = document.getElementById('mistakesContent');
+  if (!container || !questionsData) return;
+  
+  const mistakes = questionsData.questions.filter((q) => {
+    const progress = getQuestionProgress(q.id);
+    return progress.attempted && !progress.correct;
+  });
+  
+  if (mistakes.length === 0) {
+    container.innerHTML = '<p class="review-empty">✅ 太棒了！暂无错题。</p>';
+    return;
+  }
+  
+  container.innerHTML = '';
+  mistakes.forEach((question) => {
+    const progress = getQuestionProgress(question.id);
+    const typeText = question.type === 'single' ? '单选题' : question.type === 'multiple' ? '多选题' : '判断题';
+    
+    const card = document.createElement('div');
+    card.className = 'mistake-card';
+    
+    card.innerHTML = `
+      <div class="mistake-header">
+        <span class="mistake-type">${typeText}</span>
+        <span class="mistake-attempts">尝试次数: ${progress.attempts}</span>
+      </div>
+      <h4>${question.question}</h4>
+      <button class="cta-btn mistake-retry" data-question="${question.id}">重新练习</button>
+    `;
+    
+    card.querySelector('.mistake-retry').addEventListener('click', () => {
+      switchView('practice');
+      document.getElementById('categoryFilter').value = question.category;
+      renderPractice();
+    });
+    
+    container.appendChild(card);
+  });
+}
+
+function createNoteEditor(type, id) {
+  const editor = document.createElement('div');
+  editor.className = 'note-editor';
+
+  const currentNote = getNoteRecord(type, id);
+  const noteKey = getNoteKey(type, id);
+  const timestampText = currentNote.updatedAt ? `上次更新：${formatDateTime(currentNote.updatedAt)}` : '尚无笔记';
+
+  editor.innerHTML = `
+    <textarea data-note-type="${type}" data-note-id="${id}" placeholder="在此添加笔记..." aria-label="笔记内容">${escapeHtml(currentNote.text)}</textarea>
+    <div class="note-editor-footer">
+      <span class="note-timestamp" data-note-timestamp="${noteKey}">${timestampText}</span>
+      <div class="note-buttons">
+        <button class="secondary-btn note-save" data-note-type="${type}" data-note-id="${id}">保存笔记</button>
+        <button class="secondary-btn note-clear" data-note-type="${type}" data-note-id="${id}" ${currentNote.text ? '' : 'disabled'}>清空</button>
+      </div>
+    </div>
+  `;
+
+  return editor;
 }
 
 if (localStorage.getItem('theme') === 'dark') {
