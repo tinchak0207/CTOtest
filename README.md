@@ -32,6 +32,14 @@
   - 按时间统计（日/周/月）
   - 学习效率分析
 
+### 📄 文档中心（新增）
+- **多格式上传**：支持 PDF / JPG / PNG / JPEG，单文件最大 10MB
+- **智能OCR识别**：基于 Tesseract.js，自动识别图片文字（中英文）
+- **IndexedDB 永久存储**：文档元数据+内容持久化保存，离线可用
+- **高效检索**：内置搜索与类型筛选，上传记录实时更新
+- **双栏预览器**：左侧列表、右侧内容预览 + OCR 文本查看/复制
+- **批量管理**：支持单个下载、删除以及一键清空全部文档
+
 ### 📝 复盘回顾系统（新增）
 - **智能复习计划**：
   - 基于艾宾浩斯遗忘曲线的复习间隔（1、3、7、14、30天）
@@ -73,8 +81,12 @@
 
 - **前端框架**：原生HTML5 + CSS3 + JavaScript (ES6+)
 - **样式设计**：CSS变量 + Flexbox + Grid布局
-- **数据存储**：LocalStorage（纯前端，无后端依赖）
-- **数据格式**：JSON
+- **数据存储**：
+  - LocalStorage：用户进度、笔记、分析数据
+  - IndexedDB：文档文件存储（最大10MB）
+- **数据格式**：JSON + Base64
+- **OCR引擎**：Tesseract.js v5（中英文识别）
+- **离线支持**：Service Worker（PWA能力）
 - **部署平台**：Vercel（零配置部署）
 - **字体**：Inter, PingFang SC, Microsoft YaHei
 
@@ -82,9 +94,11 @@
 
 ```
 robotics-learning-platform/
-├── index.html              # 主页面（含新增数据管理UI）
-├── styles.css              # 样式表（含新增组件样式）
-├── app.js                  # 应用逻辑（含数据导入导出、分析系统）
+├── index.html              # 主页面（含文档中心、移动导航）
+├── styles.css              # 样式表（含响应式设计、移动端优化）
+├── app.js                  # 核心应用逻辑（学习系统、数据管理）
+├── document-manager.js     # 文档中心模块（上传、预览、OCR）
+├── sw.js                   # Service Worker（离线缓存策略）
 ├── data/
 │   ├── questions.json      # 题库数据（300题）
 │   └── tutorials.json      # 交互式教程数据
@@ -101,6 +115,8 @@ robotics-learning-platform/
 1. 下载或克隆本项目
 2. 使用浏览器打开 `index.html` 文件
 3. 开始学习！
+
+> ⚠️ **提示**：直接打开文件模式下无法注册 Service Worker，离线缓存功能不可用。若需要完整 PWA 体验，请使用方法三或部署到 HTTPS 环境。
 
 ### 方法二：使用Vercel部署
 
@@ -166,6 +182,23 @@ npx http-server -p 8000
    - **错题集**：查看所有答错的题目
 3. 每个题目显示详细的复习信息
 
+### 文档中心（新功能）
+
+1. 点击导航栏的「📄 文档中心」按钮
+2. **上传文档**：
+   - 拖拽文件到上传区域，或点击「选择文件」按钮
+   - 支持 PDF、JPG、PNG、JPEG 格式，单文件最大 10MB
+   - 图片自动进行 OCR 识别（中英文）
+3. **管理文档**：
+   - 使用搜索框快速查找文档
+   - 按类型筛选（PDF、图片）
+   - 点击文档卡片查看预览
+4. **预览和操作**：
+   - 左侧：文档列表
+   - 右侧：预览区域 + OCR 识别结果
+   - 可下载、删除单个文档，或一键清空所有文档
+   - OCR 文字可一键复制
+
 ### 交互式教程
 
 1. 点击导航栏的「📚 交互教程」按钮
@@ -197,12 +230,19 @@ npx http-server -p 8000
 
 ## 💾 数据持久化详情
 
-### 本地存储键值
+### LocalStorage 键值
 - `robotics_learning_progress`: 练习题进度
 - `robotics_learning_lessons`: 教程学习进度
 - `robotics_learning_notes`: 用户笔记
 - `robotics_learning_review`: 复习计划
 - `robotics_learning_analytics`: 学习统计数据
+- `theme`: 主题设置（light/dark）
+
+### IndexedDB 数据库
+- **数据库名称**：`RoboticsLearningDocuments`
+- **存储对象**：`documents`
+- **存储内容**：文档文件（PDF、图片）+ OCR 结果
+- **存储策略**：Base64 编码，支持离线访问
 
 ### 导出数据格式
 ```json
