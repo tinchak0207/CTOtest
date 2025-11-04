@@ -26,8 +26,15 @@
                     <button class="nav-btn" data-view="practice">练习</button>
                     <button class="nav-btn" data-view="exam">模拟考试</button>
                     <button class="nav-btn" data-view="progress">学习进度</button>
+                    <button class="nav-btn" data-view="analytics">📊 数据分析</button>
+                    <button class="nav-btn" data-view="review">📝 复盘回顾</button>
                 </nav>
                 <div class="header-actions">
+                    <div class="data-actions">
+                        <button class="secondary-btn" id="exportDataBtn" title="导出所有学习数据">导出数据</button>
+                        <button class="secondary-btn" id="importDataBtn" title="导入学习数据">导入数据</button>
+                        <input type="file" id="importDataInput" accept="application/json" hidden>
+                    </div>
                     <button class="theme-toggle" title="切换主题">
                         <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="5"/>
@@ -128,6 +135,10 @@
                             <option value="multiple">多选题</option>
                             <option value="truefalse">判断题</option>
                         </select>
+                        <label class="review-toggle">
+                            <input type="checkbox" id="reviewOnly">
+                            <span>仅看待复盘</span>
+                        </label>
                         <button id="resetPractice" class="secondary-btn">重置进度</button>
                     </div>
                 </div>
@@ -179,6 +190,62 @@
                     <div class="recent-activity">
                         <h3>最近活动</h3>
                         <div id="recentActivityList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics View -->
+            <div class="view" id="analyticsView">
+                <div class="analytics-container">
+                    <h2>📊 数据分析</h2>
+                    <div class="analytics-summary">
+                        <div class="analytics-card">
+                            <h4>🔥 连续学习</h4>
+                            <div class="analytics-number" id="streakDays">0</div>
+                            <p>天</p>
+                        </div>
+                        <div class="analytics-card">
+                            <h4>⏱️ 总学习时长</h4>
+                            <div class="analytics-number" id="totalStudyTime">0</div>
+                            <p>小时</p>
+                        </div>
+                        <div class="analytics-card">
+                            <h4>📝 待复习题目</h4>
+                            <div class="analytics-number" id="dueReviewCount">0</div>
+                            <p>题</p>
+                        </div>
+                        <div class="analytics-card">
+                            <h4>📚 笔记数量</h4>
+                            <div class="analytics-number" id="notesCount">0</div>
+                            <p>条</p>
+                        </div>
+                    </div>
+                    <div class="analytics-charts">
+                        <div class="chart-section">
+                            <h3>学习趋势</h3>
+                            <div id="studyTrendChart"></div>
+                        </div>
+                        <div class="chart-section">
+                            <h3>知识点分布</h3>
+                            <div id="knowledgeDistChart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review View -->
+            <div class="view" id="reviewView">
+                <div class="review-container">
+                    <h2>📝 复盘回顾</h2>
+                    <div class="review-tabs">
+                        <button class="tab-btn active" data-tab="dueReview">待复习 (<span id="dueCount">0</span>)</button>
+                        <button class="tab-btn" data-tab="notes">我的笔记 (<span id="noteCount">0</span>)</button>
+                        <button class="tab-btn" data-tab="mistakes">错题集</button>
+                    </div>
+                    <div class="review-content">
+                        <div class="review-tab-content active" id="dueReviewContent"></div>
+                        <div class="review-tab-content" id="notesContent"></div>
+                        <div class="review-tab-content" id="mistakesContent"></div>
                     </div>
                 </div>
             </div>
