@@ -326,7 +326,10 @@
                             <div class="ocr-panel">
                                 <div class="ocr-header">
                                     <h4>OCR 识别内容</h4>
-                                    <button class="secondary-btn" id="copyOcrText" disabled>复制文字</button>
+                                    <div class="ocr-actions">
+                                        <button class="secondary-btn" id="copyOcrText" disabled>复制文字</button>
+                                        <button class="cta-btn" id="generateQuestionsBtn" disabled>🚀 一键生成题库</button>
+                                    </div>
                                 </div>
                                 <div class="ocr-content" id="ocrContent">
                                     <p>当上传图片时，系统会自动识别文字并显示在此处。</p>
@@ -403,6 +406,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script src="question-generator.js"></script>
     <script src="document-manager.js"></script>
     <script src="app.js"></script>
 </body>
