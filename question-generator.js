@@ -34,6 +34,16 @@ const QuestionGenerator = (function() {
 
     const sentences = extractSentences(text);
     const keywords = extractKeywords(text);
+
+    // 验证提取的句子和关键词
+    if (!Array.isArray(sentences) || sentences.length === 0) {
+      throw new Error('未能从文本中提取到有效的句子，请检查文档内容');
+    }
+
+    if (!Array.isArray(keywords) || keywords.length === 0) {
+      throw new Error('未能从文本中提取到有效的关键词，请检查文档内容');
+    }
+
     const questions = [];
 
     // 按类型分配题目数量
@@ -79,7 +89,8 @@ const QuestionGenerator = (function() {
       .filter(s => s.length >= 10 && s.length <= 200)
       .filter(s => containsTechContent(s));
 
-    return sentences;
+    // 确保返回数组，即使为空
+    return Array.isArray(sentences) ? sentences : [];
   }
 
   /**
@@ -192,7 +203,7 @@ const QuestionGenerator = (function() {
       const relatedKeywords = keywords.filter(kw => sentence.includes(kw)).slice(0, 4);
       if (relatedKeywords.length < 2) continue;
 
-      const questionText = `以下哪些选项与"${sentence.slice(0, 30)}..."相关？（多选）`;
+      const questionText = `以下哪些选项与"${(sentence || '').slice(0, 30)}..."相关？（多选）`;
       const correctAnswers = relatedKeywords.slice(0, 2 + Math.floor(Math.random() * 2));
       const distractors = generateDistractors(correctAnswers[0], keywords, 4 - correctAnswers.length);
       
@@ -261,8 +272,8 @@ const QuestionGenerator = (function() {
     const questions = [];
     
     for (let i = 0; i < count; i++) {
-      const sentence = sentences[Math.floor(Math.random() * sentences.length)];
-      const keyword = keywords[Math.floor(Math.random() * keywords.length)];
+      const sentence = sentences[Math.floor(Math.random() * sentences.length)] || '';
+      const keyword = keywords[Math.floor(Math.random() * keywords.length)] || '';
       
       const type = ['single', 'truefalse'][Math.floor(Math.random() * 2)];
       
@@ -359,14 +370,20 @@ const QuestionGenerator = (function() {
    * 选择未使用的随机句子
    */
   function selectRandomUnused(array, usedSet) {
-    const available = array.filter((_, index) => !usedSet.has(index));
+    if (!Array.isArray(array) || array.length === 0) {
+      return null;
+    }
+    
+    const available = array.filter((item, index) => !usedSet.has(index) && item);
     if (available.length === 0) return null;
     
     const selected = available[Math.floor(Math.random() * available.length)];
     const index = array.indexOf(selected);
-    usedSet.add(index);
+    if (index >= 0) {
+      usedSet.add(index);
+    }
     
-    return selected;
+    return selected || null;
   }
 
   /**
