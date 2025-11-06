@@ -263,7 +263,7 @@
                 <div class="documents-container">
                     <div class="documents-header">
                         <h2>📄 文档中心</h2>
-                        <p class="documents-subtitle">上传 .md 或 .txt 文件来提取文本内容</p>
+                        <p class="documents-subtitle">上传 .md、.txt、.pdf、.docx 或 .zip 文档，系统将自动提取文本内容</p>
                     </div>
                     
                     <div class="upload-section">
@@ -274,8 +274,8 @@
                                 <line x1="12" y1="3" x2="12" y2="15"/>
                             </svg>
                             <p class="upload-text">拖拽文件到此处或点击上传</p>
-                            <p class="upload-hint">支持 .md, .txt 格式，单个文件最大 10MB</p>
-                            <input type="file" id="documentInput" accept=".md,.txt" multiple hidden>
+                            <p class="upload-hint">支持 .md / .txt / .pdf / .docx / .zip，单个文件最大 10MB</p>
+                            <input type="file" id="documentInput" accept=".md,.txt,.pdf,.docx,.zip" multiple hidden>
                             <button class="cta-btn" id="selectFilesBtn">选择文件</button>
                         </div>
                     </div>
@@ -294,8 +294,11 @@
                                     </div>
                                     <select id="documentTypeFilter">
                                         <option value="">所有类型</option>
+                                        <option value="markdown">Markdown</option>
+                                        <option value="text">纯文本</option>
                                         <option value="pdf">PDF</option>
-                                        <option value="image">图片</option>
+                                        <option value="docx">Word</option>
+                                        <option value="zip">ZIP</option>
                                         <option value="other">其他</option>
                                     </select>
                                     <button class="secondary-btn" id="clearAllDocuments">清空文档</button>
