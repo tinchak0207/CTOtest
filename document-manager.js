@@ -539,8 +539,8 @@ const DocumentManager = (function() {
   }
 
   function setupEventListeners() {
-    if (listenersBound) return;
-    listenersBound = true;
+    // Always ensure event listeners are bound when called
+    // The listenersBound flag prevents duplicate binding within the same session
 
     const selectFilesBtn = document.getElementById('selectFilesBtn');
     const documentInput = document.getElementById('documentInput');
@@ -550,12 +550,18 @@ const DocumentManager = (function() {
     const triggerFileSelect = () => {
       if (documentInput) {
         documentInput.click();
+      } else {
+        console.error('documentInput element not found');
+        alert('文件选择功能不可用，请刷新页面重试');
       }
     };
 
     // 设置选择文件按钮
     if (selectFilesBtn) {
-      selectFilesBtn.addEventListener('click', (e) => {
+      // Remove any existing listeners to prevent duplicates
+      selectFilesBtn.replaceWith(selectFilesBtn.cloneNode(true));
+      const newSelectBtn = document.getElementById('selectFilesBtn');
+      newSelectBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         triggerFileSelect();
@@ -574,7 +580,11 @@ const DocumentManager = (function() {
 
     // 设置文件输入变化事件
     if (documentInput) {
-      documentInput.addEventListener('change', (e) => {
+      // Remove any existing listeners to prevent duplicates
+      const newInput = documentInput.cloneNode(true);
+      documentInput.replaceWith(newInput);
+      const updatedInput = document.getElementById('documentInput');
+      updatedInput.addEventListener('change', (e) => {
         if (e.target.files && e.target.files.length > 0) {
           handleFileUpload(Array.from(e.target.files));
           e.target.value = ''; // Reset input
@@ -626,25 +636,33 @@ const DocumentManager = (function() {
     // Download button
     const downloadBtn = document.getElementById('downloadDocument');
     if (downloadBtn) {
-      downloadBtn.addEventListener('click', downloadCurrentDocument);
+      downloadBtn.replaceWith(downloadBtn.cloneNode(true));
+      const newDownloadBtn = document.getElementById('downloadDocument');
+      newDownloadBtn.addEventListener('click', downloadCurrentDocument);
     }
 
     // Delete button
     const deleteBtn = document.getElementById('deleteDocument');
     if (deleteBtn) {
-      deleteBtn.addEventListener('click', deleteCurrentDocument);
+      deleteBtn.replaceWith(deleteBtn.cloneNode(true));
+      const newDeleteBtn = document.getElementById('deleteDocument');
+      newDeleteBtn.addEventListener('click', deleteCurrentDocument);
     }
 
     // Copy OCR text button
     const copyBtn = document.getElementById('copyOcrText');
     if (copyBtn) {
-      copyBtn.addEventListener('click', copyOCRText);
+      copyBtn.replaceWith(copyBtn.cloneNode(true));
+      const newCopyBtn = document.getElementById('copyOcrText');
+      newCopyBtn.addEventListener('click', copyOCRText);
     }
 
     // Generate questions button
     const generateBtn = document.getElementById('generateQuestionsBtn');
     if (generateBtn) {
-      generateBtn.addEventListener('click', generateQuestionsFromDocument);
+      generateBtn.replaceWith(generateBtn.cloneNode(true));
+      const newGenerateBtn = document.getElementById('generateQuestionsBtn');
+      newGenerateBtn.addEventListener('click', generateQuestionsFromDocument);
     }
 
     // Clear all documents button
@@ -703,13 +721,14 @@ const DocumentManager = (function() {
     try {
       if (!initialized) {
         await initIndexedDB();
-        initOCR();
+        // initOCR(); // No longer needed since we only support .md and .txt files
         setupEventListeners();
         initialized = true;
       }
       await renderDocuments();
     } catch (error) {
       console.error('Error initializing DocumentManager:', error);
+      throw error; // Re-throw so caller can handle it
     }
   }
 

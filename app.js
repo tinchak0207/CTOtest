@@ -542,6 +542,13 @@ function initialize() {
   updateProgressDisplay();
   setupEventListeners();
 
+  // Initialize DocumentManager if available
+  if (typeof DocumentManager !== 'undefined') {
+    DocumentManager.init().catch(error => {
+      console.error('Failed to initialize DocumentManager on startup:', error);
+    });
+  }
+
   document.querySelector(`.nav-btn[data-view="${currentView}"]`)?.classList.add('active');
   document.querySelector(`.mobile-nav-item[data-view="${currentView}"]`)?.classList.add('active');
   
@@ -649,7 +656,10 @@ function switchView(view) {
     renderReview();
   } else if (view === 'documents') {
     if (typeof DocumentManager !== 'undefined') {
-      DocumentManager.init();
+      // Ensure documents are rendered when switching to documents view
+      DocumentManager.renderDocuments().catch(error => {
+        console.error('Failed to render documents:', error);
+      });
     }
   }
 }
